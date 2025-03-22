@@ -77,7 +77,7 @@ const AccountSettings = () =>{
                     <Link
                         to={item.to}
                         key={index}
-                        className="group flex items-center gap-4 hover:bg-[#ece3ff] transition rounded-xl p-4"
+                        className="group flex items-center gap-4  transition rounded-xl p-4"
                     >
                         {/*Dung group da kiem soat hover (group la class cha kiem soat (Link) )*/}
                         <span className="material-symbols-outlined text-[32px] text-white">
