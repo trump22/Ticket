@@ -143,6 +143,7 @@ const NavBar = () => {
         try {
             const response = await axios.get('http://13.239.139.152:8080/api/User/GetUserById', {
                 headers: {
+
                     'Authorization': `Bearer ${tokenValue}`,
                     'Accept': '*/*'
                 }
