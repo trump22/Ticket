@@ -1,4 +1,5 @@
 import {Link, useLocation} from "react-router-dom";
+import Cookies from "js-cookie";
 const BREADCRUMB_MAP = {
     soldticket: 'Vé đã mua',
     profile: 'Thông tin tài khoản',
@@ -69,7 +70,7 @@ const AccountSettings = () =>{
                     {/* Nội dung bên phải ảnh */}
                     <div className="flex flex-col">
                         <p className="text-xs text-muted-foreground">Tài khoản cá nhân</p>
-                        <p className="text-lg font-semibold text-white">Nguyễn Văn A</p>
+                        <p className="text-lg font-semibold text-white">{Cookies.get('username')}</p>
                     </div>
                 </div>
                 {items.map((item, index) => (
