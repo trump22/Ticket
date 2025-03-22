@@ -1,12 +1,51 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import searchIcon from '../assets/images/search.png';
 import discountIcon from '../assets/images/discountw.png';
 import cartIcon from '../assets/images/cartw.png';
 import vnFlag from '../assets/images/vnflag.png';
+import axios from 'axios';
+
+import { useDispatch } from 'react-redux';
+import { setToken } from '../slice/tokenSlice';
+import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 const NavBar = () => {
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [showRegisterModal, setShowRegisterModal] = useState(false);
+    const [name, setName] = useState("");
+    const dispatch = useDispatch();
+    const [phoneNumber, setPhoneNumber] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [rePassword, setRePassword] = useState("");
+    const [dob, setDob] = useState("2025-03-18"); // Giá trị mặc định
+    const [gender, setGender] = useState(true);
+    const [imageUrl, setImageUrl] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
+    const [error, setError] = useState("");
+    const [emailOrPhone, setEmailOrPhone] = useState("");
+    const [loginShow, setLoginShow] = useState("");
+    const [registerShow, setRegisterShow] = useState("");
+    const [username, setUserName] = useState("");
+    const [userphone, setUserPhone] = useState("");
+
+
+    useEffect(() => {
+        if (Cookies.get('username') === undefined) {
+            setLoginShow("Đăng nhập");
+            setRegisterShow("Đăng kí");
+        } else {
+            setLoginShow(Cookies.get('username'));
+            setRegisterShow(Cookies.get('userphone'));
+            // Bạn có thể thực hiện các hành động khác sau khi có thông tin user ở đây
+        }
+    }, [username, userphone]);
+    const handleBeforeLogin = () => {
+        setLoginShow("Đăng nhập");
+        setRegisterShow("Đăng kí");
+    };
+
 
     const handleLoginClick = () => {
         setShowLoginModal(true);
@@ -17,7 +56,120 @@ const NavBar = () => {
         setShowRegisterModal(true);
         setShowLoginModal(false); // Đảm bảo modal đăng nhập không mở cùng lúc
     };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
+        const data = {
+            name,
+            phoneNumber,
+            email,
+            password,
+            rePassword,
+            dob,
+            gender,
+            imageUrl
+        };
+
+        try {
+            // Gửi dữ liệu lên server
+            const response = await axios.post('http:/http://13.239.139.152:8080/api/Authen/Register', data, {
+                headers: {
+                    'Accept': '*/*',
+                    'Content-Type': 'application/json'
+                }
+            });
+            console.log("Response:", response.data);
+            if (response.status === 200) {
+                setSuccessMessage("Đăng kí tài khoản thành công <3");
+                setError("");
+            } else {
+                setError("Đăng ký thất bại, vui lòng thử lại!");
+                setSuccessMessage("");
+            }
+        } catch (error) {
+            console.error("Lỗi khi gửi dữ liệu:", error);
+            console.error("Dữ liệu:", data);
+            setError("Đăng ký thất bại, vui lòng thử lại!");
+            setSuccessMessage("");
+        }
+    };
+
+    const handleSubmit1 = async (e) => {
+        e.preventDefault();
+
+        const data = {
+            phonenumberOrEmail: emailOrPhone,
+            password
+        };
+
+        try {
+            // Gửi dữ liệu lên server   
+            const response = await axios.post('http://13.239.139.152:8080/api/Authen/Login', data, {
+                headers: {
+                    'Accept': '*/*',
+                    'Content-Type': 'application/json'
+                }
+            });
+            console.log("Response:", response.data);
+
+            if (response.status === 200) {
+                setSuccessMessage("Đăng nhập tài khoản thành công <3");
+                setError("");
+                dispatch(setToken(response.data.token));
+                Cookies.set('token', response.data.token, { expires: 7 });
+                handleLoginSuccess(Cookies.get('token'));
+            } else {
+                handleBeforeLogin();
+                setError("Đăng nhập thất bại, vui lòng thử lại!");
+                setSuccessMessage("");
+            }
+        } catch (error) {
+            console.error("Lỗi khi gửi dữ liệu:", error);
+            setError("Đăng nhập thất bại, vui lòng thử lại!");
+            setSuccessMessage("");
+        }
+    };
+    axios.interceptors.request.use(
+        (config) => {
+            // Kiểm tra và log token trong header Authorization (nếu có)
+            console.log('Authorization Header:', config.headers.Authorization);
+            return config;
+        },
+        (error) => {
+            return Promise.reject(error);
+        }
+    );
+    const getUserById = async (tokenValue) => {
+        try {
+            const response = await axios.get('http://http://13.239.139.152/:8080/api/User/GetUserById', {
+                headers: {
+                    'Authorization': `Bearer ${tokenValue}`,
+                    'Accept': '*/*'
+                }
+            });
+            return response.data; // Trả về thông tin người dùng
+        } catch (error) {
+            console.error("Lỗi khi gọi getUserById:", error);
+            throw error;
+        }
+    };
+
+    const handleLoginSuccess = async (tokenValue) => {
+        try {
+            const user = await getUserById(tokenValue);
+            setUserName(user.name);
+            setUserPhone(user.phoneNumber);
+            Cookies.set('username', user.name, { expires: 7 });
+            Cookies.set('userphone', user.phoneNumber, { expires: 7 });
+            Cookies.set('userid', user.id, { expires: 7 });
+            setShowLoginModal(false);
+
+
+        } catch (error) {
+            console.error("Lỗi getUserById:", error);
+            // Xử lý lỗi nếu cần
+        }
+    };
     return (
         <div>
             {/* HEADER */}
@@ -46,9 +198,7 @@ const NavBar = () => {
 
                     <div className="ml-8 flex items-center">
                         <img src={discountIcon} alt="Ticket" className="w-[33.42px] h-[33.42px]" />
-                        <button className="text-white text-base font-normal font-['Inter'] mr-8">
-                            Vé đã mua
-                        </button>
+                        <Link to="/ticketList"> <button className="text-white text-base font-normal font-['Inter']">Vé đã mua</button></Link>
                     </div>
 
                     <div className="flex items-center">
@@ -59,14 +209,14 @@ const NavBar = () => {
                                 onClick={handleLoginClick}
                                 className="w-[110px] h-[33px] flex items-center justify-center text-white text-base font-normal font-['Inter']"
                             >
-                                Đăng nhập
+                                {loginShow}
                             </button>
                             <div className="h-6 w-px bg-white mx-1" />
                             <button
                                 onClick={handleRegisterClick}
                                 className="w-[88px] h-[33px] flex items-center justify-center text-white text-base font-normal font-['Inter']"
                             >
-                                Đăng kí
+                                {registerShow}
                             </button>
                         </div>
                     </div>
@@ -90,7 +240,11 @@ const NavBar = () => {
 
             {/* NAVIGATION TABS */}
             <nav className="bg-black py-2 px-8 flex space-x-8">
-                <div className="hover:underline cursor-pointer">Nhạc sống</div>
+                <div className="hover:underline cursor-pointer">
+
+                    <Link to="/">Trang chủ</Link>
+                </div>
+
                 <div className="hover:underline cursor-pointer">Sân khấu &amp; Nghệ thuật</div>
                 <div className="hover:underline cursor-pointer">Thể thao</div>
                 <div className="hover:underline cursor-pointer">Khác</div>
@@ -106,16 +260,105 @@ const NavBar = () => {
                         >
                             ✕
                         </button>
-                        <h3 className="text-lg font-bold mb-4">Đăng nhập</h3>
-                        <div className="flex flex-col space-y-3">
-                            <input type="text" placeholder="Nhập email hoặc số điện thoại" className="input input-bordered w-full" />
-                            <input type="password" placeholder="Nhập mật khẩu" className="input input-bordered w-full" />
-                            <button className="btn btn-primary w-full">Tiếp tục</button>
-                        </div>
-                        <div className="mt-4 text-center">
-                            <a href="#" className="text-sm link link-hover">
-                                Quên mật khẩu?
-                            </a>
+
+                        <div className="max-w-md mx-auto p-6 space-y-6">
+                            {/* Header */}
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-2">
+                                    {/* Close Icon */}
+                                    <button className="p-2">
+                                        <svg width="32" height="32" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M16 8L8 16" stroke="#828BA0" strokeWidth="2" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+                                            <path d="M8 8L16 16" stroke="#828BA0" strokeWidth="2" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+                                        </svg>
+                                    </button>
+                                    <h2 className="text-xl font-semibold">Đăng nhập</h2>
+                                </div>
+
+                                {/* Decorative SVG (example; replace with your actual SVG as needed) */}
+
+
+                            </div>
+
+
+                            {/* Login Form */}
+                            <form onSubmit={handleSubmit1} className="space-y-4">
+                                <div>
+                                    <input
+                                        type="text"
+                                        placeholder="Nhập email hoặc số điện thoại"
+                                        value={emailOrPhone}
+                                        onChange={(e) => setEmailOrPhone(e.target.value)}
+                                        className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <input
+                                        type="password"
+                                        placeholder="Nhập mật khẩu"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        required
+                                    />
+                                </div>
+                                {successMessage && <p className="text-green-500 mb-2">{successMessage}</p>}
+                                {error && <p className="text-red-500 mb-2">{error}</p>}
+                                <button
+                                    type="submit"
+
+
+                                    className="w-full py-3 bg-blue-600 text-white rounded disabled:opacity-50"
+                                >
+                                    Tiếp tục
+                                </button>
+                            </form>
+
+                            {/* Forgot Password Link */}
+                            <div className="text-center">
+                                <p className="text-sm text-blue-600 cursor-pointer">Quên mật khẩu?</p>
+                            </div>
+
+                            {/* Register Link */}
+                            <div className="flex flex-col items-center gap-1">
+                                <p className="text-sm text-gray-600">Chưa có tài khoản?</p>
+                                <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+                                    onClick={handleRegisterClick}
+                                >
+                                    Tạo tài khoản ngay
+                                </button>
+                            </div>
+
+                            {/* Divider */}
+                            <div className="flex items-center my-4">
+                                <div className="flex-grow border-t border-gray-300"></div>
+                                <span className="mx-2 text-gray-500">Hoặc</span>
+                                <div className="flex-grow border-t border-gray-300"></div>
+                            </div>
+
+                            {/* Google Sign-In Button */}
+                            <div className="flex justify-center">
+                                <iframe
+                                    src="https://accounts.google.com/gsi/button?type=icon&text=signin_with&shape=circle&size=large&theme=filled&class=g_id_signin&is_fedcm_supported=false&client_id=1087811486846-ukuold92cnmo9nd0u9apiv9bv4h6b0cl.apps.googleusercontent.com&iframe_id=gsi_134253_202900&cas=RiLtWu0XsRwceHeVnOKFHoGW2t%2BQb%2FnvC%2F6o2cIJLpM&hl=vi-VN"
+                                    className="w-16 h-11 border-0"
+                                    title="Nút Đăng nhập bằng Google"
+                                    allow="identity-credentials-get"
+                                ></iframe>
+                            </div>
+
+                            {/* Commitment Text */}
+                            <div className="text-xs text-center text-gray-500">
+                                Bằng việc tiếp tục, bạn đã đọc và đồng ý với{' '}
+                                <a href="https://ticketbox.vn/customer-terms-of-use" target="_blank" rel="noreferrer" className="text-blue-600 underline">
+                                    Điều khoản sử dụng
+                                </a>{' '}
+                                và{' '}
+                                <a href="https://ticketbox.vn/information-privacy-policy" target="_blank" rel="noreferrer" className="text-blue-600 underline">
+                                    Chính sách bảo mật thông tin cá nhân
+                                </a>{' '}
+                                của Ticketbox
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -131,21 +374,67 @@ const NavBar = () => {
                         >
                             ✕
                         </button>
-                        <h3 className="text-lg font-bold mb-4">Đăng ký</h3>
-                        <div className="flex flex-col space-y-3">
-                            <input type="text" placeholder="Họ và tên" className="input input-bordered w-full" />
-                            <input type="text" placeholder="Số điện thoại" className="input input-bordered w-full" />
-                            <input type="email" placeholder="Email" className="input input-bordered w-full" />
-                            <input type="password" placeholder="Mật khẩu" className="input input-bordered w-full" />
-                            <input type="password" placeholder="Nhập lại mật khẩu" className="input input-bordered w-full" />
-                            <button className="btn btn-primary w-full">Tạo tài khoản</button>
-                        </div>
-                        <div className="mt-4 text-center">
-                            <span className="text-sm">Bạn đã có tài khoản? </span>
-                            <button onClick={handleLoginClick} className="text-blue-500 link link-hover">
-                                Đăng nhập ngay
+                        <form onSubmit={handleSubmit} className="space-y-3">
+                            <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Nhập tên" className="w-full border p-2 rounded-md" />
+                            <input
+                                type="text"
+                                value={phoneNumber}
+                                onChange={(e) => setPhoneNumber(e.target.value)}
+                                placeholder="Nhập số điện thoại"
+                                className="w-full border p-2 rounded-md"
+                            />
+                            <input
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="Nhập email"
+                                className="w-full border p-2 rounded-md"
+                            />
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="Nhập mật khẩu"
+                                className="w-full border p-2 rounded-md"
+                            />
+                            <input
+                                type="password"
+                                value={rePassword}
+                                onChange={(e) => setRePassword(e.target.value)}
+                                placeholder="Nhập lại mật khẩu"
+                                className="w-full border p-2 rounded-md"
+                            />
+                            <input
+                                type="date"
+                                value={dob}
+                                onChange={(e) => setDob(e.target.value)}
+                                placeholder="YYYY-MM-DD"
+                                className="w-full border p-2 rounded-md"
+                            />
+                            <select
+                                value={gender.toString()}
+                                onChange={(e) => setGender(e.target.value === "true")}
+                                className="w-full border p-2 rounded-md"
+                            >
+                                <option value="true">Nam</option>
+                                <option value="false">Nữ</option>
+                            </select>
+                            <input
+                                type="text"
+                                value={imageUrl}
+                                onChange={(e) => setImageUrl(e.target.value)}
+                                placeholder="Nhập URL hình ảnh"
+                                className="w-full border p-2 rounded-md"
+                            />
+                            <button
+                                type="submit"
+                                className="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600"
+                            >
+                                Gửi Dữ Liệu
                             </button>
-                        </div>
+                        </form>
+                        {successMessage && <p className="text-green-500 mb-2">{successMessage}</p>}
+                        {error && <p className="text-red-500 mb-2">{error}</p>}
                     </div>
                 </div>
             )}

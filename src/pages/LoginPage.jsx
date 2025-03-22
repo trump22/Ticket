@@ -1,8 +1,12 @@
 import { useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 const LoginPage = () => {
+    const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const handleClick = () => {
+        navigate('/login');
+    };
 
     // For demonstration, the button is disabled if either field is empty.
     const isDisabled = !username || !password;
@@ -14,7 +18,7 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="max-w-md mx-auto p-6 space-y-6">
+        <div onClick={handleClick} className="max-w-md mx-auto p-6 space-y-6">
             {/* Header */}
             <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">

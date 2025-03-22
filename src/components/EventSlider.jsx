@@ -40,9 +40,48 @@ const EventSlider = () => {
             {/* Slider track */}
             <div
                 ref={sliderRef}
-                className="flex overflow-x-auto scroll-smooth space-x-4 px-4 pb-4"
+                className="flex justify-center overflow-x-auto scroll-smooth space-x-4 px-4 pb-4"
             >
                 {/* Slider Item */}
+                <div className="slider-item flex-shrink-0 w-48">
+                    <a
+                        href="https://ticketbox.vn/kich-thanh-xa-bach-xa-86983?utm_medium=special-events&utm_source=tkb-homepage"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <img
+                            src="https://images.tkbcdn.com/2/360/479/ts/ds/2a/9e/57/beb7172537b8cdccf0dfe263a6e8946b.jpg"
+                            alt="event"
+                            className="rounded-lg object-cover w-full h-full"
+                        />
+                    </a>
+                </div>
+                <div className="slider-item flex-shrink-0 w-48">
+                    <a
+                        href="https://ticketbox.vn/kich-thanh-xa-bach-xa-86983?utm_medium=special-events&utm_source=tkb-homepage"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <img
+                            src="https://images.tkbcdn.com/2/360/479/ts/ds/2a/9e/57/beb7172537b8cdccf0dfe263a6e8946b.jpg"
+                            alt="event"
+                            className="rounded-lg object-cover w-full h-full"
+                        />
+                    </a>
+                </div>
+                <div className="slider-item flex-shrink-0 w-48">
+                    <a
+                        href="https://ticketbox.vn/kich-thanh-xa-bach-xa-86983?utm_medium=special-events&utm_source=tkb-homepage"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <img
+                            src="https://images.tkbcdn.com/2/360/479/ts/ds/2a/9e/57/beb7172537b8cdccf0dfe263a6e8946b.jpg"
+                            alt="event"
+                            className="rounded-lg object-cover w-full h-full"
+                        />
+                    </a>
+                </div>
                 <div className="slider-item flex-shrink-0 w-48">
                     <a
                         href="https://ticketbox.vn/kich-thanh-xa-bach-xa-86983?utm_medium=special-events&utm_source=tkb-homepage"
@@ -85,6 +124,19 @@ const EventSlider = () => {
                     </a>
                 </div>
                 {/* Add additional slider items as needed */}
+                <div className="slider-item flex-shrink-0 w-48">
+                    <a
+                        href="https://ticketbox.vn/kich-thanh-xa-bach-xa-86983?utm_medium=special-events&utm_source=tkb-homepage"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <img
+                            src="https://images.tkbcdn.com/2/360/479/ts/ds/2a/9e/57/beb7172537b8cdccf0dfe263a6e8946b.jpg"
+                            alt="event"
+                            className="rounded-lg object-cover w-full h-full"
+                        />
+                    </a>
+                </div>
             </div>
         </div>
     );
