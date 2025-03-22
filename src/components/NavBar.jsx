@@ -38,7 +38,6 @@ const NavBar = () => {
         } else {
             setLoginShow(Cookies.get('username'));
             setRegisterShow(Cookies.get('userphone'));
-            // Bạn có thể thực hiện các hành động khác sau khi có thông tin user ở đây
         }
     }, [username, userphone]);
     const handleBeforeLogin = () => {
@@ -56,6 +55,7 @@ const NavBar = () => {
         setShowRegisterModal(true);
         setShowLoginModal(false); // Đảm bảo modal đăng nhập không mở cùng lúc
     };
+    //aa
     const handleSubmit = async (e) => {
         e.preventDefault();
 
