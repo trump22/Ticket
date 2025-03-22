@@ -10,6 +10,7 @@ import { setToken } from '../store/tokenSlice';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import SearchBar from "./SearchBar.jsx";
+import instance from "../services/axios.js";
 
 const NavBar = () => {
     const [showLoginModal, setShowLoginModal] = useState(false);
@@ -105,7 +106,7 @@ const NavBar = () => {
 
         try {
             // Gửi dữ liệu lên server   
-            const response = await axios.post('http://13.239.139.152:8080/api/Authen/Login', data, {
+            const response = await instance.post('/api/Authen/Login', data, {
                 headers: {
                     'Accept': '*/*',
                     'Content-Type': 'application/json'
