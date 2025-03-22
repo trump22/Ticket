@@ -9,7 +9,6 @@ const Home = () => {
     return (
         <div className="bg-zinc-full text-white min-h-screen">
             <SliderBanner />
-
             <EventSlider />
             <TrendingEvents />
             <TrendingEvents />

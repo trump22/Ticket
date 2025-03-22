@@ -72,7 +72,7 @@ const NavBar = () => {
 
         try {
             // Gửi dữ liệu lên server
-            const response = await axios.post('http:/http://13.239.139.152:8080/api/Authen/Register', data, {
+            const response = await axios.post('http://13.239.139.152:8080/api/Authen/Register', data, {
                 headers: {
                     'Accept': '*/*',
                     'Content-Type': 'application/json'
@@ -141,7 +141,7 @@ const NavBar = () => {
     );
     const getUserById = async (tokenValue) => {
         try {
-            const response = await axios.get('http://http://13.239.139.152/:8080/api/User/GetUserById', {
+            const response = await axios.get('http://13.239.139.152:8080/api/User/GetUserById', {
                 headers: {
                     'Authorization': `Bearer ${tokenValue}`,
                     'Accept': '*/*'
