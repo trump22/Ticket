@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import { setToken } from '../store/tokenSlice';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import SearchBar from "./SearchBar.jsx";
 
 const NavBar = () => {
     const [showLoginModal, setShowLoginModal] = useState(false);
@@ -178,18 +179,7 @@ const NavBar = () => {
                 <div className="text-2xl font-['Inter'] font-normal mr-8">TICKET</div>
 
                 {/* Search Bar */}
-                <div className="w-[376px] h-[47px] bg-white rounded-[13px] overflow-hidden">
-                    <div className="flex items-center w-full h-full">
-                        <img src={searchIcon} alt="Search" className="w-10 h-10 ml-2" />
-                        <input
-                            type="text"
-                            placeholder="Bạn tìm gì hôm nay?"
-                            className="flex-1 outline-none border-none text-black/50 text-base font-normal font-['Inter']"
-                        />
-                        <div className="h-6 w-px bg-gray-300 mx-2" />
-                        <button className="mr-3 text-black font-['Inter']">Tìm kiếm</button>
-                    </div>
-                </div>
+                <SearchBar/>
 
                 {/* Các nút hành động */}
                 <div className="flex items-center ml-8 space-x-6">
