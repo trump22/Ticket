@@ -1,9 +1,9 @@
-// src/pages/TicketList.jsx
+// src/pages/list.jsx
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-const TicketList = () => {
+const List = () => {
     const [tickets, setTickets] = useState([]);
     const [eventsList, setEventsList] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -149,4 +149,4 @@ const TicketList = () => {
     );
 };
 
-export default TicketList;
+export default List;

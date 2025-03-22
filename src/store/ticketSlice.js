@@ -1,4 +1,4 @@
-// src/slice/ticketSlice.js
+// src/store/ticketSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -23,4 +23,4 @@ const ticketSlice = createSlice({
 });
 
 export const { setTickets, updateTicketStatus } = ticketSlice.actions;
-export default ticketSlice.reducer;
+export default ticketSlice;

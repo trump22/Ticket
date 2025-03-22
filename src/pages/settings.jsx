@@ -1,9 +1,9 @@
 
 
-const SettingPage = () => {
+const Settings = () => {
     return (
         <div>SettingPage</div>
     )
 }
 
-export default SettingPage 
+export default Settings

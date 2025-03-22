@@ -6,7 +6,7 @@ import vnFlag from '../assets/images/vnflag.png';
 import axios from 'axios';
 
 import { useDispatch } from 'react-redux';
-import { setToken } from '../slice/tokenSlice';
+import { setToken } from '../store/tokenSlice';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
@@ -198,7 +198,7 @@ const NavBar = () => {
 
                     <div className="ml-8 flex items-center">
                         <img src={discountIcon} alt="Ticket" className="w-[33.42px] h-[33.42px]" />
-                        <Link to="/ticketList"> <button className="text-white text-base font-normal font-['Inter']">Vé đã mua</button></Link>
+                        <Link to="/ticket/list"> <button className="text-white text-base font-normal font-['Inter']">Vé đã mua</button></Link>
                     </div>
 
                     <div className="flex items-center">

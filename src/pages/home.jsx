@@ -1,11 +1,11 @@
-// src/pages/HomePage.jsx
+// src/pages/home.jsx
 
 import EventSlider from "../components/EventSlider";
 import SliderBanner from "../components/SliderBanner";
 import TrendingEvents from "../components/TrendingEvents";
 
 
-const HomePage = () => {
+const Home = () => {
     return (
         <div className="bg-zinc-full text-white min-h-screen">
             <SliderBanner />
@@ -20,4 +20,4 @@ const HomePage = () => {
 }
 
 
-export default HomePage;
+export default Home;

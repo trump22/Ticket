@@ -1,4 +1,4 @@
-// src/pages/TicketInfor.jsx
+// src/pages/infor.jsx
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
@@ -32,7 +32,7 @@ const TicketConfirmationModal = ({ orderData, onClose, onSellTicket }) => {
     );
 };
 
-const TicketInfor = () => {
+const Infor = () => {
     const [ticket, setTicket] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -168,4 +168,4 @@ const TicketInfor = () => {
     );
 };
 
-export default TicketInfor;
+export default Infor;
