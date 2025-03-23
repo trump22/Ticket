@@ -1,9 +1,9 @@
 import {Input,Button} from "@headlessui/react";
 import clsx from 'clsx'
-import instance from "../services/axios.js";
+import instance from "../../services/axios.js";
 import Cookies from "js-cookie";
 
-const PersonalProfile = () =>{
+const Profile = () =>{
 const fields =[
     { label: "Họ tên", name: "Name", type: "text", placeholder: "Nhập họ tên" },
     { label: "Email", name: "email", type: "email", placeholder: "Nhập email" },
@@ -115,4 +115,4 @@ const fields =[
         </div>
     )
 }
-export default PersonalProfile;
+export default Profile;
