@@ -213,7 +213,7 @@ const NavBar = () => {
                         </div>
                     </div>
 
-                    {/* Profile Icon */}
+                    {/* Account Icon */}
                     <div className="ml-6 flex items-center space-x-2 cursor-pointer">
                         <img src={vnFlag} alt="VN Flag" className="w-8 h-8" />
                         <svg

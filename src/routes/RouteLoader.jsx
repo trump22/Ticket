@@ -1,27 +1,35 @@
-// src/routes/RouteLoader.jsx
-import { Suspense } from "react";
+import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import routes from "./index";
-import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
-import NotFound from "../pages/NotFound";
-import Home from "../pages/home.jsx"; // Đảm bảo bạn có file này
+import Home from "../pages/home.jsx";
+import NotFound from "../pages/NotFound.jsx";
+import routes from "./index.jsx";
+const Account = lazy(() => import("../components/layout/account.jsx"));
 
-const Loading = () => (
-    <div className="loading">Loading...</div>
-);
+const RouteLoader = () => {
+    const sidebarPaths = ["/profile", "/ticket/purchased"];
 
-const RouteLoader = () => (
-    <Suspense fallback={<Loading />}>
-        <Routes>
-            {routes.map(({ path, component: Component }) => (
-                <Route key={path} path={path} element={<Component />} />
-            ))}
-            <Route path="*" element={<NotFound />} />
-            <Route path="/" element={<Home />} />
-        </Routes>
-        <ToastContainer position="bottom-center" />
-    </Suspense>
-);
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <Routes>
+                {/* Group các route có sidebar */}
+                <Route element={<Account />}>
+                    {routes
+                        .filter(({ path }) => sidebarPaths.includes(path))
+                        .map(({ path, component: Component }) => (
+                            <Route key={path} path={path} element={<Component />} />
+                        ))}
+                </Route>
+
+                {/* Các route khác */}
+                {routes.map(({ path, component: Component }) => (
+                    <Route key={path} path={path} element={<Component />} />
+                ))}
+
+                <Route path="/" element={<Home />} />
+                <Route path="*" element={<NotFound />} />
+            </Routes>
+        </Suspense>
+    );
+};
 
 export default RouteLoader;
