@@ -6,7 +6,7 @@ import routes from "./index.jsx";
 const Account = lazy(() => import("../components/layout/account.jsx"));
 
 const RouteLoader = () => {
-    const sidebarPaths = ["/profile", "/ticket/purchased"];
+    const sidebarPaths = ["/profile", "/ticket/purchased","/ticket/buy"];
 
     return (
         <Suspense fallback={<div>Loading...</div>}>
