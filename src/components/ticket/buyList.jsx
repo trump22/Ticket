@@ -1,6 +1,8 @@
 // src/pages/list.jsx
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { setTickets, cancelTicket } from '@/redux/ticketsSlice';
+
 import Cookies from 'js-cookie';
 import instance from "../../services/axios.js";
 
@@ -62,13 +64,13 @@ const BuyList = () => {
     const handleCancelTicket = async (orderId) => {
         try {
             // Gọi API hủy vé. Bạn có thể dùng axios.put hoặc axios.delete tùy API yêu cầu.
-            const response = await axios.put(
-                `http://13.239.1.215:8080/api/OrderDetail/CancelOrderDetail/${orderId}`,
+            const response = await instance.put(
+                `api/OrderDetail/CancelOrderDetail/${orderId}`,
                 {},
                 {
                     headers: {
                         'Accept': '*/*',
-                        'Authorization': `Bearer ${Cookies.get('token')}`
+                        'Authorization': `Bearer ${token}`
                     }
                 }
             );
@@ -80,6 +82,7 @@ const BuyList = () => {
                     )
                 );
                 alert("Hủy vé thành công!");
+
             }
         } catch (err) {
             console.error("Error canceling ticket:", err);
@@ -105,9 +108,6 @@ const BuyList = () => {
 
     return (
         <div className="max-w-6xl mx-auto p-4 sm:p-8">
-            <h1 className="text-2xl sm:text-3xl font-bold mb-4 text-white text-center sm:text-left">
-                Danh sách vé đã mua
-            </h1>
 
             {/* Table for larger screens */}
             <div className="hidden md:block overflow-x-auto">
