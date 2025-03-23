@@ -1,17 +1,17 @@
-import {Input,Button} from "@headlessui/react";
+import { Input, Button } from "@headlessui/react";
 import clsx from 'clsx'
 import instance from "../../services/axios.js";
 import Cookies from "js-cookie";
-import {useState} from "react";
-const fields =[
+import { useState } from "react";
+const fields = [
     { label: "Họ tên", name: "Name", type: "text", placeholder: "Nhập họ tên" },
     { label: "Email", name: "email", type: "email", placeholder: "Nhập email" },
     { label: "Số điện thoại", name: "PhoneNumber", type: "tel", placeholder: "Nhập số điện thoại" },
     { label: "Giới tính", name: "gender" },
     { label: "Ngày sinh", name: "dob", type: "date", placeholder: "" }
 ]
-const Profile = () =>{
-    const[showMessage,setShowMessage]=useState("");
+const Profile = () => {
+    const [showMessage, setShowMessage] = useState("");
     const [messageType, setMessageType] = useState("success");
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -23,11 +23,11 @@ const Profile = () =>{
         } else {
             data.gender = false;
         }
-        console.log("Dữ liệu đầu vào là ",data)
+        console.log("Dữ liệu đầu vào là ", data)
 
         try {
             const token = Cookies.get('token'); // hoặc nơi bạn lưu token
-            console.log("Token trong file nafy la ",token)
+            console.log("Token trong file nafy la ", token)
             const response = await instance.put('/api/User/UpdateUser', data, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -45,7 +45,7 @@ const Profile = () =>{
             setMessageType("error");
         }
     };
-    return(
+    return (
         <div>
             <div className={"w-full mr-auto  px-4 md:px-2  mt-8 "}>
                 <div className="mt-10 flex flex-col md:flex-row gap-4 items-center md:items-start">
@@ -105,9 +105,8 @@ const Profile = () =>{
                                 </Button>
                             </div>
                             {showMessage && (
-                                <p className={`mt-2 text-sm font-medium ${
-                                    messageType === "success" ? "text-green-600" : "text-red-600"
-                                }`}>
+                                <p className={`mt-2 text-sm font-medium ${messageType === "success" ? "text-green-600" : "text-red-600"
+                                    }`}>
                                     {showMessage}
                                 </p>
                             )}
