@@ -2,15 +2,17 @@ import { Input, Button } from "@headlessui/react";
 import clsx from 'clsx'
 import instance from "../../services/axios.js";
 import Cookies from "js-cookie";
-
+import { useState } from "react";
+const fields = [
+    { label: "Họ tên", name: "Name", type: "text", placeholder: "Nhập họ tên" },
+    { label: "Email", name: "email", type: "email", placeholder: "Nhập email" },
+    { label: "Số điện thoại", name: "PhoneNumber", type: "tel", placeholder: "Nhập số điện thoại" },
+    { label: "Giới tính", name: "gender" },
+    { label: "Ngày sinh", name: "dob", type: "date", placeholder: "" }
+]
 const Profile = () => {
-    const fields = [
-        { label: "Họ tên", name: "Name", type: "text", placeholder: "Nhập họ tên" },
-        { label: "Email", name: "email", type: "email", placeholder: "Nhập email" },
-        { label: "Số điện thoại", name: "PhoneNumber", type: "tel", placeholder: "Nhập số điện thoại" },
-        { label: "Giới tính", name: "gender" },
-        { label: "Ngày sinh", name: "dob", type: "date", placeholder: "" }
-    ]
+    const [showMessage, setShowMessage] = useState("");
+    const [messageType, setMessageType] = useState("success");
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -31,8 +33,6 @@ const Profile = () => {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
-
-
             });
 
             console.log('Cập nhật thành công:', response.data);
@@ -104,6 +104,12 @@ const Profile = () => {
                                     Hoàn Thành
                                 </Button>
                             </div>
+                            {showMessage && (
+                                <p className={`mt-2 text-sm font-medium ${messageType === "success" ? "text-green-600" : "text-red-600"
+                                    }`}>
+                                    {showMessage}
+                                </p>
+                            )}
                         </form>
                     </div>
                 </div>
