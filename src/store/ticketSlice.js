@@ -1,26 +1,20 @@
-// src/store/ticketSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
-    list: []
-};
-
-const ticketSlice = createSlice({
+const ticketsSlice = createSlice({
     name: 'tickets',
-    initialState,
+    initialState: {
+        list: [],
+    },
     reducers: {
         setTickets: (state, action) => {
             state.list = action.payload;
         },
-        updateTicketStatus: (state, action) => {
-            const { id, status } = action.payload;
-            const ticket = state.list.find(ticket => ticket.id === id);
-            if (ticket) {
-                ticket.status = status;
-            }
-        }
-    }
+        cancelTicket: (state, action) => {
+            state.list = state.list.map(ticket =>
+                ticket.id === action.payload ? { ...ticket, status: "Đã hủy" } : ticket
+            );
+        },
+    },
 });
 
-export const { setTickets, updateTicketStatus } = ticketSlice.actions;
-export default ticketSlice;
+export const { setTickets, cancelTicket } = ticketsSlice.actions;

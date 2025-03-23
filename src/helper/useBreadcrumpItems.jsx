@@ -2,6 +2,7 @@ import { useLocation } from "react-router-dom";
 
 const BREADCRUMB_MAP = {
     ticket: {
+        _label: "Vé",
         purchased: "Vé đã mua",
         sold: "Vé đã bán"
     },
@@ -9,9 +10,10 @@ const BREADCRUMB_MAP = {
     sellTicket: "Bán vé",
     myevent: "Sự kiện của tôi"
 };
-
+//Ham lay tu map (_label se thay the ticket khi ghep vao ) _label =Ve -> /ticket/purchased thanh 've>ve da mua
 const getLabelFromMap = (segments) => {
     let current = BREADCRUMB_MAP;
+    let label = "";
 
     for (let i = 0; i < segments.length; i++) {
         const segment = segments[i];
@@ -21,16 +23,30 @@ const getLabelFromMap = (segments) => {
         } else if (!current[segment]) {
             return segment;
         } else {
-            current = current[segment];
+            if (typeof current[segment] === "object") {
+                if (current[segment]._label) {
+                    label = current[segment]._label;
+                } else {
+                    label = segment;
+                }
+                current = current[segment];
+            } else if (typeof current[segment] === "string") {
+                label = current[segment];
+                current = current[segment];
+            } else {
+                label = segment;
+            }
         }
     }
 
-    if (typeof current === "string") {
-        return current;
+    if (typeof label === "string") {
+        return label;
     } else {
         return segments[segments.length - 1];
     }
 };
+
+
 export const useBreadcrumbItems = () => {
     const location = useLocation();
     const pathnames = location.pathname.split("/").filter(Boolean);

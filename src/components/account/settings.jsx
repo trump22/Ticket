@@ -1,6 +1,8 @@
 import {Link} from "react-router-dom";
 import Cookies from "js-cookie";
 import {useBreadcrumbItems} from "../../helper/useBreadcrumpItems.jsx";
+import {useEffect, useState} from "react";
+import {useSelector} from "react-redux";
     //Breadcumb map để biết được hiển thị giưữa các Link
         // const BREADCRUMB_MAP = {
         //     ticket: {
@@ -37,6 +39,13 @@ const items = [
 //File này để tạo đường dẫn Trang chur>Thông tin tài khoản
 const Settings = () =>{
     const breadcrumbItems = useBreadcrumbItems();
+    const username = useSelector((state) => state.auth.username);
+
+    const displayName = username && username.trim() !== "" ? username : "Tài khoản của bạn";
+
+
+
+
     return(
         <div>
             <div className="text-sm text-muted-foreground px-4 pb-4 ">
@@ -69,7 +78,7 @@ const Settings = () =>{
                     {/* Nội dung bên phải ảnh */}
                     <div className="flex flex-col">
                         <p className="text-xs text-muted-foreground">Tài khoản cá nhân</p>
-                        <p className="text-lg font-semibold text-white">{Cookies.get('username')}</p>
+                        <p className="text-lg font-semibold text-white">{displayName}</p>
                     </div>
                 </div>
                 {items.map((item, index) => (
