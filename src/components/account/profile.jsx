@@ -1,16 +1,17 @@
 import { Input, Button } from "@headlessui/react";
 import clsx from 'clsx'
-import instance from "../services/axios.js";
+import instance from "../../services/axios.js";
 import Cookies from "js-cookie";
 
-const PersonalProfile = () => {
+
+const Profile = () => {
     const fields = [
         { label: "Họ tên", name: "Name", type: "text", placeholder: "Nhập họ tên" },
         { label: "Email", name: "email", type: "email", placeholder: "Nhập email" },
         { label: "Số điện thoại", name: "PhoneNumber", type: "tel", placeholder: "Nhập số điện thoại" },
         { label: "Giới tính", name: "gender" },
         { label: "Ngày sinh", name: "dob", type: "date", placeholder: "" }
-    ]
+    ];
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -43,13 +44,6 @@ const PersonalProfile = () => {
     return (
         <div>
             <div className={"w-full mr-auto  px-4 md:px-2  mt-8 "}>
-                <h1 className={"font-bold " +
-                    "text-white pb-1 border-b-2" +
-                    " border-b-white " +
-                    "mb-2 text-2xl"}>
-                    Thông tin tài khoản
-                </h1>
-
                 <div className="mt-10 flex flex-col md:flex-row gap-4 items-center md:items-start">
                     {/* Cột trái */}
                     <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 p-4 flex justify-center items-center">
@@ -115,4 +109,4 @@ const PersonalProfile = () => {
         </div>
     )
 }
-export default PersonalProfile;
+export default Profile;

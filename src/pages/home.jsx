@@ -1,8 +1,8 @@
 // src/pages/home.jsx
 
-import EventSlider from "../components/EventSlider";
-import SliderBanner from "../components/SliderBanner";
-import TrendingEvents from "../components/TrendingEvents";
+import EventSlider from "../components/home/EventSlider.jsx";
+import SliderBanner from "../components/home/SliderBanner.jsx";
+import TrendingEvents from "../components/home/TrendingEvents.jsx";
 
 
 const Home = () => {

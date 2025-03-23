@@ -1,8 +1,8 @@
-import PersonalProfile from "../components/PersonalProfile.jsx";
+import Profile from "../components/account/profile.jsx";
 
 const profilePage = () => (
     <div>
-        <PersonalProfile/>
+        <Profile/>
     </div>
 )
 export default profilePage;

@@ -1,8 +1,8 @@
-import searchIcon from "../assets/images/search.png";
+import searchIcon from "../../assets/images/search.png";
 import { useEffect, useMemo, useRef, useState } from "react";
-import instance from "../services/axios.js";
+import instance from "../../services/axios.js";
 
-const SearchBar = () => {
+const Searchbar = () => {
     const [searchResult, setSearchResult] = useState("");
     const [dataSearch, setDataSearch] = useState([]);
     const [isFocused, setIsFocused] = useState(false);
@@ -92,4 +92,4 @@ const SearchBar = () => {
     );
 };
 
-export default SearchBar;
+export default Searchbar;

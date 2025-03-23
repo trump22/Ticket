@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
-import searchIcon from '../assets/images/search.png';
-import discountIcon from '../assets/images/discountw.png';
-import cartIcon from '../assets/images/cartw.png';
-import vnFlag from '../assets/images/vnflag.png';
+import searchIcon from '../../assets/images/search.png';
+import discountIcon from '../../assets/images/discountw.png';
+import cartIcon from '../../assets/images/cartw.png';
+import vnFlag from '../../assets/images/vnflag.png';
 import axios from 'axios';
 
 import { useDispatch } from 'react-redux';
-import { setToken } from '../store/tokenSlice';
+import { setToken } from '../../store/tokenSlice.js';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import SearchBar from "./SearchBar.jsx";
-import instance from "../services/axios.js";
+import Searchbar from "./searchbar.jsx";
+import instance from "../../services/axios.js";
 
-const NavBar = () => {
+const Navbar = () => {
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [showRegisterModal, setShowRegisterModal] = useState(false);
     const [name, setName] = useState("");
@@ -180,7 +180,7 @@ const NavBar = () => {
                 <div className="text-2xl font-['Inter'] font-normal mr-8">TICKET</div>
 
                 {/* Search Bar */}
-                <SearchBar/>
+                <Searchbar/>
 
                 {/* Các nút hành động */}
                 <div className="flex items-center ml-8 space-x-6">
@@ -434,4 +434,4 @@ const NavBar = () => {
     );
 };
 
-export default NavBar;
+export default Navbar;
