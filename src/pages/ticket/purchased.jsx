@@ -1,7 +1,9 @@
+import BuyList from "../../components/ticket/buyList.jsx";
+
 const PurchasedTicket = () =>{
     return (
         <div>
-            Nơi hiển thị vé đã mua
+            <div><BuyList/></div>
         </div>
     )
 }
