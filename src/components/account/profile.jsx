@@ -3,7 +3,6 @@ import clsx from 'clsx'
 import instance from "../../services/axios.js";
 import Cookies from "js-cookie";
 
-
 const Profile = () => {
     const fields = [
         { label: "Họ tên", name: "Name", type: "text", placeholder: "Nhập họ tên" },
@@ -11,7 +10,7 @@ const Profile = () => {
         { label: "Số điện thoại", name: "PhoneNumber", type: "tel", placeholder: "Nhập số điện thoại" },
         { label: "Giới tính", name: "gender" },
         { label: "Ngày sinh", name: "dob", type: "date", placeholder: "" }
-    ];
+    ]
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -36,9 +35,12 @@ const Profile = () => {
 
             console.log('Cập nhật thành công:', response.data);
             // toast.success('Cập nhật thành công!');
+            setShowMessage("Cập nhật thành công")
         } catch (error) {
             console.error('Cập nhật thất bại:', error);
             // toast.error('Có lỗi xảy ra khi cập nhật.');
+            setShowMessage("Cập nhật không thành công");
+            setMessageType("error");
         }
     };
     return (
