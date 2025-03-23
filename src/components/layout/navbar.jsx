@@ -193,7 +193,6 @@ const Navbar = () => {
         }
     };
 
-    // ========================= LOGOUT (tuỳ chọn) =========================
     const handleLogout = () => {
         // Xoá cookie
         Cookies.remove('token');
@@ -218,20 +217,17 @@ const Navbar = () => {
                     </button>
 
                     {/* Vé đã mua - ẩn khi màn hình quá rộng */}
-                    <div className="ml-8 hidden xl:flex items-center shrink-0">
-                        <img src={discountIcon} alt="Ticket" className="w-[33.42px] h-[33.42px]"/>
-                        <Link to="/ticket/list">
-                            <button className="text-white text-base font-normal font-['Inter'] whitespace-nowrap">
-                                Vé đã mua
-                            </button>
+                    <div className="flex items-center space-x-4">
+                        {/* Vé đã mua */}
+                        <Link to="/ticket/list" className="flex items-center space-x-1">
+                            <img src={discountIcon} alt="Ticket" className="w-6 h-6"/>
+                            <span className="hidden md:inline whitespace-nowrap">Vé đã mua</span>
                         </Link>
-                    </div>
 
-                    {/* Bán vé - ẩn khi màn hình quá rộng */}
-                    <div className="hidden xl:flex items-center shrink-0">
-                        <img src={cartIcon} alt="Sale" className="w-[33.42px] h-[33.42px]"/>
-                        <button className="text-white text-base font-normal font-['Inter'] whitespace-nowrap">
-                            Bán vé
+                        {/* Bán vé */}
+                        <button className="flex items-center space-x-1 text-sm text-white">
+                            <img src={cartIcon} alt="Sale" className="w-6 h-6"/>
+                            <span className="hidden md:inline whitespace-nowrap">Bán vé</span>
                         </button>
                     </div>
 
@@ -273,11 +269,21 @@ const Navbar = () => {
                 </div>
             </header>
 
-            <nav className="bg-black px-4 md:px-8 py-2 flex flex-wrap justify-start md:space-x-8 text-sm text-white">
-                <Link to="/" className="hover:underline">Trang chủ</Link>
-                <span className="hover:underline cursor-pointer">Sân khấu & Nghệ thuật</span>
-                <span className="hover:underline cursor-pointer">Thể thao</span>
-                <span className="hover:underline cursor-pointer">Khác</span>
+            <nav className="bg-black px-4 py-2 text-white text-sm">
+                <div className="hidden md:flex space-x-6">
+                    <Link to="/" className="hover:underline">Trang chủ</Link>
+                    <span className="hover:underline cursor-pointer">Sân khấu & Nghệ thuật</span>
+                    <span className="hover:underline cursor-pointer">Thể thao</span>
+                    <span className="hover:underline cursor-pointer">Khác</span>
+                </div>
+                <div className="md:hidden">
+                    <select className="bg-black text-white border border-white rounded px-2 py-1 w-full">
+                        <option>Trang chủ</option>
+                        <option>Sân khấu & Nghệ thuật</option>
+                        <option>Thể thao</option>
+                        <option>Khác</option>
+                    </select>
+                </div>
             </nav>
 
 
@@ -480,7 +486,7 @@ const Navbar = () => {
                     </div>
                 )
             }
-        </div >
+        </div>
     );
 };
 
