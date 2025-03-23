@@ -3,6 +3,9 @@ import clsx from 'clsx'
 import instance from "../../services/axios.js";
 import Cookies from "js-cookie";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import {setUsername} from "../../store/authSlice.js";
+
 const fields = [
     { label: "Họ tên", name: "Name", type: "text", placeholder: "Nhập họ tên" },
     { label: "Email", name: "email", type: "email", placeholder: "Nhập email" },
@@ -11,11 +14,12 @@ const fields = [
     { label: "Ngày sinh", name: "dob", type: "date", placeholder: "" }
 ]
 const Profile = () => {
+    const dispatch = useDispatch();
     const [showMessage, setShowMessage] = useState("");
+
     const [messageType, setMessageType] = useState("success");
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         const form = new FormData(e.target);
         const data = Object.fromEntries(form.entries());
         if (data.gender === "true") {
@@ -36,6 +40,11 @@ const Profile = () => {
             });
 
             console.log('Cập nhật thành công:', response.data);
+            if (data.Name) {
+                Cookies.set("username", data.Name); // cập nhật Cookies
+                dispatch(setUsername(data.Name)); // cập nhật Redux
+            }
+
             // toast.success('Cập nhật thành công!');
             setShowMessage("Cập nhật thành công")
         } catch (error) {

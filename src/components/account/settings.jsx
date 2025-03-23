@@ -1,7 +1,5 @@
 import {Link} from "react-router-dom";
-import Cookies from "js-cookie";
 import {useBreadcrumbItems} from "../../helper/useBreadcrumpItems.jsx";
-import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
     //Breadcumb map để biết được hiển thị giưữa các Link
         // const BREADCRUMB_MAP = {
@@ -40,7 +38,7 @@ const items = [
 const Settings = () =>{
     const breadcrumbItems = useBreadcrumbItems();
     const username = useSelector((state) => state.auth.username);
-
+    console.log("Username: " + username);
     const displayName = username && username.trim() !== "" ? username : "Tài khoản của bạn";
 
 
@@ -102,4 +100,4 @@ const Settings = () =>{
         </div>
     )
 }
-            export default Settings
+export default Settings
