@@ -43,13 +43,6 @@ const fields =[
     return(
         <div>
             <div className={"w-full mr-auto  px-4 md:px-2  mt-8 "}>
-                <h1 className={"font-bold " +
-                    "text-white pb-1 border-b-2" +
-                    " border-b-white " +
-                    "mb-2 text-2xl"}>
-                    Thông tin tài khoản
-                </h1>
-
                 <div className="mt-10 flex flex-col md:flex-row gap-4 items-center md:items-start">
                     {/* Cột trái */}
                     <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/5 p-4 flex justify-center items-center">
