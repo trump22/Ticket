@@ -205,133 +205,81 @@ const Navbar = () => {
     return (
         <div>
             {/* HEADER */}
-            <header className="bg-[#ca9bf6] h-20 flex items-center px-8">
-                {/* Logo + Link trang chủ */}
-                <div>
-                    <Link to="/" className="text-3xl font-['Inter'] font-normal mr-8 ml-8">
-                        ticketbox
-                    </Link>
+            <header className="bg-[#ca9bf6] h-20 px-4 md:px-8 flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                    <Link to="/" className="text-2xl font-semibold">ticketbox</Link>
+                    <Searchbar/>
                 </div>
 
-                {/* Search Bar */}
-                <Searchbar />
-
-                {/* Các nút hành động */}
-                <div className="flex items-center ml-8 space-x-6">
-                    <button className="ml-8 border border-white rounded-3xl px-4 py-2 hover:bg-white/20">
+                <div className="flex items-center ml-8 space-x-6 overflow-hidden">
+                    <button
+                        className="ml-8 border border-white rounded-3xl px-4 py-2 hover:bg-white/20 whitespace-nowrap">
                         Tạo sự kiện
                     </button>
 
-                    <div className="ml-8 flex items-center">
-                        <img
-                            src={discountIcon}
-                            alt="Ticket"
-                            className="w-[33.42px] h-[33.42px]"
-                        />
+                    {/* Vé đã mua - ẩn khi màn hình quá rộng */}
+                    <div className="ml-8 hidden xl:flex items-center shrink-0">
+                        <img src={discountIcon} alt="Ticket" className="w-[33.42px] h-[33.42px]"/>
                         <Link to="/ticket/list">
-                            <button className="text-white text-base font-normal font-['Inter']">
+                            <button className="text-white text-base font-normal font-['Inter'] whitespace-nowrap">
                                 Vé đã mua
                             </button>
                         </Link>
                     </div>
 
-                    <div className="flex items-center">
-                        <img
-                            src={cartIcon}
-                            alt="Sale"
-                            className="w-[33.42px] h-[33.42px]"
-                        />
-
-                        <button className="text-white text-base font-normal font-['Inter']">
+                    {/* Bán vé - ẩn khi màn hình quá rộng */}
+                    <div className="hidden xl:flex items-center shrink-0">
+                        <img src={cartIcon} alt="Sale" className="w-[33.42px] h-[33.42px]"/>
+                        <button className="text-white text-base font-normal font-['Inter'] whitespace-nowrap">
                             Bán vé
                         </button>
-
-                        {/* PHẦN XỬ LÝ HIỂN THỊ: nếu displayName === "Đăng nhập" => nút login, register, ngược lại => dropdown */}
-                        <div className="ml-[30px]">
-                            {displayName === "Đăng nhập" ? (
-                                <div className="flex items-center">
-                                    <button
-                                        onClick={handleLoginClick}
-                                        className="w-[110px] h-[33px] flex items-center justify-center text-white text-base font-normal font-['Inter']"
-                                    >
-                                        Đăng nhập
-                                    </button>
-                                    <div className="h-6 w-px bg-white mx-1" />
-                                    <button
-                                        onClick={handleRegisterClick}
-                                        className="w-[88px] h-[33px] flex items-center justify-center text-white text-base font-normal font-['Inter']"
-                                    >
-                                        Đăng kí
-                                    </button>
-                                </div>
-                            ) : (
-                                // Nếu đã đăng nhập -> dropdown on hover với tên user
-                                <div className="dropdown dropdown-hover">
-                                    {/* Nút hiển thị tên user */}
-                                    <div
-                                        tabIndex={0}
-                                        className="flex items-center text-white cursor-pointer"
-                                    >
-                                        {displayName}
-                                        <svg
-
-                                            width="10"
-                                            height="8"
-                                            viewBox="0 0 10 8"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            className="mt-1 ml-2"
-                                        >
-                                            <path d="M5 8L0.67 0.5L9.33 0.5L5 8Z" fill="white" />
-                                        </svg>
-
-                                    </div>
-
-                                    {/* Dropdown menu */}
-                                    <ul
-                                        tabIndex={0}
-                                        className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
-                                    >
-                                        <li>
-                                            <Link to="/profile">Tài khoản của tôi</Link>
-                                        </li>
-                                        <li>
-                                            <button onClick={handleLogout}>Đăng xuất</button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            )}
-                        </div>
                     </div>
 
-                    {/* Account Icon */}
-                    <div className="ml-6 flex items-center space-x-2 cursor-pointer">
-                        <img src={vnFlag} alt="VN Flag" className="w-8 h-8" />
-                        <svg
-                            width="10"
-                            height="8"
-                            viewBox="0 0 10 8"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="mt-1"
-                        >
-                            <path d="M5 8L0.67 0.5L9.33 0.5L5 8Z" fill="white" />
+
+                    {/* Tên user / Đăng nhập */}
+                    <div className="ml-2">
+                        {displayName === "Đăng nhập" ? (
+                            <div className="flex space-x-2 text-sm">
+                                <button onClick={handleLoginClick}>Đăng nhập</button>
+                                <span className="text-white">|</span>
+                                <button onClick={handleRegisterClick}>Đăng ký</button>
+                            </div>
+                        ) : (
+                            <div className="dropdown dropdown-hover text-sm">
+                                <div tabIndex={0} className="flex items-center text-white cursor-pointer">
+                                    {displayName}
+                                    <svg width="10" height="8" className="ml-1 mt-1" viewBox="0 0 10 8" fill="none">
+                                        <path d="M5 8L0.67 0.5L9.33 0.5L5 8Z" fill="white"/>
+                                    </svg>
+                                </div>
+                                <ul tabIndex={0}
+                                    className="dropdown-content menu bg-base-100 rounded-box w-48 shadow z-10">
+                                    <li><Link to="/profile">Tài khoản của tôi</Link></li>
+                                    <li>
+                                        <button onClick={handleLogout}>Đăng xuất</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Quốc kỳ */}
+                    <div className="ml-2 flex items-center space-x-1">
+                        <img src={vnFlag} alt="VN Flag" className="w-6 h-6"/>
+                        <svg width="10" height="8" className="mt-1" viewBox="0 0 10 8" fill="none">
+                            <path d="M5 8L0.67 0.5L9.33 0.5L5 8Z" fill="white"/>
                         </svg>
                     </div>
                 </div>
             </header>
 
-            {/* NAVIGATION TABS */}
-            <nav className="bg-black py-2 px-8 flex space-x-8">
-                <div className="hover:underline cursor-pointer">
-                    <Link to="/">Trang chủ</Link>
-                </div>
-                <div className="hover:underline cursor-pointer">
-                    Sân khấu &amp; Nghệ thuật
-                </div>
-                <div className="hover:underline cursor-pointer">Thể thao</div>
-                <div className="hover:underline cursor-pointer">Khác</div>
+            <nav className="bg-black px-4 md:px-8 py-2 flex flex-wrap justify-start md:space-x-8 text-sm text-white">
+                <Link to="/" className="hover:underline">Trang chủ</Link>
+                <span className="hover:underline cursor-pointer">Sân khấu & Nghệ thuật</span>
+                <span className="hover:underline cursor-pointer">Thể thao</span>
+                <span className="hover:underline cursor-pointer">Khác</span>
             </nav>
+
 
             {/* Modal đăng nhập */}
             {showLoginModal && (
