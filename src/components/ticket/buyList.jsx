@@ -2,9 +2,9 @@
 import { useEffect, useState } from 'react';
 // import { useDispatch, useSelector } from 'react-redux';
 // import { setTickets, cancelTicket } from '@/redux/ticketsSlice';
-
 import Cookies from 'js-cookie';
 import instance from "../../services/axios.js";
+import {formatDateTime} from "../../helper/convertDate.js";
 
 const BuyList = () => {
     const [tickets, setTickets] = useState([]);
@@ -117,8 +117,9 @@ const BuyList = () => {
                         <th className="border border-white">ID Vé</th>
                         <th className="border border-white">Giá</th>
                         <th className="border border-white">Trạng thái</th>
-                        <th className="border border-white">User ID</th>
+                        <th className="border border-white">Tên người dùng</th>
                         <th className="border border-white">Tên sự kiện</th>
+                        <th className="border border-white">Thời gian tạo</th>
                         <th className="border border-white">Hành động</th>
                     </tr>
                     </thead>
@@ -137,6 +138,7 @@ const BuyList = () => {
                                 <td className="border border-white">{ticket.status}</td>
                                 <td className="border border-white">{Cookies.get('username')}</td>
                                 <td className="border border-white">{eventMapping[ticket.eventId] || 'Không xác định'}</td>
+                                <th className="border border-white whitespace-nowrap">{formatDateTime(ticket.createAt)}</th>
                                 <td className="border border-white">
                                     {ticket.status !== "Đã hủy" && (
                                         <button
@@ -176,17 +178,21 @@ const BuyList = () => {
                                 <span className="ml-2 ">{ticket.price} Đ</span>
                             </p>
                             <p>
-                            <span className="border-b-2 font-semibold">Trạng thái:</span>
+                                <span className="border-b-2 font-semibold">Trạng thái:</span>
                                 <span className="ml-2 ">{ticket.status}</span>
 
                             </p>
                             <p>
-                                <span className="border-b-2 font-semibold">User name:</span>
-                                <span className="ml-2 ">{Cookies.get('username')} Đ</span>
-                              </p>
+                                <span className="border-b-2 font-semibold">Tên người dùng:</span>
+                                <span className="ml-2 ">{Cookies.get('username')}</span>
+                            </p>
                             <p>
                                 <span className="border-b-2 font-semibold">Tên sự kiện:</span>
                                 <span className={"ml-2"}> {eventMapping[ticket.eventId] || 'Không xác định'}</span>
+                            </p>
+                            <p>
+                                <span className="border-b-2 font-semibold">Thời gian tạo :</span>
+                                <span className={"ml-2 whitespace-nowrap"}> {formatDateTime(ticket.createAt)}</span>
                             </p>
                             {ticket.status !== "Đã hủy" && (
                                 <button
