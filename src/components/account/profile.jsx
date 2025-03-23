@@ -2,8 +2,7 @@ import {Input,Button} from "@headlessui/react";
 import clsx from 'clsx'
 import instance from "../../services/axios.js";
 import Cookies from "js-cookie";
-
-const Profile = () =>{
+import {useState} from "react";
 const fields =[
     { label: "Họ tên", name: "Name", type: "text", placeholder: "Nhập họ tên" },
     { label: "Email", name: "email", type: "email", placeholder: "Nhập email" },
@@ -11,6 +10,9 @@ const fields =[
     { label: "Giới tính", name: "gender" },
     { label: "Ngày sinh", name: "dob", type: "date", placeholder: "" }
 ]
+const Profile = () =>{
+    const[showMessage,setShowMessage]=useState("");
+    const [messageType, setMessageType] = useState("success");
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -35,9 +37,12 @@ const fields =[
 
             console.log('Cập nhật thành công:', response.data);
             // toast.success('Cập nhật thành công!');
+            setShowMessage("Cập nhật thành công")
         } catch (error) {
             console.error('Cập nhật thất bại:', error);
             // toast.error('Có lỗi xảy ra khi cập nhật.');
+            setShowMessage("Cập nhật không thành công");
+            setMessageType("error");
         }
     };
     return(
@@ -99,7 +104,14 @@ const fields =[
                                     Hoàn Thành
                                 </Button>
                             </div>
-                            </form>
+                            {showMessage && (
+                                <p className={`mt-2 text-sm font-medium ${
+                                    messageType === "success" ? "text-green-600" : "text-red-600"
+                                }`}>
+                                    {showMessage}
+                                </p>
+                            )}
+                        </form>
                     </div>
                 </div>
 
