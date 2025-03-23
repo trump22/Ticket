@@ -1,16 +1,22 @@
-import React from "react";
+import React, {useEffect} from "react";
 
 const Settings = React.lazy(() => import('../account/settings.jsx'),)
 import {Outlet, useLocation} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {useSelector} from "react-redux";
+import Cookies from "js-cookie";
+import {setUsername,clearUsername} from "../../store/authSlice.js";
 const accountTitles = [
     { path: "/profile", label: "Thông tin tài khoản" },
     { path: "/ticket/purchased", label: "Vé đã đặt" },
 ];
 
 const AccountLayout = () => {
+    const username = useSelector(state => state.auth.username);
+
     const location = useLocation();
     const currentPath = location.pathname;
-
+    const dispatch = useDispatch();
     let title = "Thông tin tài khoản"; // default
     //startsWith return true or false
     for (const item of accountTitles) {
@@ -19,6 +25,26 @@ const AccountLayout = () => {
             break;
         }
     }
+
+
+    useEffect(() => {
+        const checkUsername = () => {
+            const usernameFromCookie = Cookies.get("username");
+            if (usernameFromCookie) {
+                dispatch(setUsername(usernameFromCookie));
+            } else {
+                dispatch(clearUsername());
+            }
+        };
+
+        // Kiểm tra lần đầu
+        checkUsername();
+
+        // Theo dõi thay đổi cookies mỗi vài giây (nếu bạn không có hệ thống theo dõi cookies)
+        const interval = setInterval(checkUsername, 2000);
+
+        return () => clearInterval(interval);
+    }, [dispatch]);
 
     return (
         <div>
