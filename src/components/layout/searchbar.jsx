@@ -42,7 +42,7 @@ const Searchbar = () => {
     }, [searchResult, dataSearch]);
 
     return (
-        <div className="w-full  flex justify-center">
+        <div className="w-1x1  flex justify-center">
             <div ref={wrapperRef} className="relative w-full max-w-[376px]">
                 {/* Search Box */}
                 <div className="h-[47px] bg-white rounded-xl overflow-hidden w-full shadow-md">

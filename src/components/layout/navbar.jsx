@@ -3,7 +3,7 @@ import discountIcon from '../../assets/images/discountw.png';
 import cartIcon from '../../assets/images/cartw.png';
 import vnFlag from '../../assets/images/vnflag.png';
 import axios from 'axios';
-
+import gmail from '../../assets/svgs/Gmail 1.png';
 import { useDispatch } from 'react-redux';
 import { setToken } from '../../store/tokenSlice.js';
 import { Link } from 'react-router-dom';
@@ -208,7 +208,7 @@ const Navbar = () => {
             <header className="bg-[#ca9bf6] h-20 flex items-center px-8">
                 {/* Logo + Link trang chủ */}
                 <div>
-                    <Link to="/" className="text-2xl font-['Inter'] font-normal mr-8">
+                    <Link to="/" className="text-3xl font-['Inter'] font-normal mr-8 ml-8">
                         ticketbox
                     </Link>
                 </div>
@@ -273,6 +273,18 @@ const Navbar = () => {
                                         className="flex items-center text-white cursor-pointer"
                                     >
                                         {displayName}
+                                        <svg
+
+                                            width="10"
+                                            height="8"
+                                            viewBox="0 0 10 8"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            className="mt-1 ml-2"
+                                        >
+                                            <path d="M5 8L0.67 0.5L9.33 0.5L5 8Z" fill="white" />
+                                        </svg>
+
                                     </div>
 
                                     {/* Dropdown menu */}
@@ -281,7 +293,7 @@ const Navbar = () => {
                                         className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
                                     >
                                         <li>
-                                            <Link to="/profile">Trang cá nhân</Link>
+                                            <Link to="/profile">Tài khoản của tôi</Link>
                                         </li>
                                         <li>
                                             <button onClick={handleLogout}>Đăng xuất</button>
@@ -335,32 +347,7 @@ const Navbar = () => {
                         <div className="max-w-md mx-auto p-6 space-y-6">
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center space-x-2">
-                                    <button className="p-2">
-                                        <svg
-                                            width="32"
-                                            height="32"
-                                            viewBox="0 0 23 23"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path
-                                                d="M16 8L8 16"
-                                                stroke="#828BA0"
-                                                strokeWidth="2"
-                                                strokeMiterlimit="10"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                            />
-                                            <path
-                                                d="M8 8L16 16"
-                                                stroke="#828BA0"
-                                                strokeWidth="2"
-                                                strokeMiterlimit="10"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                            />
-                                        </svg>
-                                    </button>
+
                                     <h2 className="text-xl font-semibold">Đăng nhập</h2>
                                 </div>
                             </div>
@@ -423,12 +410,17 @@ const Navbar = () => {
 
                             <div className="flex justify-center">
                                 {/* Nút Đăng nhập Google (demo) */}
-                                <iframe
-                                    src="https://accounts.google.com/gsi/button?type=icon&text=signin_with&shape=circle&size=large&theme=filled&class=g_id_signin&is_fedcm_supported=false&client_id=1087811486846-ukuold92cnmo9nd0u9apiv9bv4h6b0cl.apps.googleusercontent.com&iframe_id=gsi_134253_202900&cas=RiLtWu0XsRwceHeVnOKFHoGW2t%2BQb%2FnvC%2F6o2cIJLpM&hl=vi-VN"
-                                    className="w-16 h-11 border-0"
-                                    title="Nút Đăng nhập bằng Google"
-                                    allow="identity-credentials-get"
-                                ></iframe>
+                                <img
+                                    src={gmail}
+                                    alt="Google Logo"
+                                    title="Đăng nhập bằng Google"
+                                    className="w-10 h-10 rounded-full border border-gray-300 p-1 cursor-pointer hover:bg-gray-100"
+                                    onClick={() => {
+                                        // Xử lý sự kiện khi người dùng click vào logo Google
+                                        console.log('Nhấn đăng nhập Google');
+                                        // Ví dụ: gọi hàm handleGoogleLogin() hay mở link...
+                                    }}
+                                />
                             </div>
 
                             <div className="text-xs text-center text-gray-500">
@@ -455,89 +447,92 @@ const Navbar = () => {
                         </div>
                     </div>
                 </div>
-            )}
+            )
+            }
 
             {/* Modal đăng ký */}
-            {showRegisterModal && (
-                <div className="modal modal-open bg-black/50 backdrop-blur-sm">
-                    <div className="modal-box relative" onClick={(e) => e.stopPropagation()}>
-                        <button
-                            className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-                            onClick={() => setShowRegisterModal(false)}
-                        >
-                            ✕
-                        </button>
-                        <form onSubmit={handleSubmit} className="space-y-3">
-                            <input
-                                type="text"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                placeholder="Nhập tên"
-                                className="w-full border p-2 rounded-md"
-                            />
-                            <input
-                                type="text"
-                                value={phoneNumber}
-                                onChange={(e) => setPhoneNumber(e.target.value)}
-                                placeholder="Nhập số điện thoại"
-                                className="w-full border p-2 rounded-md"
-                            />
-                            <input
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                placeholder="Nhập email"
-                                className="w-full border p-2 rounded-md"
-                            />
-                            <input
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                placeholder="Nhập mật khẩu"
-                                className="w-full border p-2 rounded-md"
-                            />
-                            <input
-                                type="password"
-                                value={rePassword}
-                                onChange={(e) => setRePassword(e.target.value)}
-                                placeholder="Nhập lại mật khẩu"
-                                className="w-full border p-2 rounded-md"
-                            />
-                            <input
-                                type="date"
-                                value={dob}
-                                onChange={(e) => setDob(e.target.value)}
-                                placeholder="YYYY-MM-DD"
-                                className="w-full border p-2 rounded-md"
-                            />
-                            <select
-                                value={gender.toString()}
-                                onChange={(e) => setGender(e.target.value === "true")}
-                                className="w-full border p-2 rounded-md"
-                            >
-                                <option value="true">Nam</option>
-                                <option value="false">Nữ</option>
-                            </select>
-                            <input
-                                type="text"
-                                value={imageUrl}
-                                onChange={(e) => setImageUrl(e.target.value)}
-                                placeholder="Nhập URL hình ảnh"
-                                className="w-full border p-2 rounded-md"
-                            />
+            {
+                showRegisterModal && (
+                    <div className="modal modal-open bg-black/50 backdrop-blur-sm">
+                        <div className="modal-box relative" onClick={(e) => e.stopPropagation()}>
                             <button
-                                type="submit"
-                                className="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600"
+                                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                                onClick={() => setShowRegisterModal(false)}
                             >
-                                Gửi Dữ Liệu
+                                ✕
                             </button>
-                        </form>
-                        {successMessage && <p className="text-green-500 mb-2">{successMessage}</p>}
-                        {error && <p className="text-red-500 mb-2">{error}</p>}
+                            <form onSubmit={handleSubmit} className="space-y-3">
+                                <input
+                                    type="text"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    placeholder="Nhập tên"
+                                    className="w-full border p-2 rounded-md"
+                                />
+                                <input
+                                    type="text"
+                                    value={phoneNumber}
+                                    onChange={(e) => setPhoneNumber(e.target.value)}
+                                    placeholder="Nhập số điện thoại"
+                                    className="w-full border p-2 rounded-md"
+                                />
+                                <input
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    placeholder="Nhập email"
+                                    className="w-full border p-2 rounded-md"
+                                />
+                                <input
+                                    type="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    placeholder="Nhập mật khẩu"
+                                    className="w-full border p-2 rounded-md"
+                                />
+                                <input
+                                    type="password"
+                                    value={rePassword}
+                                    onChange={(e) => setRePassword(e.target.value)}
+                                    placeholder="Nhập lại mật khẩu"
+                                    className="w-full border p-2 rounded-md"
+                                />
+                                <input
+                                    type="date"
+                                    value={dob}
+                                    onChange={(e) => setDob(e.target.value)}
+                                    placeholder="YYYY-MM-DD"
+                                    className="w-full border p-2 rounded-md"
+                                />
+                                <select
+                                    value={gender.toString()}
+                                    onChange={(e) => setGender(e.target.value === "true")}
+                                    className="w-full border p-2 rounded-md"
+                                >
+                                    <option value="true">Nam</option>
+                                    <option value="false">Nữ</option>
+                                </select>
+                                <input
+                                    type="text"
+                                    value={imageUrl}
+                                    onChange={(e) => setImageUrl(e.target.value)}
+                                    placeholder="Nhập URL hình ảnh"
+                                    className="w-full border p-2 rounded-md"
+                                />
+                                <button
+                                    type="submit"
+                                    className="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600"
+                                >
+                                    Gửi Dữ Liệu
+                                </button>
+                            </form>
+                            {successMessage && <p className="text-green-500 mb-2">{successMessage}</p>}
+                            {error && <p className="text-red-500 mb-2">{error}</p>}
+                        </div>
                     </div>
-                </div>
-            )}
-        </div>
+                )
+            }
+        </div >
     );
 };
 
