@@ -1,16 +1,16 @@
-import {Input,Button} from "@headlessui/react";
+import { Input, Button } from "@headlessui/react";
 import clsx from 'clsx'
 import instance from "../services/axios.js";
 import Cookies from "js-cookie";
 
-const PersonalProfile = () =>{
-const fields =[
-    { label: "Họ tên", name: "Name", type: "text", placeholder: "Nhập họ tên" },
-    { label: "Email", name: "email", type: "email", placeholder: "Nhập email" },
-    { label: "Số điện thoại", name: "PhoneNumber", type: "tel", placeholder: "Nhập số điện thoại" },
-    { label: "Giới tính", name: "gender" },
-    { label: "Ngày sinh", name: "dob", type: "date", placeholder: "" }
-]
+const PersonalProfile = () => {
+    const fields = [
+        { label: "Họ tên", name: "Name", type: "text", placeholder: "Nhập họ tên" },
+        { label: "Email", name: "email", type: "email", placeholder: "Nhập email" },
+        { label: "Số điện thoại", name: "PhoneNumber", type: "tel", placeholder: "Nhập số điện thoại" },
+        { label: "Giới tính", name: "gender" },
+        { label: "Ngày sinh", name: "dob", type: "date", placeholder: "" }
+    ]
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -21,11 +21,11 @@ const fields =[
         } else {
             data.gender = false;
         }
-        console.log("Dữ liệu đầu vào là ",data)
+        console.log("Dữ liệu đầu vào là ", data)
 
         try {
             const token = Cookies.get('token'); // hoặc nơi bạn lưu token
-            console.log("Token trong file nafy la ",token)
+            console.log("Token trong file nafy la ", token)
             const response = await instance.put('/api/User/UpdateUser', data, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -40,7 +40,7 @@ const fields =[
             // toast.error('Có lỗi xảy ra khi cập nhật.');
         }
     };
-    return(
+    return (
         <div>
             <div className={"w-full mr-auto  px-4 md:px-2  mt-8 "}>
                 <h1 className={"font-bold " +
@@ -106,7 +106,7 @@ const fields =[
                                     Hoàn Thành
                                 </Button>
                             </div>
-                            </form>
+                        </form>
                     </div>
                 </div>
 
