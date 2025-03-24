@@ -1,22 +1,28 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const ticketsSlice = createSlice({
-    name: 'tickets',
+    name: "tickets",
     initialState: {
-        list: [],
+        tickets: [],
+        eventsList: [],
     },
     reducers: {
         setTickets: (state, action) => {
-            state.list = action.payload;
+            state.tickets = action.payload;
+        },
+        setEventsList: (state, action) => {
+            state.eventsList = action.payload;
         },
         cancelTicket: (state, action) => {
-            state.list = state.list.map(ticket =>
-                ticket.id === action.payload ? { ...ticket, status: "Đã hủy" } : ticket
-            );
+            const ticketId = action.payload;
+            const index = state.tickets.findIndex((t) => t.id === ticketId);
+            if (index !== -1) {
+                state.tickets[index].status = "Đã huỷ";
+            }
         },
     },
 });
 
-export const { setTickets, cancelTicket } = ticketsSlice.actions;
+export const { setTickets, setEventsList, cancelTicket } = ticketsSlice.actions;
 export default ticketsSlice.reducer;
 export const sliceName = ticketsSlice.name;
