@@ -206,31 +206,34 @@ const Navbar = () => {
     return (
         <div>
             {/* HEADER */}
-            <header className="bg-[#ca9bf6] h-20 px-4 md:px-8 flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                    <Link to="/" className="text-2xl font-semibold">ticketbox</Link>
-                    <Searchbar />
+            <header className="bg-[#ca9bf6] h-20 flex items-center px-8">
+                {/* Logo + Link trang chủ */}
+                <div>
+                    <Link to="/" className="text-3xl font-['Inter'] font-normal mr-8 ml-9">
+                        ticketbox
+                    </Link>
                 </div>
 
-                <div className="flex items-center ml-8 space-x-6 overflow-hidden">
-                    <button
-                        className="ml-8 border border-white rounded-3xl px-4 py-2 hover:bg-white/20 whitespace-nowrap">
+                {/* Search Bar */}
+                <Searchbar />
+
+                {/* Các nút hành động */}
+                <div className="flex items-center ml-8 space-x-6">
+                    <button className="ml-8 border border-white rounded-3xl px-4 py-2 hover:bg-white/20">
                         Tạo sự kiện
                     </button>
 
-                    {/* Vé đã mua - ẩn khi màn hình quá rộng */}
-                    <div className="flex items-center space-x-4">
-                        {/* Vé đã mua */}
-                        <Link to="/ticket/list" className="flex items-center space-x-1">
-                            <img src={discountIcon} alt="Ticket" className="w-6 h-6" />
-                            <span className="hidden md:inline whitespace-nowrap">Vé đã mua</span>
+                    <div className="ml-8 flex items-center">
+                        <img
+                            src={discountIcon}
+                            alt="Ticket"
+                            className="w-[33.42px] h-[33.42px]"
+                        />
+                        <Link to="/ticket/list">
+                            <button className="text-white text-base font-normal font-['Inter']">
+                                Vé đã mua
+                            </button>
                         </Link>
-
-                        {/* Bán vé */}
-                        <button className="flex items-center space-x-1 text-sm text-white">
-                            <img src={cartIcon} alt="Sale" className="w-6 h-6" />
-                            <span className="hidden md:inline whitespace-nowrap">Bán vé</span>
-                        </button>
                     </div>
 
                     <div className="flex items-center">
@@ -288,13 +291,13 @@ const Navbar = () => {
                                     {/* Dropdown menu */}
                                     <ul
                                         tabIndex={0}
-                                        className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+                                        className="dropdown-content menu bg-base-100 rounded-box z-2 w-44 p-2 shadow-sm "
                                     >
                                         <li>
-                                            <Link to="/profile">Tài khoản của tôi</Link>
+                                            <Link to="/profile"> <img src={discountIcon} alt="ticket" className="w-6 h-6" /> Tài khoản của tôi </Link>
                                         </li>
                                         <li>
-                                            <button onClick={handleLogout}>Đăng xuất</button>
+                                            <button onClick={handleLogout}> <img src={logout} alt="logout" className="w-6 h-6" />Đăng xuất</button>
                                         </li>
                                     </ul>
                                 </div>
@@ -302,33 +305,34 @@ const Navbar = () => {
                         </div>
                     </div>
 
-                    {/* Quốc kỳ */}
-                    <div className="ml-2 flex items-center space-x-1">
-                        <img src={vnFlag} alt="VN Flag" className="w-6 h-6" />
-                        <svg width="10" height="8" className="mt-1" viewBox="0 0 10 8" fill="none">
+                    {/* Account Icon */}
+                    <div className="ml-6 flex items-center space-x-2 cursor-pointer">
+                        <img src={vnFlag} alt="VN Flag" className="w-8 h-8" />
+                        <svg
+                            width="10"
+                            height="8"
+                            viewBox="0 0 10 8"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="mt-1"
+                        >
                             <path d="M5 8L0.67 0.5L9.33 0.5L5 8Z" fill="white" />
                         </svg>
                     </div>
                 </div>
             </header>
 
-            <nav className="bg-black px-4 py-2 text-white text-sm">
-                <div className="hidden md:flex space-x-6">
-                    <Link to="/" className="hover:underline">Trang chủ</Link>
-                    <span className="hover:underline cursor-pointer">Sân khấu & Nghệ thuật</span>
-                    <span className="hover:underline cursor-pointer">Thể thao</span>
-                    <span className="hover:underline cursor-pointer">Khác</span>
+            {/* NAVIGATION TABS */}
+            <nav className="bg-black py-2 px-8 flex space-x-8">
+                <div className="hover:underline cursor-pointer">
+                    <Link to="/">Trang chủ</Link>
                 </div>
-                <div className="md:hidden">
-                    <select className="bg-black text-white border border-white rounded px-2 py-1 w-full">
-                        <option>Trang chủ</option>
-                        <option>Sân khấu & Nghệ thuật</option>
-                        <option>Thể thao</option>
-                        <option>Khác</option>
-                    </select>
+                <div className="hover:underline cursor-pointer">
+                    Sân khấu &amp; Nghệ thuật
                 </div>
+                <div className="hover:underline cursor-pointer">Thể thao</div>
+                <div className="hover:underline cursor-pointer">Khác</div>
             </nav>
-
 
             {/* Modal đăng nhập */}
             {showLoginModal && (
@@ -529,7 +533,7 @@ const Navbar = () => {
                     </div>
                 )
             }
-        </div>
+        </div >
     );
 };
 

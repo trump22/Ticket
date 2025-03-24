@@ -46,7 +46,7 @@ const Searchbar = () => {
             <div ref={wrapperRef} className="relative w-full max-w-[376px]">
                 {/* Search Box */}
                 <div className="h-[47px] bg-white rounded-xl overflow-hidden w-full shadow-md">
-                    <div className="flex items-center w-full h-full ">
+                    <div className="flex items-center w-full h-full  ">
                         <img src={searchIcon} alt="Search" className="w-6 h-6 md:w-8 md:h-8" />
                         <input
                             type="text"
