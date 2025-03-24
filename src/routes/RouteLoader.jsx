@@ -4,7 +4,8 @@ import Home from "../pages/home.jsx";
 import NotFound from "../pages/NotFound.jsx";
 import routes from "./index.jsx";
 import PrivateRoute from "./private.jsx";
-import EventByType from "../components/event/showByType.jsx"; // thêm dòng này
+import EventByType from "../components/search/showByType.jsx";
+import SearchPage from "../components/search/searchByName.jsx"; // thêm dòng này
 const Account = lazy(() => import("../components/layout/account.jsx"));
 
 const RouteLoader = () => {
@@ -31,6 +32,7 @@ const RouteLoader = () => {
                 ))}
                 <Route path="/eventtype/:type" element={<EventByType />} />
                 <Route path="/" element={<Home />} />
+                <Route path="/eventsearch" element={<SearchPage />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </Suspense>

@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { setToken } from '../../store/tokenSlice.js';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import Searchbar from "./searchbar.jsx";
+import SeachDropDown from "./seachDropDown.jsx";
 import instance from "../../services/axios.js";
 
 const Navbar = () => {
@@ -222,7 +222,7 @@ const Navbar = () => {
                 </div>
 
                 {/* Search Bar */}
-                <Searchbar/>
+                <SeachDropDown/>
 
                 {/* Các nút hành động */}
                 <div className="flex items-center ml-8 space-x-6">

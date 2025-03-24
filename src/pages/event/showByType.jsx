@@ -1,4 +1,4 @@
-import EventByType from "../../components/event/showByType.jsx";
+import EventByType from "../../components/search/showByType.jsx";
 
 const ShowByTypePage = () =>{
     return(

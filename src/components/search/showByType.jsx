@@ -1,7 +1,7 @@
 import React, { useMemo} from "react";
 import { useParams } from "react-router-dom";
 import {useSelector} from "react-redux";
-const EventGroup = React.lazy(() => import("./group.jsx"));
+const EventGroup = React.lazy(() => import("../event/group.jsx"));
 
 //Tao mot map de co the thay the duong ten link
 //VD : '/eventype/thể thao -> '/eventtype/thethao'
