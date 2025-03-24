@@ -201,7 +201,9 @@ const BuyList = () => {
                                 >
                                     Hủy vé
                                 </button>
+
                             )}
+                            <button className="btn btn-primary">Nút nè!</button>
                         </div>
                     ))
                 )}

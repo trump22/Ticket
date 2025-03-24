@@ -164,7 +164,7 @@ const Navbar = () => {
     // Gọi API lấy thông tin user
     const getUserById = async (tokenValue) => {
         try {
-            const response = await axios.get('http://13.239.139.152:8080/api/User/GetUserById', {
+            const response = await instance.get('/api/User/GetUserById', {
                 headers: {
                     'Authorization': `Bearer ${tokenValue}`,
                     'Accept': '*/*'
