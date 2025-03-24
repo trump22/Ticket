@@ -12,8 +12,6 @@ const accountTitles = [
 ];
 
 const AccountLayout = () => {
-    const username = useSelector(state => state.auth.username);
-
     const location = useLocation();
     const currentPath = location.pathname;
     const dispatch = useDispatch();

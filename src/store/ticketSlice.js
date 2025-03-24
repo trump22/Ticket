@@ -18,3 +18,5 @@ const ticketsSlice = createSlice({
 });
 
 export const { setTickets, cancelTicket } = ticketsSlice.actions;
+export default ticketsSlice.reducer;
+export const sliceName = ticketsSlice.name;
