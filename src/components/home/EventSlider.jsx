@@ -1,6 +1,7 @@
 // src/components/EventSlider.jsx
 import { useRef, useState, useEffect } from "react";
-import axios from "axios";
+
+import instance from "../../services/axios";
 
 const EventSlider = () => {
     const sliderRef = useRef(null);
@@ -9,8 +10,8 @@ const EventSlider = () => {
 
     // Lấy dữ liệu sự kiện từ API khi component mount
     useEffect(() => {
-        axios
-            .get("http://13.239.139.152:8080/api/Event/GetAllEvent")
+        instance
+            .get("/api/Event/GetAllEvent")
             .then((response) => {
                 setEvents(response.data);
                 setLoading(false);
