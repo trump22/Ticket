@@ -1,12 +1,17 @@
 // src/pages/list.jsx
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+
 // import { useDispatch, useSelector } from 'react-redux';
 // import { setTickets, cancelTicket } from '@/redux/ticketsSlice';
 import Cookies from 'js-cookie';
 import instance from "../../services/axios.js";
 import {formatDateTime} from "../../helper/convertDate.js";
+const NoTicketsComponent = React.lazy(() => import("../layout/NotFoundTicket.jsx"));
 
 const BuyList = () => {
+
+
     const [tickets, setTickets] = useState([]);
     const [eventsList, setEventsList] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -23,7 +28,12 @@ const BuyList = () => {
                 }
             })
             .then((response) => {
-                setTickets(response.data);
+                console.log("Response ticket data:", response.data);
+                if (Array.isArray(response.data)) {
+                    setTickets(response.data);
+                } else {
+                    setTickets([]);  // Không có vé mua
+                }
                 console.log(response.data);
             })
             .catch((err) => {
@@ -52,6 +62,10 @@ const BuyList = () => {
                 setLoading(false);
             });
     }, []);
+    if (tickets.length === 0) {
+        return <NoTicketsComponent />; // hoặc bất kỳ component nào bạn tạo
+    }
+
 
     // Tạo mapping từ eventId sang event name
     const eventMapping = eventsList.reduce((acc, event) => {
