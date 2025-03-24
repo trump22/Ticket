@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import discountIcon from '../../assets/images/discountw.png';
 import cartIcon from '../../assets/images/cartw.png';
 import vnFlag from '../../assets/images/vnflag.png';
+import logout from '../../assets/images/logout.png';
 import axios from 'axios';
 import gmail from '../../assets/svgs/Gmail 1.png';
 import { useDispatch } from 'react-redux';
@@ -290,13 +291,13 @@ const Navbar = () => {
                                     {/* Dropdown menu */}
                                     <ul
                                         tabIndex={0}
-                                        className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+                                        className="dropdown-content menu bg-base-100 rounded-box z-2 w-44 p-2 shadow-sm "
                                     >
                                         <li>
-                                            <Link to="/profile">Tài khoản của tôi</Link>
+                                            <Link to="/profile"> <img src={discountIcon} alt="ticket" className="w-6 h-6" /> Tài khoản của tôi </Link>
                                         </li>
                                         <li>
-                                            <button onClick={handleLogout}>Đăng xuất</button>
+                                            <button onClick={handleLogout}> <img src={logout} alt="logout" className="w-6 h-6" />Đăng xuất</button>
                                         </li>
                                     </ul>
                                 </div>
