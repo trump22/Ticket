@@ -82,7 +82,7 @@ const Navbar = () => {
 
         try {
             const response = await instance.post(
-                '/register',
+                '/api/Authen/Register',
                 data,
                 {
                     headers: {
@@ -119,7 +119,7 @@ const Navbar = () => {
         };
 
         try {
-            const response = await instance.post('/login', data, {
+            const response = await instance.post('/api/Authen/Login', data, {
                 headers: {
                     'Accept': '*/*',
                     'Content-Type': 'application/json'
