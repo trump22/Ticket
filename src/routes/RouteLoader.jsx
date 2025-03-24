@@ -1,12 +1,12 @@
-import { lazy, Suspense } from "react";
+import React, { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "../pages/home.jsx";
 import NotFound from "../pages/NotFound.jsx";
 import routes from "./index.jsx";
-import PrivateRoute from "./private.jsx";
-import EventByType from "../components/search/showByType.jsx";
-import SearchPage from "../components/search/searchByName.jsx"; // thêm dòng này
-const Account = lazy(() => import("../components/layout/account.jsx"));
+const PrivateRoute = React.lazy(() => import("./private.jsx"))
+const EventByType = React.lazy(() => import("../components/search/showByType.jsx"));
+const SearchPage = React.lazy(() => import("../components/search/searchByName.jsx"))
+const Account = React.lazy(() => import("../components/layout/account.jsx"));
 
 const RouteLoader = () => {
     const sidebarPaths = ["/profile", "/ticket/buy","/ticket/tab","/event/create"];

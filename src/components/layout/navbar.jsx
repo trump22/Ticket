@@ -221,7 +221,7 @@ const Navbar = () => {
                     </Link>
                 </div>
 
-                {/* Search Bar */}
+                {/* search Bar */}
                 <SeachDropDown/>
 
                 {/* Các nút hành động */}

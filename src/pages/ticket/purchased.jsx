@@ -1,4 +1,4 @@
-import BuyList from "../../components/ticket/buyList.jsx";
+const BuyList = React.lazy(() => import("../../components/ticket/buyList.jsx"));
 
 const PurchasedTicket = () =>{
     return (

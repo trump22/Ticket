@@ -42,7 +42,7 @@ const SeachDropDown = () => {
     return (
         <div className="w-1x1  flex justify-center">
             <div ref={wrapperRef} className="relative w-full max-w-[376px]">
-                {/* Search Box */}
+                {/* search Box */}
 
                 <form
                     onSubmit={handleSearchSubmit}
