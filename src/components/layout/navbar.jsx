@@ -209,7 +209,7 @@ const Navbar = () => {
             <header className="bg-[#ca9bf6] h-20 flex items-center px-8">
                 {/* Logo + Link trang chủ */}
                 <div>
-                    <Link to="/" className="text-3xl font-['Inter'] font-normal mr-8 ml-8">
+                    <Link to="/" className="text-3xl font-['Inter'] font-normal mr-8 ml-9">
                         ticketbox
                     </Link>
                 </div>
