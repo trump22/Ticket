@@ -1,7 +1,5 @@
 import React from "react";
-
-const CreateEvent = React.lazy(() => import("../../components/event/Create.jsx"));
-
+import CreateEvent from "../../components/event/create.jsx";
 const CreateEventPage = () => {
     return (
         <div>
