@@ -239,7 +239,7 @@ const Navbar = () => {
                             alt="Ticket"
                             className="w-[33.42px] h-[33.42px]"
                         />
-                        <Link to="/ticket/list">
+                        <Link to="/ticket/tab">
                             <button className="text-white text-base font-normal font-['Inter'] whitespace-nowrap">
                                 Vé đã mua
                             </button>
