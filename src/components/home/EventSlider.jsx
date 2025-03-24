@@ -3,13 +3,14 @@ import { useRef, useState, useEffect } from "react";
 
 import instance from "../../services/axios";
 import {useDispatch} from "react-redux";
-import {setAllEvents} from "../../store/eventSlice.jsx";
+import {setAllEvents} from "../../store/eventSlice.js";
 
 const EventSlider = () => {
     const sliderRef = useRef(null);
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true);
     const dispatch = useDispatch();
+
     // Lấy dữ liệu sự kiện từ API khi component mount
     useEffect(() => {
         instance
@@ -17,6 +18,7 @@ const EventSlider = () => {
             .then((response) => {
                 setEvents(response.data);
                 dispatch(setAllEvents(response.data));
+                console.log(response.data);
                 setLoading(false);
             })
             .catch((error) => {
