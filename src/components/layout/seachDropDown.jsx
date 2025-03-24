@@ -72,20 +72,26 @@ const SeachDropDown = () => {
             {/* Dropdown kết quả */}
             {isFocused && filteredResults.length > 0 && (
                 <ul className="absolute z-10 mt-2 w-full bg-white border border-gray-200 rounded-xl shadow-lg max-h-60 overflow-auto">
-                        {filteredResults.map((item, index) => (
-                            <li
-                                key={index}
-                                className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm text-black"
-                                onClick={() => {
-                                    setSearchResult(item.name);
-                                    setIsFocused(false);
-                                }}
-                            >
-                                {item.name}
-                            </li>
-                        ))}
-                    </ul>
-                )}
+                    {filteredResults.map((item, index) => (
+                        <li
+                            key={index}
+                            className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm text-black"
+                            onClick={() => {
+                                setSearchResult(item.name);
+                                setIsFocused(false);
+                            }}
+                        >
+                            <img
+                                src={item.imageUrl}
+                                alt={item.name}
+                                className="w-10 h-10 object-cover rounded-md"
+                            />
+                            <span>{item.name}</span>
+                        </li>
+                    ))}
+                </ul>
+
+            )}
             </div>
         </div>
     );
