@@ -81,7 +81,7 @@ const Navbar = () => {
 
         try {
             const response = await instance.post(
-                '',
+                '/register',
                 data,
                 {
                     headers: {
@@ -90,7 +90,7 @@ const Navbar = () => {
                     }
                 }
             );
-            console.log("Response:", response.data);
+            console.log("Response dang ki:", response.data);
 
             if (response.status === 200) {
                 setSuccessMessage("Đăng kí tài khoản thành công! Mời bạn đăng nhập.");

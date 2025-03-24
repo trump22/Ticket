@@ -1,0 +1,12 @@
+# ❗ Bảo toàn API proxy (không redirect về index.html)
+[[redirects]]
+from = "/api/*"
+to = "http://localhost:5000/:splat" # hoặc URL backend thật của bạn nếu đã deploy
+status = 200
+force = true
+
+# ❗ Redirect các route frontend về index.html
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
