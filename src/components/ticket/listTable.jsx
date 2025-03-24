@@ -26,8 +26,8 @@ const TicketListTable = ({ tickets, eventMapping, onCancel }) => {
                         <th className="border border-white">Trạng thái</th>
                         <th className="border border-white">Tên người dùng</th>
                         <th className="border border-white">Tên sự kiện</th>
-                        <th className="border border-white">Thời gian tạo</th>
-                        <th className={"border border-white"}>Thời gian hủy</th>
+                        <th className="border border-white">Thời gian mua vé</th>
+                        <th className={"border border-white"}>Thời gian hủy vé</th>
                         <th className="border border-white">Tương tác</th>
                     </tr>
                     </thead>
@@ -45,10 +45,11 @@ const TicketListTable = ({ tickets, eventMapping, onCancel }) => {
                                 {ticket.status !== "Đã huỷ" && (
                                     <button
                                         onClick={() => onCancel(ticket.id)}
-                                        className="mt-2 py-1 px-4 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+                                        className="mt-2 py-1 px-4 text-white rounded transition-colors bg-[#a24bf4] hover:bg-[#bb73f7]"
                                     >
                                         Hủy vé
                                     </button>
+
                                 )}
                             </td>
                         </tr>

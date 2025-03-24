@@ -181,8 +181,15 @@ const Navbar = () => {
     const handleLoginSuccess = async (tokenValue) => {
         try {
             const user = await getUserById(tokenValue);
+
             // Lưu username vào cookie
+            console.log("user la ",user);
+            Cookies.set('user', user, { expires: 7 });
+
             Cookies.set('username', user.name, { expires: 7 });
+            Cookies.set('phonenumber', user.phoneNumber, { expires: 7 });
+            Cookies.set('email', user.email, { expires: 7 });
+            Cookies.set('dob',user.dob,{expires:7});
 
             // Cập nhật tên hiển thị
             setDisplayName(user.name);
