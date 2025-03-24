@@ -6,8 +6,11 @@ const BREADCRUMB_MAP = {
         tab: "Vé đã mua",
         sold: "Vé đã bán"
     },
-    profile: "Thông tin tài khoản",
-    sellTicket: "Bán vé",
+    profile: "Chỉnh sửa thông tin tài khoản",
+    event: {
+        _label: "Sự kiện",
+        create:"Tạo sự kiện",
+    },
     myevent: "Sự kiện của tôi"
 };
 //Ham lay tu map (_label se thay the ticket khi ghep vao ) _label =Ve -> /ticket/purchased thanh 've>ve da mua

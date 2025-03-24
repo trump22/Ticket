@@ -26,8 +26,6 @@ const TicketListTable = ({ tickets, eventMapping, onCancel }) => {
                         <th className="border border-white">Trạng thái</th>
                         <th className="border border-white">Tên người dùng</th>
                         <th className="border border-white">Tên sự kiện</th>
-                        <th className="border border-white">Thời gian mua vé</th>
-                        <th className={"border border-white"}>Thời gian hủy vé</th>
                         <th className="border border-white">Tương tác</th>
                     </tr>
                     </thead>
@@ -39,8 +37,6 @@ const TicketListTable = ({ tickets, eventMapping, onCancel }) => {
                             <td className="border border-white">{ticket.status}</td>
                             <td className="border border-white">{Cookies.get('username')}</td>
                             <td className="border border-white">{eventMapping[ticket.eventId] || 'Không xác định'}</td>
-                            <td className="border border-white whitespace-nowrap">{formatDateTime(ticket.createAt)}</td>
-                            <td className="border border-white whitespace-nowrap">{formatDateTime(ticket.endTime) || "Chưa có thời gian hủy hoặc kết thúc"}</td>
                             <td className="border border-white">
                                 {ticket.status !== "Đã huỷ" && (
                                     <button
@@ -72,7 +68,6 @@ const TicketListTable = ({ tickets, eventMapping, onCancel }) => {
                         <p><strong>Trạng thái:</strong> {ticket.status}</p>
                         <p><strong>Người dùng:</strong> {Cookies.get('username')}</p>
                         <p><strong>Tên sự kiện:</strong> {eventMapping[ticket.eventId] || 'Không xác định'}</p>
-                        <p><strong>Thời gian tạo:</strong> {formatDateTime(ticket.createAt)}</p>
 
                         {ticket.status !== "Đã huỷ" && (
                             <button

@@ -8,7 +8,7 @@ import EventByType from "../components/event/showByType.jsx"; // thêm dòng nà
 const Account = lazy(() => import("../components/layout/account.jsx"));
 
 const RouteLoader = () => {
-    const sidebarPaths = ["/profile", "/ticket/buy","/ticket/tab"];
+    const sidebarPaths = ["/profile", "/ticket/buy","/ticket/tab","/event/create"];
 
     return (
         <Suspense fallback={<div>Loading...</div>}>

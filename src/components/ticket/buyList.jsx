@@ -30,6 +30,7 @@ const BuyList = () => {
             .then((response) => {
                 console.log("Response ticket data:", response.data);
                 if (Array.isArray(response.data)) {
+                    console.log("Ticket la ",response.data)
                     setTickets(response.data);
                     dispatch(setTickets(response.data));
                 } else {
@@ -137,7 +138,6 @@ const BuyList = () => {
                         <th className="border border-white">Trạng thái</th>
                         <th className="border border-white">Tên người dùng</th>
                         <th className="border border-white">Tên sự kiện</th>
-                        <th className="border border-white">Thời gian tạo</th>
                         <th className="border border-white">Hành động</th>
                     </tr>
                     </thead>
@@ -156,7 +156,6 @@ const BuyList = () => {
                                 <td className="border border-white">{ticket.status}</td>
                                 <td className="border border-white">{Cookies.get('username')}</td>
                                 <td className="border border-white">{eventMapping[ticket.eventId] || 'Không xác định'}</td>
-                                <th className="border border-white whitespace-nowrap">{formatDateTime(ticket.createAt)}</th>
                                 <td className="border border-white">
                                     {ticket.status !== "Đã hủy" && (
                                         <button
@@ -208,10 +207,7 @@ const BuyList = () => {
                                 <span className="border-b-2 font-semibold">Tên sự kiện:</span>
                                 <span className={"ml-2"}> {eventMapping[ticket.eventId] || 'Không xác định'}</span>
                             </p>
-                            <p>
-                                <span className="border-b-2 font-semibold">Thời gian tạo :</span>
-                                <span className={"ml-2 whitespace-nowrap"}> {formatDateTime(ticket.createAt)}</span>
-                            </p>
+
                             {activeTickets.status !== "Đã hủy" && (
                                 <button
                                     onClick={() => handleCancelTicket(ticket.id)}

@@ -28,9 +28,9 @@ const items = [
         to: '/profile',
     },
     {
-        title: 'Sự kiện của tôi',
+        title: 'Tạo sự kiện ',
         logo:'photo_camera',
-        to: '/',
+        to: '/event/create',
     },
 
 ]
