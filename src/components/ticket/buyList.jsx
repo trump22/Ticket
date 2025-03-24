@@ -1,23 +1,21 @@
 // src/pages/list.jsx
 import React, { useEffect, useState } from 'react';
-
-
-// import { useDispatch, useSelector } from 'react-redux';
-// import { setTickets, cancelTicket } from '@/redux/ticketsSlice';
 import Cookies from 'js-cookie';
-
 import instance from "../../services/axios.js";
-
 import {formatDateTime} from "../../helper/convertDate.js";
-const NoTicketsComponent = React.lazy(() => import("../layout/NotFoundTicket.jsx"));
+import { useDispatch, useSelector } from 'react-redux';
+import {setTickets,cancelTicket} from "../../store/ticketSlice.js";
+
+const NoTicketsComponent = React.lazy(() => import("./notFound.jsx"));
 
 const BuyList = () => {
-
-
-    const [tickets, setTickets] = useState([]);
+    const dispatch = useDispatch();
+    const tickets = useSelector(state => state.tickets.list);
     const [eventsList, setEventsList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const activeTickets = tickets.filter(ticket => ticket.status !== "Đã huỷ");
+
     let token = Cookies.get('token');
 
     // Lấy danh sách vé đã mua từ API
@@ -33,8 +31,10 @@ const BuyList = () => {
                 console.log("Response ticket data:", response.data);
                 if (Array.isArray(response.data)) {
                     setTickets(response.data);
+                    dispatch(setTickets(response.data));
                 } else {
-                    setTickets([]);  // Không có vé mua
+                    setTickets([]);
+                    dispatch(setTickets([]));
                 }
                 console.log(response.data);
             })
@@ -64,9 +64,10 @@ const BuyList = () => {
                 setLoading(false);
             });
     }, []);
-    if (tickets.length === 0) {
-        return <NoTicketsComponent />; // hoặc bất kỳ component nào bạn tạo
+    if (activeTickets.length === 0) {
+        return <NoTicketsComponent />;
     }
+
 
 
     // Tạo mapping từ eventId sang event name
@@ -97,6 +98,7 @@ const BuyList = () => {
                         ticket.id === orderId ? { ...ticket, status: "Đã hủy" } : ticket
                     )
                 );
+                dispatch(cancelTicket(orderId));
                 alert("Hủy vé thành công!");
 
             }
@@ -140,14 +142,14 @@ const BuyList = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {tickets.length === 0 ? (
+                    {activeTickets.length === 0 ? (
                         <tr>
                             <td colSpan="6" className="text-center border border-white py-4">
                                 Không có vé mua.
                             </td>
                         </tr>
                     ) : (
-                        tickets.map((ticket) => (
+                        activeTickets.map((ticket) => (
                             <tr key={ticket.id} className="hover:bg-base-300 text-white">
                                 <td className="border border-white">{ticket.id}</td>
                                 <td className="border border-white">{ticket.price.toLocaleString()} đ</td>
@@ -175,10 +177,10 @@ const BuyList = () => {
             {/* Card layout for mobile */}
             {/* Card layout for mobile */}
             <div className="md:hidden divide-y divide-white border border-white rounded-xl overflow-hidden">
-                {tickets.length === 0 ? (
+                {activeTickets.length === 0 ? (
                     <p className="text-center text-white p-4">Không có vé mua.</p>
                 ) : (
-                    tickets.map((ticket, index) => (
+                    activeTickets.map((ticket, index) => (
                         <div
                             key={ticket.id}
                             className={`bg-base-200 px-2 text-white ${
@@ -210,7 +212,7 @@ const BuyList = () => {
                                 <span className="border-b-2 font-semibold">Thời gian tạo :</span>
                                 <span className={"ml-2 whitespace-nowrap"}> {formatDateTime(ticket.createAt)}</span>
                             </p>
-                            {ticket.status !== "Đã hủy" && (
+                            {activeTickets.status !== "Đã hủy" && (
                                 <button
                                     onClick={() => handleCancelTicket(ticket.id)}
                                     className="mt-2 py-1 px-4 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
