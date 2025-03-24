@@ -80,8 +80,8 @@ const Navbar = () => {
         };
 
         try {
-            const response = await axios.post(
-                'http://13.239.139.152:8080/api/Authen/Register',
+            const response = await instance.post(
+                '',
                 data,
                 {
                     headers: {
@@ -118,7 +118,7 @@ const Navbar = () => {
         };
 
         try {
-            const response = await instance.post('/api/Authen/Login', data, {
+            const response = await instance.post('/login', data, {
                 headers: {
                     'Accept': '*/*',
                     'Content-Type': 'application/json'
@@ -193,6 +193,7 @@ const Navbar = () => {
         }
     };
 
+    // ========================= LOGOUT (tuỳ chọn) =========================
     const handleLogout = () => {
         // Xoá cookie
         Cookies.remove('token');
@@ -206,7 +207,7 @@ const Navbar = () => {
             {/* HEADER */}
             <header className="bg-[#ca9bf6] h-20 px-4 md:px-8 flex items-center justify-between">
                 <div className="flex items-center space-x-4">
-                    <Link to="/" className="text-2xl font-semibold">ticketbox</Link>
+                    <Link to="/" className="text-2xl font-semibold">TicketBox</Link>
                     <Searchbar/>
                 </div>
 
@@ -216,18 +217,19 @@ const Navbar = () => {
                         Tạo sự kiện
                     </button>
 
-                    {/* Vé đã mua - ẩn khi màn hình quá rộng */}
-                    <div className="flex items-center space-x-4">
-                        {/* Vé đã mua */}
-                        <Link to="/ticket/list" className="flex items-center space-x-1">
-                            <img src={discountIcon} alt="Ticket" className="w-6 h-6"/>
-                            <span className="hidden md:inline whitespace-nowrap">Vé đã mua</span>
+                    <div className="ml-4 hidden md:flex items-center shrink-0">
+                        <img src={discountIcon} alt="Ticket" className="w-6 h-6"/>
+                        <Link to="/ticket/list">
+                            <button className="text-white text-sm font-normal whitespace-nowrap">
+                                Vé đã mua
+                            </button>
                         </Link>
+                    </div>
 
-                        {/* Bán vé */}
-                        <button className="flex items-center space-x-1 text-sm text-white">
-                            <img src={cartIcon} alt="Sale" className="w-6 h-6"/>
-                            <span className="hidden md:inline whitespace-nowrap">Bán vé</span>
+                    <div className="hidden md:flex items-center shrink-0">
+                        <img src={cartIcon} alt="Sale" className="w-6 h-6"/>
+                        <button className="text-white text-sm font-normal whitespace-nowrap">
+                            Bán vé
                         </button>
                     </div>
 
@@ -269,21 +271,11 @@ const Navbar = () => {
                 </div>
             </header>
 
-            <nav className="bg-black px-4 py-2 text-white text-sm">
-                <div className="hidden md:flex space-x-6">
-                    <Link to="/" className="hover:underline">Trang chủ</Link>
-                    <span className="hover:underline cursor-pointer">Sân khấu & Nghệ thuật</span>
-                    <span className="hover:underline cursor-pointer">Thể thao</span>
-                    <span className="hover:underline cursor-pointer">Khác</span>
-                </div>
-                <div className="md:hidden">
-                    <select className="bg-black text-white border border-white rounded px-2 py-1 w-full">
-                        <option>Trang chủ</option>
-                        <option>Sân khấu & Nghệ thuật</option>
-                        <option>Thể thao</option>
-                        <option>Khác</option>
-                    </select>
-                </div>
+            <nav className="bg-black px-4 md:px-8 py-2 flex flex-wrap justify-start md:space-x-8 text-sm text-white">
+                <Link to="/" className="hover:underline">Trang chủ</Link>
+                <span className="hover:underline cursor-pointer">Sân khấu & Nghệ thuật</span>
+                <span className="hover:underline cursor-pointer">Thể thao</span>
+                <span className="hover:underline cursor-pointer">Khác</span>
             </nav>
 
 
@@ -486,7 +478,7 @@ const Navbar = () => {
                     </div>
                 )
             }
-        </div>
+        </div >
     );
 };
 
