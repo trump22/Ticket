@@ -1,67 +1,66 @@
-import { useRef } from "react";
-// Hoặc dùng SVG tùy ý, ở đây ví dụ dùng react-icons
+// src/components/EventSlider.jsx
+import { useRef, useState, useEffect } from "react";
 
-// Giả sử bạn có mảng sự kiện tĩnh (mock) như sau:
-// Trong thực tế, bạn sẽ fetch dữ liệu từ API
-const eventsData = [
-    {
-        id: 1,
-        title: 'Vở Kịch Rối "THẠCH SANH LÝ THÔNG"',
-        image: 'https://images.tkbcdn.com/2/608/332/ts/ds/68/e3/02/ed4601249b30da012d9ab58065dbf5c3.jpg',
-        price: '100.000đ',
-        date: '23 tháng 03, 2025',
-        link: '#',
-    },
-    {
-        id: 2,
-        title: "Sân Khấu Hồng Vân: Vở Kịch Người Vợ Ma",
-        image: 'https://images.tkbcdn.com/2/608/332/ts/ds/b3/54/c7/5f793edaebc0462080ec56694d7a3b42.jpg',
-        price: '300.000đ',
-        date: '30 tháng 03, 2025',
-        link: '#',
-    },
-    {
-        id: 3,
-        title: "Nhà Hát Kịch IDECAF: Cái gì Vui Vẻ thì mình Ưu Tiên",
-        image: 'https://images.tkbcdn.com/2/608/332/ts/ds/2b/1a/a5/371b379ac0bdd94e091cfc20ae2ce99d.jpg',
-        price: '270.000đ',
-        date: '23 tháng 03, 2025',
-        link: '#',
-    },
-    {
-        id: 4,
-        title: "[FLOWER 1969’s] WORKSHOP SOLID PERFUME - NƯỚC HOA KHÔ",
-        image: 'https://images.tkbcdn.com/2/608/332/ts/ds/d1/91/35/4b4ca883013ffa19ccd3ce6889e96d69.png',
-        price: '279.000đ',
-        date: '22 tháng 03, 2025',
-        link: '#',
-    },
-    // ... Thêm nhiều object tương tự
-];
+import instance from "../../services/axios";
 
-function TrendingEvents() {
-    // Dùng useRef để tham chiếu div cuộn ngang
-    const scrollContainerRef = useRef(null);
+const EventSlider = () => {
+    const sliderRef = useRef(null);
+    const [events, setEvents] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    // Lấy dữ liệu sự kiện từ API khi component mount
+    useEffect(() => {
+        instance
+            .get("/api/Event/GetAllEvent", {
+                headers: { "Accept": "*/*" }
+            })
+            .then((response) => {
+                setEvents(response.data);
+                setLoading(false);
+            })
+            .catch((err) => {
+                console.error("Error fetching events:", err);
+                setError(err.message || "Error fetching data");
+                setLoading(false);
+            });
+    }, []);
 
     // Hàm scroll sang phải
     const scrollRight = () => {
-        if (scrollContainerRef.current) {
-            scrollContainerRef.current.scrollBy({
-                left: 300, // tuỳ chỉnh px cuộn mỗi lần
-                behavior: 'smooth',
+        if (sliderRef.current) {
+            sliderRef.current.scrollBy({
+                left: 300, // số pixel cần cuộn mỗi lần
+                behavior: "smooth",
             });
         }
     };
 
     // Hàm scroll sang trái
     const scrollLeft = () => {
-        if (scrollContainerRef.current) {
-            scrollContainerRef.current.scrollBy({
+        if (sliderRef.current) {
+            sliderRef.current.scrollBy({
                 left: -300,
-                behavior: 'smooth',
+                behavior: "smooth",
             });
         }
     };
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center h-64">
+                <p className="text-gray-600">Đang tải sự kiện...</p>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="flex items-center justify-center h-64">
+                <p className="text-red-500">Lỗi: {error}</p>
+            </div>
+        );
+    }
 
     return (
         <div className="max-w-6xl mx-auto">
@@ -86,32 +85,44 @@ function TrendingEvents() {
             text-white
             p-2
             rounded-full
-            hidden md:block  /* Ẩn trên mobile, chỉ hiển thị trên md */
+            hidden md:block
           "
                 >
-
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="w-5 h-5 rotate-180"
+                    >
+                        <polyline points="15 18 9 12 15 6" />
+                    </svg>
                 </button>
 
                 {/* Container cuộn ngang */}
                 <div
-                    ref={scrollContainerRef}
+                    ref={sliderRef}
                     className="
             flex justify-center
             overflow-x-auto
             gap-4
-            scrollbar-hide  /* Tuỳ bạn, có thể giấu scrollbar bằng plugin Tailwind */
+            scrollbar-hide
             scroll-smooth
             px-6
             py-2
           "
                 >
-                    {eventsData.map((ev) => (
+                    {events.map((ev) => (
                         <a
                             key={ev.id}
-                            href={ev.link}
+                            href={ev.link || "#"} // Nếu API không trả link, bạn có thể thay đổi thành đường dẫn đến trang chi tiết sự kiện
                             className="
                 w-[240px]
-                h-[351px] 
+                h-[351px]
                 shrink-0
                 relative
                 rounded-md
@@ -124,8 +135,8 @@ function TrendingEvents() {
                         >
                             {/* Ảnh sự kiện */}
                             <img
-                                src={ev.image}
-                                alt={ev.title}
+                                src={ev.imageUrl || "https://placehold.co/240x351"}
+                                alt={ev.name}
                                 className="w-full h-full object-cover"
                             />
 
@@ -142,9 +153,11 @@ function TrendingEvents() {
                   backdrop-blur-sm
                 "
                             >
-                                <p className="text-sm font-semibold line-clamp-2">{ev.title}</p>
+                                <p className="text-sm font-semibold line-clamp-2">
+                                    {ev.name}
+                                </p>
                                 <p className="text-green-400 text-sm font-bold">
-                                    Từ {ev.price}
+                                    {ev.price ? `Từ ${ev.price}` : ""}
                                 </p>
                                 <div className="text-sm flex items-center mt-1">
                                     {/* Icon lịch */}
@@ -163,7 +176,11 @@ function TrendingEvents() {
                                             fill="#fff"
                                         ></path>
                                     </svg>
-                                    <span>{ev.date}</span>
+                                    <span>
+                                        {ev.starTime
+                                            ? new Date(ev.starTime).toLocaleDateString()
+                                            : ""}
+                                    </span>
                                 </div>
                             </div>
                         </a>
@@ -187,11 +204,23 @@ function TrendingEvents() {
             hidden md:block
           "
                 >
-
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="w-5 h-5"
+                    >
+                        <polyline points="9 18 15 12 9 6" />
+                    </svg>
                 </button>
             </div>
         </div>
     );
-}
+};
 
-export default TrendingEvents;
+export default EventSlider;

@@ -1,19 +1,47 @@
-import { useRef } from 'react';
+// src/components/EventSlider.jsx
+import { useRef, useState, useEffect } from "react";
+
+import instance from "../../services/axios";
 
 const EventSlider = () => {
     const sliderRef = useRef(null);
+    const [events, setEvents] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    // Lấy dữ liệu sự kiện từ API khi component mount
+    useEffect(() => {
+        instance
+            .get("/api/Event/GetAllEvent")
+            .then((response) => {
+                setEvents(response.data);
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.error("Error fetching events:", error);
+                setLoading(false);
+            });
+    }, []);
 
     const handleNext = () => {
         if (sliderRef.current) {
-            const sliderItem = sliderRef.current.querySelector('.slider-item');
+            // Lấy một slider-item để tính khoảng cách cần scroll
+            const sliderItem = sliderRef.current.querySelector(".slider-item");
             if (sliderItem) {
                 const itemStyle = window.getComputedStyle(sliderItem);
                 const marginRight = parseInt(itemStyle.marginRight, 10);
                 const itemWidth = sliderItem.offsetWidth + marginRight;
-                sliderRef.current.scrollBy({ left: itemWidth, behavior: 'smooth' });
+                sliderRef.current.scrollBy({ left: itemWidth, behavior: "smooth" });
             }
         }
     };
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center h-64">
+                <p className="text-gray-600">Loading events...</p>
+            </div>
+        );
+    }
 
     return (
         <div className="max-w-6xl mx-auto">
@@ -42,101 +70,21 @@ const EventSlider = () => {
                 ref={sliderRef}
                 className="flex justify-center overflow-x-auto scroll-smooth space-x-4 px-4 pb-4"
             >
-                {/* Slider Item */}
-                <div className="slider-item flex-shrink-0 w-48">
-                    <a
-                        href="https://ticketbox.vn/kich-thanh-xa-bach-xa-86983?utm_medium=special-events&utm_source=tkb-homepage"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <img
-                            src="https://images.tkbcdn.com/2/360/479/ts/ds/2a/9e/57/beb7172537b8cdccf0dfe263a6e8946b.jpg"
-                            alt="event"
-                            className="rounded-lg object-cover w-full h-full"
-                        />
-                    </a>
-                </div>
-                <div className="slider-item flex-shrink-0 w-48">
-                    <a
-                        href="https://ticketbox.vn/kich-thanh-xa-bach-xa-86983?utm_medium=special-events&utm_source=tkb-homepage"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <img
-                            src="https://images.tkbcdn.com/2/360/479/ts/ds/2a/9e/57/beb7172537b8cdccf0dfe263a6e8946b.jpg"
-                            alt="event"
-                            className="rounded-lg object-cover w-full h-full"
-                        />
-                    </a>
-                </div>
-                <div className="slider-item flex-shrink-0 w-48">
-                    <a
-                        href="https://ticketbox.vn/kich-thanh-xa-bach-xa-86983?utm_medium=special-events&utm_source=tkb-homepage"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <img
-                            src="https://images.tkbcdn.com/2/360/479/ts/ds/2a/9e/57/beb7172537b8cdccf0dfe263a6e8946b.jpg"
-                            alt="event"
-                            className="rounded-lg object-cover w-full h-full"
-                        />
-                    </a>
-                </div>
-                <div className="slider-item flex-shrink-0 w-48">
-                    <a
-                        href="https://ticketbox.vn/kich-thanh-xa-bach-xa-86983?utm_medium=special-events&utm_source=tkb-homepage"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <img
-                            src="https://images.tkbcdn.com/2/360/479/ts/ds/2a/9e/57/beb7172537b8cdccf0dfe263a6e8946b.jpg"
-                            alt="event"
-                            className="rounded-lg object-cover w-full h-full"
-                        />
-                    </a>
-                </div>
-                {/* Another Slider Item */}
-                <div className="slider-item flex-shrink-0 w-48">
-                    <a
-                        href="https://ticketbox.vn/tphcm-nhung-thanh-pho-mo-mang-summer-2025-23769?utm_medium=special-events&utm_source=tkb-homepage"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <img
-                            src="https://images.tkbcdn.com/2/360/479/ts/ds/59/0c/3a/2720601ecc1f0dc2ccb62a8856a4bf95.jpg"
-                            alt="event"
-                            className="rounded-lg object-cover w-full h-full"
-                        />
-                    </a>
-                </div>
-                {/* Third Slider Item */}
-                <div className="slider-item flex-shrink-0 w-48">
-                    <a
-                        href="https://ticketbox.vn/hype-fest-23811?utm_medium=special-events&utm_source=tkb-homepage"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <img
-                            src="https://images.tkbcdn.com/2/360/479/ts/ds/e3/e6/14/99ced3f425e39bdf7c8ef1d418e71e86.jpg"
-                            alt="event"
-                            className="rounded-lg object-cover w-full h-full"
-                        />
-                    </a>
-                </div>
-                {/* Add additional slider items as needed */}
-                <div className="slider-item flex-shrink-0 w-48">
-                    <a
-                        href="https://ticketbox.vn/kich-thanh-xa-bach-xa-86983?utm_medium=special-events&utm_source=tkb-homepage"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <img
-                            src="https://images.tkbcdn.com/2/360/479/ts/ds/2a/9e/57/beb7172537b8cdccf0dfe263a6e8946b.jpg"
-                            alt="event"
-                            className="rounded-lg object-cover w-full h-full"
-                        />
-                    </a>
-                </div>
+                {events.map((event) => (
+                    <div key={event.id} className="slider-item flex-shrink-0 w-48">
+                        <a
+                            href={`/event/${event.id}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <img
+                                src={event.imageUrl}
+                                alt={event.name}
+                                className="rounded-lg object-cover w-full h-full transition-transform duration-300 hover:scale-105"
+                            />
+                        </a>
+                    </div>
+                ))}
             </div>
         </div>
     );

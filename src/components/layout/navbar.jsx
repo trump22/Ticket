@@ -219,9 +219,12 @@ const Navbar = () => {
 
                 {/* Các nút hành động */}
                 <div className="flex items-center ml-8 space-x-6">
-                    <button className="ml-8 border border-white rounded-3xl px-4 py-2 hover:bg-white/20">
-                        Tạo sự kiện
-                    </button>
+                    <Link to="/event/create">
+                        <button className="ml-8 border border-white rounded-3xl px-4 py-2 hover:bg-white/20" >
+                            Tạo sự kiện
+                        </button>
+                    </Link>
+
 
                     <div className="ml-8 flex items-center">
                         <img
