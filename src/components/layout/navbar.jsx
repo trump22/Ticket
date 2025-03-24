@@ -81,8 +81,8 @@ const Navbar = () => {
         };
 
         try {
-            const response = await axios.post(
-                'http://13.239.139.152:8080/api/Authen/Register',
+            const response = await instance.post(
+                '/api/Authen/Register',
                 data,
                 {
                     headers: {
@@ -91,7 +91,7 @@ const Navbar = () => {
                     }
                 }
             );
-            console.log("Response:", response.data);
+            console.log("Response dang ki:", response.data);
 
             if (response.status === 200) {
                 setSuccessMessage("Đăng kí tài khoản thành công! Mời bạn đăng nhập.");

@@ -1,0 +1,12 @@
+# ❗ Bảo toàn API proxy (không redirect về index.html)
+[[redirects]]
+from = "/api/*"
+to = "http://13.239.139.152:8080/api/:splat"
+status = 200
+force = true
+
+# ❗ Redirect các route frontend về index.html
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
