@@ -93,6 +93,10 @@ const EventSlider = () => {
                             alt="event"
                             className="rounded-lg object-cover w-full h-full"
                         />
+
+
+
+
                     </a>
                 </div>
                 {/* Another Slider Item */}
