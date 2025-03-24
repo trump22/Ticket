@@ -7,7 +7,7 @@ import PrivateRoute from "./private.jsx"; // thêm dòng này
 const Account = lazy(() => import("../components/layout/account.jsx"));
 
 const RouteLoader = () => {
-    const sidebarPaths = ["/profile", "/ticket/purchased", "/ticket/buy","/ticket/tab"];
+    const sidebarPaths = ["/profile", "/ticket/buy","/ticket/tab"];
 
     return (
         <Suspense fallback={<div>Loading...</div>}>

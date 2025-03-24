@@ -233,7 +233,7 @@ const Navbar = () => {
                             className="w-[33.42px] h-[33.42px]"
                         />
                         <Link to="/ticket/list">
-                            <button className="text-white text-base font-normal font-['Inter']">
+                            <button className="text-white text-base font-normal font-['Inter'] whitespace-nowrap">
                                 Vé đã mua
                             </button>
                         </Link>
@@ -246,7 +246,7 @@ const Navbar = () => {
                             className="w-[33.42px] h-[33.42px]"
                         />
 
-                        <button className="text-white text-base font-normal font-['Inter']">
+                        <button className="text-white text-base font-normal font-['Inter'] whitespace-nowrap ">
                             Bán vé
                         </button>
 

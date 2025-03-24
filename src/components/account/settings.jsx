@@ -20,7 +20,7 @@ const items = [
     {
         title: 'Vé đã mua',
         logo: 'confirmation_number',
-        to: '/ticket/purchased',
+        to: '/ticket/tab',
     },
     {
         title: 'Bán vé',
