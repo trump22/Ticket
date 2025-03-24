@@ -27,7 +27,8 @@ const TicketListTable = ({ tickets, eventMapping, onCancel }) => {
                         <th className="border border-white">Tên người dùng</th>
                         <th className="border border-white">Tên sự kiện</th>
                         <th className="border border-white">Thời gian tạo</th>
-                        <th className="border border-white">Hành động</th>
+                        <th className={"border border-white"}>Thời gian hủy</th>
+                        <th className="border border-white">Tương tác</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -39,11 +40,12 @@ const TicketListTable = ({ tickets, eventMapping, onCancel }) => {
                             <td className="border border-white">{Cookies.get('username')}</td>
                             <td className="border border-white">{eventMapping[ticket.eventId] || 'Không xác định'}</td>
                             <td className="border border-white whitespace-nowrap">{formatDateTime(ticket.createAt)}</td>
+                            <td className="border border-white whitespace-nowrap">{formatDateTime(ticket.endTime) || "Chưa có thời gian hủy hoặc kết thúc"}</td>
                             <td className="border border-white">
                                 {ticket.status !== "Đã huỷ" && (
                                     <button
                                         onClick={() => onCancel(ticket.id)}
-                                        className="py-1 px-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+                                        className="mt-2 py-1 px-4 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
                                     >
                                         Hủy vé
                                     </button>

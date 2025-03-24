@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 const BREADCRUMB_MAP = {
     ticket: {
         _label: "Vé",
-        purchased: "Vé đã mua",
+        tab: "Vé đã mua",
         sold: "Vé đã bán"
     },
     profile: "Thông tin tài khoản",

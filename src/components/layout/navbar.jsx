@@ -215,12 +215,12 @@ const Navbar = () => {
                 </div>
 
                 {/* Search Bar */}
-                <Searchbar />
+                <Searchbar/>
 
                 {/* Các nút hành động */}
                 <div className="flex items-center ml-8 space-x-6">
                     <Link to="/event/create">
-                        <button className="ml-8 border border-white rounded-3xl px-4 py-2 hover:bg-white/20" >
+                        <button className="ml-8 border border-white rounded-3xl px-4 py-2 hover:bg-white/20">
                             Tạo sự kiện
                         </button>
                     </Link>
@@ -260,7 +260,7 @@ const Navbar = () => {
                                     >
                                         Đăng nhập
                                     </button>
-                                    <div className="h-6 w-px bg-white mx-1" />
+                                    <div className="h-6 w-px bg-white mx-1"/>
                                     <button
                                         onClick={handleRegisterClick}
                                         className="w-[88px] h-[33px] flex items-center justify-center text-white text-base font-normal font-['Inter']"
@@ -286,7 +286,7 @@ const Navbar = () => {
                                             xmlns="http://www.w3.org/2000/svg"
                                             className="mt-1 ml-2"
                                         >
-                                            <path d="M5 8L0.67 0.5L9.33 0.5L5 8Z" fill="white" />
+                                            <path d="M5 8L0.67 0.5L9.33 0.5L5 8Z" fill="white"/>
                                         </svg>
 
                                     </div>
@@ -297,10 +297,13 @@ const Navbar = () => {
                                         className="dropdown-content menu bg-base-100 rounded-box z-2 w-44 p-2 shadow-sm "
                                     >
                                         <li>
-                                            <Link to="/profile"> <img src={discountIcon} alt="ticket" className="w-6 h-6" /> Tài khoản của tôi </Link>
+                                            <Link to="/profile"> <img src={discountIcon} alt="ticket"
+                                                                      className="w-6 h-6"/> Tài khoản của tôi </Link>
                                         </li>
                                         <li>
-                                            <button onClick={handleLogout}> <img src={logout} alt="logout" className="w-6 h-6" />Đăng xuất</button>
+                                            <button onClick={handleLogout}><img src={logout} alt="logout"
+                                                                                className="w-6 h-6"/>Đăng xuất
+                                            </button>
                                         </li>
                                     </ul>
                                 </div>
@@ -310,7 +313,7 @@ const Navbar = () => {
 
                     {/* Account Icon */}
                     <div className="ml-6 flex items-center space-x-2 cursor-pointer">
-                        <img src={vnFlag} alt="VN Flag" className="w-8 h-8" />
+                        <img src={vnFlag} alt="VN Flag" className="w-8 h-8"/>
                         <svg
                             width="10"
                             height="8"
@@ -319,23 +322,28 @@ const Navbar = () => {
                             xmlns="http://www.w3.org/2000/svg"
                             className="mt-1"
                         >
-                            <path d="M5 8L0.67 0.5L9.33 0.5L5 8Z" fill="white" />
+                            <path d="M5 8L0.67 0.5L9.33 0.5L5 8Z" fill="white"/>
                         </svg>
                     </div>
                 </div>
             </header>
 
             {/* NAVIGATION TABS */}
-            <nav className="bg-black py-2 px-8 flex space-x-8">
-                <div className="hover:underline cursor-pointer">
-                    <Link to="/">Trang chủ</Link>
-                </div>
-                <div className="hover:underline cursor-pointer">
-                    Sân khấu &amp; Nghệ thuật
-                </div>
-                <div className="hover:underline cursor-pointer">Thể thao</div>
-                <div className="hover:underline cursor-pointer">Khác</div>
+            <nav className="bg-black py-2 px-8 flex space-x-8 text-white">
+                <Link to="/" className="hover:underline cursor-pointer">
+                    Trang chủ
+                </Link>
+                <Link to="/eventtype/sknt" className="hover:underline cursor-pointer">
+                    Sân khấu & Nghệ thuật
+                </Link>
+                <Link to="/eventtype/thethao" className="hover:underline cursor-pointer">
+                    Thể thao
+                </Link>
+                <Link to="/eventtype/khac" className="hover:underline cursor-pointer">
+                    Khác
+                </Link>
             </nav>
+
 
             {/* Modal đăng nhập */}
             {showLoginModal && (
@@ -536,7 +544,7 @@ const Navbar = () => {
                     </div>
                 )
             }
-        </div >
+        </div>
     );
 };
 
