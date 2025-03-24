@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import instance from "../../services/axios.js";
-const TiketListTable = React.lazy(() => import("src/components/ticket/listTable.jsx"));
 import Cookies from "js-cookie";
+const TicketListTable = React.lazy(() => import("../../components/ticket/listTable.jsx"));
+
 
 const TicketTabs = () => {
     const [tickets, setTickets] = useState([]);
@@ -78,7 +79,7 @@ const TicketTabs = () => {
                 </button>
             </div>
 
-            <TiketListTable
+            <TicketListTable
                 tickets={filteredTickets}
                 eventMapping={eventMapping}
                 onCancel={handleCancelTicket}
