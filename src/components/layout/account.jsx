@@ -1,11 +1,11 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 
 const Settings = React.lazy(() => import('../account/settings.jsx'),)
-import {Outlet, useLocation} from "react-router-dom";
-import {useDispatch} from "react-redux";
-import {useSelector} from "react-redux";
+import { Outlet, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
 import Cookies from "js-cookie";
-import {setUsername,clearUsername} from "../../store/authSlice.js";
+import { setUsername, clearUsername } from "../../store/authSlice.js";
 const accountTitles = [
     { path: "/profile", label: "Thông tin tài khoản" },
     { path: "/ticket/purchased", label: "Vé đã đặt" },
@@ -52,7 +52,7 @@ const AccountLayout = () => {
                 {/*{!shouldHideSidebar && (*/}
                 <div className="w-full md:w-[30%] p-4">
                     <div className="px-4 md:px-2 mt-4 md:mt-8">
-                        <Settings/>
+                        <Settings />
                     </div>
                 </div>
                 {/*)}*/}
@@ -68,13 +68,13 @@ const AccountLayout = () => {
                             {title}
                         </h1>
                     </div>
-                    <Outlet/>
+                    <Outlet />
                 </div>
             </div>
 
             {/* Viền  nội dung thêm bên dưới */}
             <div className="w-full md:w-[90%] mx-auto border-t-2 border-[#d2acf7] mt-8 px-4 md:px-6">
-            <h2 className="text-base md:text-lg font-semibold">Thông tin thêm</h2>
+                <h2 className="text-base md:text-lg font-semibold">Thông tin thêm</h2>
                 <p className="text-sm md:text-base text-muted-foreground mt-2">
                     Film content
                 </p>
