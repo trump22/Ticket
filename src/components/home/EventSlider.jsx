@@ -22,18 +22,7 @@ const EventSlider = () => {
             });
     }, []);
 
-    const handleNext = () => {
-        if (sliderRef.current) {
-            // Lấy một slider-item để tính khoảng cách cần scroll
-            const sliderItem = sliderRef.current.querySelector(".slider-item");
-            if (sliderItem) {
-                const itemStyle = window.getComputedStyle(sliderItem);
-                const marginRight = parseInt(itemStyle.marginRight, 10);
-                const itemWidth = sliderItem.offsetWidth + marginRight;
-                sliderRef.current.scrollBy({ left: itemWidth, behavior: "smooth" });
-            }
-        }
-    };
+
 
     if (loading) {
         return (
@@ -48,22 +37,6 @@ const EventSlider = () => {
             {/* Header with title and next button */}
             <div className="flex items-center justify-between p-4">
                 <h2 className="text-2xl font-semibold">Sự kiện đặc biệt</h2>
-                <button
-                    onClick={handleNext}
-                    aria-label="Next"
-                    className="bg-gray-800 rounded-full w-10 h-10 flex items-center justify-center"
-                >
-                    <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="w-6 h-6 text-white"
-                    >
-                        <path d="M9 18l6-6-6-6" />
-                    </svg>
-                </button>
             </div>
             {/* Slider track */}
             <div
@@ -71,7 +44,7 @@ const EventSlider = () => {
                 className="flex justify-center overflow-x-auto scroll-smooth space-x-4 px-4 pb-4"
             >
                 {events.map((event) => (
-                    <div key={event.id} className="slider-item flex-shrink-0 w-48">
+                    <div key={event.id} className="slider-item flex-shrink-0 w-80">
                         <a
                             href={`/event/${event.id}`}
                             target="_blank"

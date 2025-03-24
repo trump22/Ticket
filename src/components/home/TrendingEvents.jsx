@@ -113,7 +113,8 @@ const EventSlider = () => {
             scrollbar-hide
             scroll-smooth
             px-6
-            py-2
+            py-4
+
           "
                 >
                     {events.map((ev) => (
@@ -121,8 +122,8 @@ const EventSlider = () => {
                             key={ev.id}
                             href={ev.link || "#"} // Nếu API không trả link, bạn có thể thay đổi thành đường dẫn đến trang chi tiết sự kiện
                             className="
-                w-[240px]
-                h-[351px]
+                w-[336px]
+                h-[283px]
                 shrink-0
                 relative
                 rounded-md
@@ -135,9 +136,9 @@ const EventSlider = () => {
                         >
                             {/* Ảnh sự kiện */}
                             <img
-                                src={ev.imageUrl || "https://placehold.co/240x351"}
+                                src={ev.imageUrl || "https://placehold.co/336x283"}
                                 alt={ev.name}
-                                className="w-full h-full object-cover"
+                                className="block max-w-full w-auto h-auto bg-transparent border-0 m-0 p-0"
                             />
 
                             {/* Thông tin nổi bật */}
@@ -157,7 +158,7 @@ const EventSlider = () => {
                                     {ev.name}
                                 </p>
                                 <p className="text-green-400 text-sm font-bold">
-                                    {ev.price ? `Từ ${ev.price}` : ""}
+                                    Từ 150.000đ
                                 </p>
                                 <div className="text-sm flex items-center mt-1">
                                     {/* Icon lịch */}
