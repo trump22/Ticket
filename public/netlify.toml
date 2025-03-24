@@ -5,7 +5,7 @@ publish = "dist"
 # ❗ Bảo toàn API proxy (không redirect về index.html)
 [[redirects]]
 from = "/api/*"
-to = "http://13.239.139.152:8080/api/:splat"
+to = "http://3.27.168.183:8080/api/:splat"
 status = 200
 force = true
 
