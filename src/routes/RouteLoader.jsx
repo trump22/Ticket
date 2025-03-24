@@ -3,7 +3,8 @@ import { Routes, Route } from "react-router-dom";
 import Home from "../pages/home.jsx";
 import NotFound from "../pages/NotFound.jsx";
 import routes from "./index.jsx";
-import PrivateRoute from "./private.jsx"; // thêm dòng này
+import PrivateRoute from "./private.jsx";
+import EventByType from "../components/event/showByType.jsx"; // thêm dòng này
 const Account = lazy(() => import("../components/layout/account.jsx"));
 
 const RouteLoader = () => {
@@ -28,7 +29,7 @@ const RouteLoader = () => {
                 {routes.map(({ path, component: Component }) => (
                     <Route key={path} path={path} element={<Component />} />
                 ))}
-
+                <Route path="/eventtype/:type" element={<EventByType />} />
                 <Route path="/" element={<Home />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
