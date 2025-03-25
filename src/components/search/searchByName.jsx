@@ -1,5 +1,5 @@
 // src/pages/SearchPage.jsx
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import EventGroup from "../event/group.jsx";

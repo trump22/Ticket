@@ -1,4 +1,5 @@
 import React, { lazy, Suspense } from "react";
+import EventDetails from "../components/event/detail.jsx";
 import { Routes, Route } from "react-router-dom";
 import Home from "../pages/home.jsx";
 import NotFound from "../pages/NotFound.jsx";
@@ -9,7 +10,7 @@ const SearchPage = React.lazy(() => import("../components/search/searchByName.js
 const Account = React.lazy(() => import("../components/layout/account.jsx"));
 
 const RouteLoader = () => {
-    const sidebarPaths = ["/user/update","/ticket/tab","/event/create","/user/info"];
+    const sidebarPaths = ["/user/update", "/ticket/tab", "/event/create", "/user/info"];
 
     return (
         <Suspense fallback={<div>Loading...</div>}>
@@ -30,6 +31,7 @@ const RouteLoader = () => {
                 {routes.map(({ path, component: Component }) => (
                     <Route key={path} path={path} element={<Component />} />
                 ))}
+                <Route path="/event/:id" element={<EventDetails />} />
                 <Route path="/eventtype/:type" element={<EventByType />} />
                 <Route path="/" element={<Home />} />
                 <Route path="/eventsearch" element={<SearchPage />} />
