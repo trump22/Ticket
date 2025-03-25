@@ -62,9 +62,6 @@ const EventSlider = () => {
                                 <p className="text-sm font-semibold line-clamp-2">
                                     {event.name}
                                 </p>
-                                <p className="text-green-400 text-sm font-bold">
-                                    Từ 150.000đ
-                                </p>
                                 <div className="text-sm flex items-center mt-1">
                                     {/* Icon lịch dùng Material Symbols */}
                                     <span className="material-symbols-outlined text-base mr-1">

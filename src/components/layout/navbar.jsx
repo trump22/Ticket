@@ -7,7 +7,7 @@ import axios from 'axios';
 import gmail from '../../assets/svgs/Gmail 1.png';
 import { useDispatch } from 'react-redux';
 import { setToken } from '../../store/tokenSlice.js';
-import {Link, useNavigate} from 'react-router-dom';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
 import Cookies from 'js-cookie';
 import SeachDropDown from "./seachDropDown.jsx";
 import instance from "../../services/axios.js";
@@ -16,7 +16,7 @@ import {clearAllCookies} from "../../helper/removeAllCookie.js";
 
 const Navbar = () => {
     const dispatch = useDispatch();
-
+    const location = useLocation();
     // ----- State liên quan đến modal đăng nhập / đăng ký -----
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [showRegisterModal, setShowRegisterModal] = useState(false);
@@ -221,6 +221,13 @@ const Navbar = () => {
         navigate('/')
 
     };
+    //Alert thông báo vui lòng đăng nhập
+    useEffect(() => {
+        if (location.state?.alertMessage) {
+            alert(location.state.alertMessage); // hoặc toast, modal, v.v.
+        }
+    }, [location]);
+
 
     return (
         <div>
