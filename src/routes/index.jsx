@@ -1,6 +1,9 @@
 // routes/index.jsx
 import { lazy } from "react";
 
+//Lưu ý , các route qua đây đều chuyển qua lowercase trước( gias tri no ve lowercase) (Trong RouteLoader sẽ tu nhận chu thường)
+//Mặc dù path vẫn có thể viet hoa
+
 // Lấy tất cả các file JSX trong thư mục pages
 const modules = import.meta.glob("../pages/**/*.jsx");
 

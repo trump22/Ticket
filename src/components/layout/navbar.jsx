@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import SeachDropDown from "./seachDropDown.jsx";
 import instance from "../../services/axios.js";
+import {setImgUrl, setUsername} from "../../store/authSlice.js";
 
 const Navbar = () => {
     const dispatch = useDispatch();
@@ -133,10 +134,11 @@ const Navbar = () => {
 
                 // Lưu token vào Redux
                 dispatch(setToken(response.data.token));
-
                 // Lưu token vào cookie
                 Cookies.set('token', response.data.token, { expires: 7 });
+                console.log("Response data la",response.data)
 
+                // cập nhật khi có dữ liệu từ API
                 // Lấy thông tin user
                 handleLoginSuccess(response.data.token);
             } else {
@@ -190,6 +192,8 @@ const Navbar = () => {
             Cookies.set('phonenumber', user.phoneNumber, { expires: 7 });
             Cookies.set('email', user.email, { expires: 7 });
             Cookies.set('dob',user.dob,{expires:7});
+            // thêm dòng này
+            Cookies.set("imgUrl", user.imageUrl, { expires:7 });
 
             // Cập nhật tên hiển thị
             setDisplayName(user.name);
@@ -304,7 +308,7 @@ const Navbar = () => {
                                         className="dropdown-content menu bg-base-100 rounded-box z-2 w-44 p-2 shadow-sm "
                                     >
                                         <li>
-                                            <Link to="/profile"> <img src={discountIcon} alt="ticket"
+                                            <Link to="/updateProfiles"> <img src={discountIcon} alt="ticket"
                                                                       className="w-6 h-6"/> Tài khoản của tôi </Link>
                                         </li>
                                         <li>

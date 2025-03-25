@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 
 const initialState = {
     username: Cookies.get("username") || null,
+    imgUrl: Cookies.get("imgUrl") || null, // Lấy từ Cookies nếu có
 };
 
 const authSlice = createSlice({
@@ -15,13 +16,17 @@ const authSlice = createSlice({
         clearUsername: (state) => {
             state.username = null;
         },
+        setImgUrl: (state, action) => {
+            state.imgUrl = action.payload;
+        },
+        clearImgUrl: (state) => {
+            state.imgUrl = null;
+        },
     },
 });
 
-export const { setUsername, clearUsername } = authSlice.actions;
+export const { setUsername, clearUsername, setImgUrl, clearImgUrl } = authSlice.actions;
 
-// Export reducer mặc định
 export default authSlice.reducer;
 
-// Export tên slice để rootReducer dùng
 export const sliceName = authSlice.name;

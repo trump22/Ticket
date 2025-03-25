@@ -9,7 +9,7 @@ const SearchPage = React.lazy(() => import("../components/search/searchByName.js
 const Account = React.lazy(() => import("../components/layout/account.jsx"));
 
 const RouteLoader = () => {
-    const sidebarPaths = ["/profile", "/ticket/buy","/ticket/tab","/event/create"];
+    const sidebarPaths = ["/updateprofiles","/ticket/tab","/event/create"];
 
     return (
         <Suspense fallback={<div>Loading...</div>}>
@@ -35,6 +35,7 @@ const RouteLoader = () => {
                 <Route path="/eventsearch" element={<SearchPage />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
+
         </Suspense>
     );
 };

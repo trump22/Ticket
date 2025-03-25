@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import { setUsername, clearUsername } from "../../store/authSlice.js";
 const accountTitles = [
-    { path: "/profile", label: "Chỉnh sửa thông tin tài khoản " },
+    { path: "/updateProfile", label: "Chỉnh sửa thông tin tài khoản " },
     { path: "/ticket/tab", label: "Vé đã đặt " },
 ];
 

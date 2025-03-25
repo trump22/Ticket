@@ -1,7 +1,8 @@
 // src/pages/CreateEvent.jsx
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Cookies from 'js-cookie';
 import instance from '../../services/axios';
+const ImageUploadPreview = React.lazy(() => import('../image/uploadAndPreview.jsx'))
 
 
 const CreateEvent = () => {
@@ -117,7 +118,9 @@ const CreateEvent = () => {
                         'Authorization': `Bearer ${token}`
                     }
                 }
+
             );
+
 
             if (response.status === 200) {
                 setSuccessMessage("Tạo event thành công!");
@@ -163,56 +166,24 @@ const CreateEvent = () => {
 
                     <div className="flex flex-col md:flex-row gap-6">
                         {/* Logo Sự Kiện (720x458) */}
-                        <div
-                            className="w-[350px] h-[400px] bg-gray-300 rounded-md flex flex-col items-center justify-center relative"
-                            onDragOver={handleDragOverLogo}
+                        <ImageUploadPreview
+                            previewUrl={logoPreview}
                             onDrop={handleDropLogo}
-                        >
-                            {logoPreview ? (
-                                <img
-                                    src={logoPreview}
-                                    alt="Logo Preview"
-                                    className="object-cover w-full h-full rounded-md"
-                                />
-                            ) : (
-                                <div className="flex flex-col items-center justify-center text-center text-gray-600">
-                                    <p className="text-sm mb-2">Thêm logo sự kiện</p>
-                                    <p className="text-xs text-gray-500">(720x458)</p>
-                                </div>
-                            )}
-                            <input
-                                type="file"
-                                accept="image/*"
-                                className="absolute inset-0 opacity-0 cursor-pointer"
-                                onChange={handleFileLogo}
-                            />
-                        </div>
+                            onDragOver={handleDragOverLogo}
+                            onChange={handleFileLogo}
+                            placeholderText="Thêm logo sự kiện (720x458)"
+                            sizeClass="w-[350px] h-[400px]"
+                        />
 
                         {/* Ảnh nền Sự Kiện (1280x720) */}
-                        <div
-                            className="w-[900px] h-[400px] bg-gray-300 rounded-md flex flex-col items-center justify-center relative"
-                            onDragOver={handleDragOverBackground}
+                        <ImageUploadPreview
+                            previewUrl={imagePreview}
                             onDrop={handleDropBackground}
-                        >
-                            {imagePreview ? (
-                                <img
-                                    src={imagePreview}
-                                    alt="Background Preview"
-                                    className="object-cover w-full h-full rounded-md"
-                                />
-                            ) : (
-                                <div className="flex flex-col items-center justify-center text-center text-gray-600">
-                                    <p className="text-sm mb-2">Thêm ảnh nền sự kiện</p>
-                                    <p className="text-xs text-gray-500">(1280x720)</p>
-                                </div>
-                            )}
-                            <input
-                                type="file"
-                                accept="image/*"
-                                className="absolute inset-0 opacity-0 cursor-pointer"
-                                onChange={handleFileBackground}
-                            />
-                        </div>
+                            onDragOver={handleDragOverBackground}
+                            onChange={handleFileBackground}
+                            placeholderText="Thêm ảnh nền sự kiện (1280x720)"
+                            sizeClass="w-[900px] h-[400px]"
+                        />
                     </div>
                 </div>
 

@@ -1,6 +1,7 @@
 import {Link} from "react-router-dom";
 import {useBreadcrumbItems} from "../../helper/useBreadcrumpItems.jsx";
 import {useSelector} from "react-redux";
+import kamenrider from '../../assets/images/kamenridermeme.jpg'
     //Breadcumb map để biết được hiển thị giưữa các Link
         // const BREADCRUMB_MAP = {
         //     ticket: {
@@ -25,7 +26,7 @@ const items = [
     {
         title: 'Chỉnh sửa thông tài khoản ',
         logo:'settings',
-        to: '/profile',
+        to: '/updateProfiles',
     },
     {
         title: 'Tạo sự kiện ',
@@ -40,7 +41,7 @@ const Settings = () =>{
     const username = useSelector((state) => state.auth.username);
     console.log("Username: " + username);
     const displayName = username && username.trim() !== "" ? username : "Tài khoản của bạn";
-
+    const imgUrl = useSelector((state) => state.auth.imgUrl);
 
 
 
@@ -68,9 +69,9 @@ const Settings = () =>{
                 <div className="flex items-center gap-4">
                     {/* Ảnh bên trái */}
                     <img
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFW0NbncSWEnZ83TNSs2LnzrIvoLcDCBU2pw&s"
+                        src={imgUrl || "https://i.pinimg.com/550x/13/e2/9b/13e29b0cce233c21c26b254e9aacc3bc.jpg" }
                         alt="Avatar"
-                        className="w-14 h-14 rounded-full object-cover border-2 border-white shadow-md"
+                        className="w-14 h-14 rounded-full object-cover"
                     />
 
                     {/* Nội dung bên phải ảnh */}
