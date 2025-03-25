@@ -58,7 +58,8 @@ const Profile = () => {
             data.gender = false;
         }
         //Luu vao fields
-        data.imgUrl = imageUrl;
+        data.imageUrl = imageUrl;
+
         console.log("Data la ",data)
         try {
             const token = Cookies.get('token');
