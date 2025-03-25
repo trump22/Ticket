@@ -49,12 +49,15 @@ const EventSlider = () => {
                 className="flex justify-center overflow-x-auto scroll-smooth space-x-4 px-4 pb-4"
             >
                 {events.map((event) => (
-                    <div key={event.id} className="slider-item flex-shrink-0 w-80">
+                    <div key={event.id} className="slider-item flex-shrink-0 w-80" >
+
                         <a
                             href={`/event/${event.id}`}
                             target="_blank"
                             rel="noopener noreferrer"
+
                         >
+
                             <img
                                 src={event.imageUrl}
                                 alt={event.name}

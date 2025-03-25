@@ -7,12 +7,12 @@ import axios from 'axios';
 import gmail from '../../assets/svgs/Gmail 1.png';
 import { useDispatch } from 'react-redux';
 import { setToken } from '../../store/tokenSlice.js';
-import {Link, useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import SeachDropDown from "./seachDropDown.jsx";
 import instance from "../../services/axios.js";
-import {clearImgUrl, clearUsername, setImgUrl, setUsername} from "../../store/authSlice.js";
-import {clearAllCookies} from "../../helper/removeAllCookie.js";
+import { clearImgUrl, clearUsername, setImgUrl, setUsername } from "../../store/authSlice.js";
+import { clearAllCookies } from "../../helper/removeAllCookie.js";
 
 const Navbar = () => {
     const dispatch = useDispatch();
@@ -196,9 +196,9 @@ const Navbar = () => {
             Cookies.set('username', user.name, { expires: 7 });
             Cookies.set('phonenumber', user.phoneNumber, { expires: 7 });
             Cookies.set('email', user.email, { expires: 7 });
-            Cookies.set('dob',user.dob,{expires:7});
+            Cookies.set('dob', user.dob, { expires: 7 });
             // thêm dòng này
-            Cookies.set("imgUrl", user.imageUrl, { expires:7 });
+            Cookies.set("imgUrl", user.imageUrl, { expires: 7 });
 
             // Cập nhật tên hiển thị
             setDisplayName(user.name);
@@ -259,15 +259,7 @@ const Navbar = () => {
                     </div>
 
                     <div className="flex items-center">
-                        <img
-                            src={cartIcon}
-                            alt="Sale"
-                            className="w-[33.42px] h-[33.42px]"
-                        />
 
-                        <button className="text-white text-base font-normal font-['Inter'] whitespace-nowrap ">
-                            Bán vé
-                        </button>
 
                         {/* PHẦN XỬ LÝ HIỂN THỊ: nếu displayName === "Đăng nhập" => nút login, register, ngược lại => dropdown */}
                         <div className="ml-[30px]">
@@ -317,11 +309,11 @@ const Navbar = () => {
                                     >
                                         <li>
                                             <Link to="user/info"> <img src={discountIcon} alt="ticket"
-                                                                      className="w-6 h-6"/> Tài khoản của tôi </Link>
+                                                className="w-6 h-6" /> Tài khoản của tôi </Link>
                                         </li>
                                         <li>
                                             <button onClick={handleLogout}><img src={logout} alt="logout"
-                                                                                className="w-6 h-6"/>Đăng xuất
+                                                className="w-6 h-6" />Đăng xuất
                                             </button>
                                         </li>
                                     </ul>
@@ -351,6 +343,9 @@ const Navbar = () => {
             <nav className="bg-black py-2 px-8 flex space-x-8 text-white">
                 <Link to="/" className="hover:underline cursor-pointer">
                     Trang chủ
+                </Link>
+                <Link to="/eventtype/sknt" className="hover:underline cursor-pointer">
+                    Nhạc sống
                 </Link>
                 <Link to="/eventtype/sknt" className="hover:underline cursor-pointer">
                     Sân khấu & Nghệ thuật
