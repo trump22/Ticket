@@ -65,7 +65,7 @@ const EventDetails = () => {
             <p>
                 <strong>End Time:</strong> {event.endTime ? new Date(event.endTime).toLocaleString() : "N/A"}
             </p>
-            <p><strong>Status:</strong> {event.status || "N/A"}</p>
+            <p><strong>Status:</strong> {event.status || "Không có "}</p>
             <p><strong>Organizer ID:</strong> {event.organizersId}</p>
             {/* Thêm các thông tin khác nếu cần */}
         </div>
