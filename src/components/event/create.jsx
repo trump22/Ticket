@@ -19,6 +19,8 @@ const CreateEvent = () => {
     const [logoUrl, setLogoUrl] = useState('');      // Giá trị sẽ gửi lên server
     const [imagePreview, setImagePreview] = useState(null); // Hiển thị preview ảnh nền
     const [logoPreview, setLogoPreview] = useState(null);   // Hiển thị preview logo
+    const [selectedImgBg,setSelectedImgBg] = useState(null);
+    const [selectedImgLogo, setSelectedImgLogo] = useState(null);
 
     // State thông tin tổ chức
     const [organizerName, setOrganizerName] = useState('');
@@ -36,6 +38,7 @@ const CreateEvent = () => {
         const file = e.target.files[0];
         if (file) {
             // Tạo URL tạm để hiển thị preview
+            setSelectedImgBg(file);
             const previewUrl = URL.createObjectURL(file);
             setImagePreview(previewUrl);
             // Tuỳ ý: Lưu base64 hoặc upload file thực tế...
@@ -50,6 +53,7 @@ const CreateEvent = () => {
         e.preventDefault();
         const file = e.dataTransfer.files[0];
         if (file) {
+            setSelectedImgBg(file);
             const previewUrl = URL.createObjectURL(file);
             setImagePreview(previewUrl);
             setImageUrl(previewUrl);
@@ -64,6 +68,7 @@ const CreateEvent = () => {
     const handleFileLogo = (e) => {
         const file = e.target.files[0];
         if (file) {
+            setSelectedImgLogo(file);
             const previewUrl = URL.createObjectURL(file);
             setLogoPreview(previewUrl);
             setLogoUrl(previewUrl);
@@ -74,6 +79,7 @@ const CreateEvent = () => {
         e.preventDefault();
         const file = e.dataTransfer.files[0];
         if (file) {
+            setSelectedImgLogo(file);
             const previewUrl = URL.createObjectURL(file);
             setLogoPreview(previewUrl);
             setLogoUrl(previewUrl);
@@ -87,6 +93,41 @@ const CreateEvent = () => {
     // ---------------------- Submit Form ----------------------
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const token = Cookies.get('token');
+        //Upload ảnh background
+        let uploadedImageUrl = "";
+        console.log("Selected img BG la ",selectedImgBg);
+        if (selectedImgBg) {
+            const formBg = new FormData();
+            formBg.append("file", selectedImgBg);
+
+            const uploadBg = await instance.post("/api/upload/Upload", formBg, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            console.log("Duong link anh sau khi push anh len servcer",uploadBg.data)
+            uploadedImageUrl = uploadBg.data?.imageUrl || "";
+
+        }
+        // BƯỚC 2: Upload logo (nếu có)
+        let uploadedLogoUrl = "";
+        console.log("Selected img BG la ",selectedImgLogo);
+        if (selectedImgLogo) {
+            const formLogo = new FormData();
+            formLogo.append("file", selectedImgLogo);
+
+            const uploadLogo = await instance.post("/api/upload/Upload", formLogo, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            uploadedLogoUrl = uploadLogo.data?.imageUrl || "";
+        }
+
 
         // Tạo payload theo cấu trúc API yêu cầu
         const data = {
@@ -96,13 +137,13 @@ const CreateEvent = () => {
             startTime,
             endTime,
             status,
-            imageUrl,   // URL ảnh nền (hoặc base64 tuỳ logic)
-            logoUrl,    // URL logo
+            imageUrl: uploadedImageUrl,
+            logoUrl: uploadedLogoUrl,
             organizerName,
             organizerPhone,
             organizerEmail,
             organizerLocation,
-            organizerLogoUrl
+            organizerLogoUrl,
         };
 
         try {
@@ -120,12 +161,13 @@ const CreateEvent = () => {
                 }
 
             );
+            console.log("Response data la ",response.data)
 
 
             if (response.status === 200) {
                 setSuccessMessage("Tạo event thành công!");
                 setError("");
-                // Reset form nếu muốn:
+                // Reset form
                 setEventName('');
                 setLocation('');
                 setEventType('');

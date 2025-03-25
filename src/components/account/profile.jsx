@@ -18,10 +18,12 @@ const fields = [
 const Profile = () => {
     const [imageUrl, setImageUrl] = useState("");
     const [imagePreview, setImagePreview] = useState("");
+    const [selectedFile, setSelectedFile] = useState(null);
 
     const handleFileBackground = (e) => {
         const file = e.target.files[0];
         if (file) {
+            setSelectedFile(file);
             const previewUrl = URL.createObjectURL(file);
             setImageUrl(previewUrl);
             setImagePreview(previewUrl)// Chỉ lưu đường dẫn tạm vào state
@@ -52,19 +54,36 @@ const Profile = () => {
 
         const form = new FormData(e.target);
         const data = Object.fromEntries(form.entries());
+        //Gender = string
         if (data.gender === "true") {
             data.gender = true;
         } else {
             data.gender = false;
         }
-        //Luu vao fields
-        data.imageUrl = imageUrl;
-
-        console.log("Data la ",data)
         try {
             const token = Cookies.get('token');
-            console.log("Data truoc khi update la ",data)// hoặc nơi bạn lưu token
-            const response = await instance.put('/api/User/UpdateUser', data, {
+
+            // ⏫ Bước 1: Upload ảnh lên trước (nếu có ảnh)
+            let uploadedImageUrl = null;
+            console.log("selectedFile la ", selectedFile);
+            if (selectedFile) {
+                const imageForm = new FormData();
+                imageForm.append("file", selectedFile);
+                const uploadRes = await instance.post("/api/upload/Upload", imageForm, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                console.log("Upload img la ",uploadRes.data);
+                uploadedImageUrl = uploadRes.data?.imageUrl;
+                data.imageUrl = uploadedImageUrl;
+            }
+
+            console.log("data laf",data)
+
+            // ✅ Bước 2: Gửi thông tin user
+            const response = await instance.put("/api/User/UpdateUser", data, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json",
@@ -72,21 +91,21 @@ const Profile = () => {
             });
 
             console.log('Cập nhật thành công:', response.data);
+
+            // Cập nhật redux & cookies
             if (data.Name) {
-                Cookies.set("username", data.Name); // cập nhật Cookies
-                dispatch(setUsername(data.Name)); // cập nhật Redux
-            }
-            console.log("data img url la ",data.imgUrl)
-            if (data.imageUrl) {
-                dispatch(setImgUrl(data.imageUrl));// chỉ cập nhật vào Redux
-                Cookies.set("imgUrl", data.imageUrl);
+                Cookies.set("username", data.Name);
+                dispatch(setUsername(data.Name));
             }
 
-            // toast.success('Cập nhật thành công!');
-            setShowMessage("Cập nhật thành công")
+            if (uploadedImageUrl) {
+                dispatch(setImgUrl(uploadedImageUrl));
+                Cookies.set("imgUrl", uploadedImageUrl);
+            }
+
+            setShowMessage("Cập nhật thành công");
         } catch (error) {
-            console.error('Cập nhật thất bại:', error);
-            // toast.error('Có lỗi xảy ra khi cập nhật.');
+            console.error("Cập nhật thất bại:", error);
             setShowMessage("Cập nhật không thành công");
             setMessageType("error");
         }
