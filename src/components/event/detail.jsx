@@ -1,7 +1,7 @@
 // src/pages/EventDetails.jsx
 import { useEffect, useState } from 'react';
 import ticket from '../../assets/images/Subtract.png';
-import placeholderImg from '../../assets/images/ok.png';
+import placeholderImg from '../../assets/svgs/ok.png';
 import { useParams } from 'react-router-dom';
 import instance from '../../services/axios';
 
@@ -61,7 +61,7 @@ const EventDetails = () => {
                 }}
             >
                 {/* Phần thông tin event bên trái: fixed width 454px, full height */}
-                <div className="w-[454px] h-full p-8">
+                <div className="w-[448px] h-full p-8">
                     <div className="info">
                         <p
                             id="title"
@@ -140,7 +140,7 @@ const EventDetails = () => {
                     </div>
                 </div>
                 {/* Phần ảnh event bên phải: fixed width 755px, full height */}
-                <div className="relative w-[755px] h-[476px] rounded-lg overflow-hidden">
+                <div className="relative w-[763px] h-[476px] rounded-lg overflow-hidden">
                     {/* Placeholder mask: dùng ảnh này làm khuôn */}
                     <div
                         className="absolute inset-0 bg-no-repeat bg-cover bg-center"
