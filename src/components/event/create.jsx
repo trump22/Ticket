@@ -19,13 +19,14 @@ const CreateEvent = () => {
     const [logoUrl, setLogoUrl] = useState('');      // Giá trị sẽ gửi lên server
     const [imagePreview, setImagePreview] = useState(null); // Hiển thị preview ảnh nền
     const [logoPreview, setLogoPreview] = useState(null);   // Hiển thị preview logo
+    const [selectedImgBg,setSelectedImgBg] = useState(null);
+    const [selectedImgLogo, setSelectedImgLogo] = useState(null);
 
     // State thông tin tổ chức
     const [organizerName, setOrganizerName] = useState('');
     const [organizerPhone, setOrganizerPhone] = useState('');
     const [organizerEmail, setOrganizerEmail] = useState('');
     const [organizerLocation, setOrganizerLocation] = useState('');
-    const [organizerLogoUrl, setOrganizerLogoUrl] = useState('');
 
     // State thông báo
     const [successMessage, setSuccessMessage] = useState('');
@@ -36,6 +37,7 @@ const CreateEvent = () => {
         const file = e.target.files[0];
         if (file) {
             // Tạo URL tạm để hiển thị preview
+            setSelectedImgBg(file);
             const previewUrl = URL.createObjectURL(file);
             setImagePreview(previewUrl);
             // Tuỳ ý: Lưu base64 hoặc upload file thực tế...
@@ -50,6 +52,7 @@ const CreateEvent = () => {
         e.preventDefault();
         const file = e.dataTransfer.files[0];
         if (file) {
+            setSelectedImgBg(file);
             const previewUrl = URL.createObjectURL(file);
             setImagePreview(previewUrl);
             setImageUrl(previewUrl);
@@ -64,6 +67,7 @@ const CreateEvent = () => {
     const handleFileLogo = (e) => {
         const file = e.target.files[0];
         if (file) {
+            setSelectedImgLogo(file);
             const previewUrl = URL.createObjectURL(file);
             setLogoPreview(previewUrl);
             setLogoUrl(previewUrl);
@@ -74,6 +78,7 @@ const CreateEvent = () => {
         e.preventDefault();
         const file = e.dataTransfer.files[0];
         if (file) {
+            setSelectedImgLogo(file);
             const previewUrl = URL.createObjectURL(file);
             setLogoPreview(previewUrl);
             setLogoUrl(previewUrl);
@@ -87,6 +92,41 @@ const CreateEvent = () => {
     // ---------------------- Submit Form ----------------------
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const token = Cookies.get('token');
+        //Upload ảnh background
+        let uploadedImageUrl = "";
+        console.log("Selected img BG la ",selectedImgBg);
+        if (selectedImgBg) {
+            const formBg = new FormData();
+            formBg.append("file", selectedImgBg);
+
+            const uploadBg = await instance.post("/api/upload/Upload", formBg, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            console.log("Duong link anh sau khi push anh len servcer",uploadBg.data)
+            uploadedImageUrl = uploadBg.data?.imageUrl || "";
+
+        }
+        // BƯỚC 2: Upload logo (nếu có)
+        let uploadedLogoUrl = "";
+        console.log("Selected img BG la ",selectedImgLogo);
+        if (selectedImgLogo) {
+            const formLogo = new FormData();
+            formLogo.append("file", selectedImgLogo);
+
+            const uploadLogo = await instance.post("/api/upload/Upload", formLogo, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            uploadedLogoUrl = uploadLogo.data?.imageUrl || "";
+        }
+
 
         // Tạo payload theo cấu trúc API yêu cầu
         const data = {
@@ -96,13 +136,12 @@ const CreateEvent = () => {
             startTime,
             endTime,
             status,
-            imageUrl,   // URL ảnh nền (hoặc base64 tuỳ logic)
-            logoUrl,    // URL logo
+            imageUrl: uploadedImageUrl,
+            logoUrl: uploadedLogoUrl,
             organizerName,
             organizerPhone,
             organizerEmail,
             organizerLocation,
-            organizerLogoUrl
         };
 
         try {
@@ -120,12 +159,13 @@ const CreateEvent = () => {
                 }
 
             );
+            console.log("Response data la ",response.data)
 
 
             if (response.status === 200) {
                 setSuccessMessage("Tạo event thành công!");
                 setError("");
-                // Reset form nếu muốn:
+                // Reset form
                 setEventName('');
                 setLocation('');
                 setEventType('');
@@ -140,7 +180,6 @@ const CreateEvent = () => {
                 setOrganizerPhone('');
                 setOrganizerEmail('');
                 setOrganizerLocation('');
-                setOrganizerLogoUrl('');
             } else {
                 setError("Tạo event thất bại, vui lòng thử lại!");
                 setSuccessMessage("");
@@ -153,7 +192,7 @@ const CreateEvent = () => {
     };
 
     return (
-        <div className="max-w-4xl mx-auto p-6 bg-base-300 rounded-md shadow">
+        <div className="max-w-4xl mx-auto p-6 rounded-md shadow">
             <h1 className="text-3xl font-bold mb-4">Tạo Event &amp; Organizer</h1>
 
             {successMessage && <p className="text-green-500 mb-4">{successMessage}</p>}
@@ -212,13 +251,19 @@ const CreateEvent = () => {
 
                 <div>
                     <label className="block text-sm font-medium mb-1">Loại Event</label>
-                    <input
-                        type="text"
-                        value={eventType}
-                        onChange={(e) => setEventType(e.target.value)}
-                        className="w-full border p-2 rounded"
-                        required
-                    />
+                    <div className="dropdown">
+                        <div tabIndex={0} role="button" className="btn m-1">
+                            {eventType || "Chọn loại event"}
+                        </div>
+                        <ul
+                            tabIndex={0}
+                            className="dropdown-content z-[1] menu p-2 shadow bg-base-300  rounded-box w-52"
+                        >
+                            <li><a onClick={() => setEventType("Sân khấu & nghệ thuật ")}>Sân khấu & nghệ thuật</a></li>
+                            <li><a onClick={() => setStatus("Thể thao")}>Thể thao</a></li>
+                            <li><a onClick={() => setStatus("Khác")}>Khác</a></li>
+                        </ul>
+                    </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
@@ -246,16 +291,25 @@ const CreateEvent = () => {
 
                 <div>
                     <label className="block text-sm font-medium mb-1">Trạng thái</label>
-                    <input
-                        type="text"
-                        value={status}
-                        onChange={(e) => setStatus(e.target.value)}
-                        className="w-full border p-2 rounded"
-                    />
+                    <div className="dropdown">
+                        <div tabIndex={0} role="button" className="btn m-1">
+                            {status || "Chọn trạng thái "}
+                        </div>
+                        <ul
+                            tabIndex={0}
+                            className="dropdown-content z-[1] menu p-2 shadow bg-base-300  rounded-box w-52"
+                        >
+                            <li><a onClick={() => setEventType("Chưa diễn ra")}>Chưa diễn ra</a></li>
+                            <li><a onClick={() => setStatus("Đang diễn ra")}>Đang diễn ra</a></li>
+                            <li><a onClick={() => setStatus("Kết thúc")}>Kết thúc</a></li>
+                        </ul>
+                    </div>
+
                 </div>
 
 
-                {/* Organizer Info */}
+                {/* Organizer Info */
+                }
                 <div>
                     <label className="block text-sm font-medium mb-1">Tên tổ chức</label>
                     <input
@@ -298,17 +352,6 @@ const CreateEvent = () => {
                         className="w-full border p-2 rounded"
                     />
                 </div>
-
-                <div>
-                    <label className="block text-sm font-medium mb-1">Logo URL (Organizer)</label>
-                    <input
-                        type="text"
-                        value={organizerLogoUrl}
-                        onChange={(e) => setOrganizerLogoUrl(e.target.value)}
-                        className="w-full border p-2 rounded"
-                    />
-                </div>
-
                 <button
                     type="submit"
                     className="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700"

@@ -70,7 +70,7 @@ const Settings = () =>{
                 <div className="flex items-center gap-4">
                     {/* Ảnh bên trái */}
                     <img
-                        src={imgUrl ||  Cookies.get("imgUrl") ||"https://i.pinimg.com/550x/13/e2/9b/13e29b0cce233c21c26b254e9aacc3bc.jpg"  }
+                        src={ Cookies.get("imgUrl") ||"https://i.pinimg.com/550x/13/e2/9b/13e29b0cce233c21c26b254e9aacc3bc.jpg"  }
                         alt="Avatar"
                         className="w-14 h-14 rounded-full object-cover"
                     />

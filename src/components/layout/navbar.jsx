@@ -16,7 +16,7 @@ import { clearAllCookies } from "../../helper/removeAllCookie.js";
 
 const Navbar = () => {
     const dispatch = useDispatch();
-
+    const location = useLocation();
     // ----- State liên quan đến modal đăng nhập / đăng ký -----
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [showRegisterModal, setShowRegisterModal] = useState(false);
@@ -221,6 +221,13 @@ const Navbar = () => {
         navigate('/')
 
     };
+    //Alert thông báo vui lòng đăng nhập
+    useEffect(() => {
+        if (location.state?.alertMessage) {
+            alert(location.state.alertMessage); // hoặc toast, modal, v.v.
+        }
+    }, [location]);
+
 
     return (
         <div>
@@ -356,6 +363,10 @@ const Navbar = () => {
                 <Link to="/eventtype/khac" className="hover:underline cursor-pointer">
                     Khác
                 </Link>
+                <Link to={`/eventmonth/${currentMonth}`} className="hover:underline cursor-pointer">
+                    Sự kiện tháng này
+                </Link>
+
             </nav>
 
 
