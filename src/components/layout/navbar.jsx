@@ -353,8 +353,8 @@ const Navbar = () => {
                 <Link to="/" className="hover:underline cursor-pointer">
                     Trang chủ
                 </Link>
-                <Link to="/eventtype/sknt" className="hover:underline cursor-pointer">
-                    Nhạc sống
+                <Link to="/eventtype/am" className="hover:underline cursor-pointer">
+                    Âm nhạc
                 </Link>
                 <Link to="/eventtype/sknt" className="hover:underline cursor-pointer">
                     Sân khấu & Nghệ thuật

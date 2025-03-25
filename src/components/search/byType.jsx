@@ -9,6 +9,7 @@ const typeMap = {
     thethao: "thể thao",
     sknt: "sân khấu & nghệ thuật",
     khac: "khác",
+    am:"âm nhạc",
 };
 
 const EventByTypePage = () => {

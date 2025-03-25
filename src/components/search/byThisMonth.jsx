@@ -7,26 +7,34 @@ const EventByMonth = () =>{
     const { month } = useParams(); // ví dụ: '2025-04'
     const allEvents = useSelector((state) => state.event.allEvents);
     //Lọc theo tháng này
+    console.log("All avent trong event by month la",allEvents)
+    console.log("Month param:", month);
 
     const filteredEvents = useMemo(() => {
-        //!thàng thì về rỗng
+        //!tháng thì về rỗng
         if (!month || !Array.isArray(allEvents)) return [];
 
-        //Tách tháng
+        // Tách tháng
         const [year, monthNum] = month.split("-").map(Number);
-        //Rturn cac event da loc
-        return allEvents.filter((event) => {
-            if (!event.startTime) return false;
 
-            const eventDate = new Date(event.startTime);
+        // Filter các event theo tháng
+        const result = allEvents.filter((event) => {
+
+            if (!event.starTime) return false;
+
+            const eventDate = new Date(event.starTime);
             const eventYear = eventDate.getFullYear();
             const eventMonth = eventDate.getMonth() + 1;
 
-            if (eventYear === year && eventMonth === monthNum) {return true};
-            return false;
+            return eventYear === year && eventMonth === monthNum;
         });
 
+        // Log kết quả sau lọc
+
+
+        return result;
     }, [month, allEvents]);
+
     return (
         <div className="max-w-7xl mx-auto px-4 py-8">
             <h1 className="text-3xl font-bold mb-6 capitalize">
