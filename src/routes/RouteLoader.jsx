@@ -35,7 +35,6 @@ const RouteLoader = () => {
                 <Route path="/eventsearch" element={<SearchPage />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
-
         </Suspense>
     );
 };

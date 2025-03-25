@@ -1,7 +1,7 @@
 import searchIcon from "../../assets/images/search.png";
 import { useEffect, useMemo, useRef, useState } from "react";
-import {useSelector} from "react-redux";
-import {useNavigate} from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const SeachDropDown = () => {
     const [searchResult, setSearchResult] = useState("");
@@ -49,7 +49,7 @@ const SeachDropDown = () => {
                     className="h-[47px] bg-white rounded-xl overflow-hidden w-full shadow-md"
                 >
                     <div className="flex items-center w-full h-full  ">
-                        <img src={searchIcon} alt="Search" className="w-6 h-6 md:w-8 md:h-8"/>
+                        <img src={searchIcon} alt="Search" className="w-6 h-6 md:w-8 md:h-8" />
                         <input
                             type="text"
                             placeholder="Bạn tìm gì hôm nay?"
@@ -58,7 +58,7 @@ const SeachDropDown = () => {
                             onFocus={() => setIsFocused(true)}
                             className="flex-1 outline-none border-none text-black/70 text-sm md:text-base font-normal font-['Inter'] px-2"
                         />
-                        <div className="hidden sm:block h-6 w-px bg-gray-300 mx-2 "/>
+                        <div className="hidden sm:block h-6 w-px bg-gray-300 mx-2 " />
                         <button
                             className="text-black text-sm md:text-base font-['Inter'] px-4 md:px-4 py-1 mr-1 md:mr-3
                             whitespace-nowrap rounded-xl h-full
@@ -69,29 +69,30 @@ const SeachDropDown = () => {
                         </button>
                     </div>
                 </form>
-            {/* Dropdown kết quả */}
-            {isFocused && filteredResults.length > 0 && (
-                <ul className="absolute z-10 mt-2 w-full bg-white border border-gray-200 rounded-xl shadow-lg max-h-60 overflow-auto">
-                    {filteredResults.map((item, index) => (
-                        <li
-                            key={index}
-                            className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm text-black"
-                            onClick={() => {
-                                setSearchResult(item.name);
-                                setIsFocused(false);
-                            }}
-                        >
-                            <img
-                                src={item.imageUrl}
-                                alt={item.name}
-                                className="w-10 h-10 object-cover rounded-md"
-                            />
-                            <span>{item.name}</span>
-                        </li>
-                    ))}
-                </ul>
+                {/* Dropdown kết quả */}
+                {isFocused && filteredResults.length > 0 && (
+                    <ul className="absolute z-10 mt-2 w-full bg-white border border-gray-200 rounded-xl shadow-lg max-h-60 overflow-auto">
+                        {filteredResults.map((item, index) => (
+                            <li
+                                key={index}
+                                className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm text-black"
+                                onClick={() => {
+                                    setSearchResult(item.name);
+                                    setIsFocused(false);
+                                }}
+                            >
+                                <img
+                                    src={item.imageUrl}
 
-            )}
+                                    alt={item.name}
+                                    className="w-10 h-10 object-cover rounded-md"
+                                />
+                                <span>{item.name}</span>
+                            </li>
+                        ))}
+                    </ul>
+
+                )}
             </div>
         </div>
     );

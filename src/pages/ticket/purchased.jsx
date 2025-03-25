@@ -1,9 +1,9 @@
-const BuyList = React.lazy(() => import("../../components/ticket/buyList.jsx"));
+import BuyList from "../../components/ticket/buyList.jsx";
 
-const PurchasedTicket = () =>{
+const PurchasedTicket = () => {
     return (
         <div>
-            <div><BuyList/></div>
+            <div><BuyList /></div>
         </div>
     )
 }

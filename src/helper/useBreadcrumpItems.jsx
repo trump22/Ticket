@@ -9,7 +9,7 @@ const BREADCRUMB_MAP = {
     profile: "Chỉnh sửa thông tin tài khoản",
     event: {
         _label: "Sự kiện",
-        create:"Tạo sự kiện",
+        create: "Tạo sự kiện",
     },
     myevent: "Sự kiện của tôi"
 };

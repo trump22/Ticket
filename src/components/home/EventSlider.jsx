@@ -2,8 +2,8 @@
 import { useRef, useState, useEffect } from "react";
 
 import instance from "../../services/axios";
-import {useDispatch} from "react-redux";
-import {setAllEvents} from "../../store/eventSlice.js";
+import { useDispatch } from "react-redux";
+import { setAllEvents } from "../../store/eventSlice.js";
 
 const EventSlider = () => {
     const sliderRef = useRef(null);

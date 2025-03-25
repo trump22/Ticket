@@ -24,7 +24,7 @@ const TicketTabs = () => {
                         headers: { Authorization: `Bearer ${token}` },
                     }),
                 ]);
-                console.log("ticket la ",ticketRes.data)
+                console.log("ticket la ", ticketRes.data)
                 dispatch(setTickets(ticketRes.data || []));
                 dispatch(setEventsList(eventRes.data || []));
             } catch (err) {
@@ -70,22 +70,20 @@ const TicketTabs = () => {
             <div className="flex items-center justify-center space-x-4 mb-4">
                 <button
                     onClick={() => setActiveTab("all")}
-                    className={`py-2 px-4 rounded text-black transition-colors duration-200 ${
-                        activeTab === "all"
+                    className={`py-2 px-4 rounded text-black transition-colors duration-200 ${activeTab === "all"
                             ? "bg-[#ca9bf6] text-white"
                             : "bg-[#ca9bf6]/20 hover:bg-[#d8b7f9]"
-                    }`}
+                        }`}
                 >
                     Vé đã mua
                 </button>
 
                 <button
                     onClick={() => setActiveTab("cancelled")}
-                    className={`py-2 px-4 rounded text-black transition-colors duration-200 ${
-                        activeTab === "cancelled"
+                    className={`py-2 px-4 rounded text-black transition-colors duration-200 ${activeTab === "cancelled"
                             ? "bg-[#ca9bf6] text-white"
                             : "bg-[#ca9bf6]/20 hover:bg-[#d8b7f9]"
-                    }`}
+                        }`}
                 >
                     Vé đã hủy
                 </button>

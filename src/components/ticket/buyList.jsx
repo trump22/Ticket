@@ -1,10 +1,11 @@
+
 // src/pages/list.jsx
 import React, { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import instance from "../../services/axios.js";
-import {formatDateTime} from "../../helper/convertDate.js";
+import { formatDateTime } from "../../helper/convertDate.js";
 import { useDispatch, useSelector } from 'react-redux';
-import {setTickets,cancelTicket} from "../../store/ticketSlice.js";
+import { setTickets, cancelTicket } from "../../store/ticketSlice.js";
 
 const NoTicketsComponent = React.lazy(() => import("./notFound.jsx"));
 
@@ -30,7 +31,7 @@ const BuyList = () => {
             .then((response) => {
                 console.log("Response ticket data:", response.data);
                 if (Array.isArray(response.data)) {
-                    console.log("Ticket la ",response.data)
+                    console.log("Ticket la ", response.data)
                     setTickets(response.data);
                     dispatch(setTickets(response.data));
                 } else {
@@ -73,7 +74,7 @@ const BuyList = () => {
 
     // Tạo mapping từ eventId sang event name
     const eventMapping = eventsList.reduce((acc, event) => {
-        console.log("eventID la ",event.id)
+        console.log("eventID la ", event.id)
         acc[event.id] = event.name;
         return acc;
     }, {});
@@ -132,43 +133,43 @@ const BuyList = () => {
             <div className="hidden md:block overflow-x-auto">
                 <table className="table table-md table-zebra w-full text-white border border-white">
                     <thead className="bg-base-200 text-white">
-                    <tr>
-                        <th className="border border-white">ID Vé</th>
-                        <th className="border border-white">Giá</th>
-                        <th className="border border-white">Trạng thái</th>
-                        <th className="border border-white">Tên người dùng</th>
-                        <th className="border border-white">Tên sự kiện</th>
-                        <th className="border border-white">Hành động</th>
-                    </tr>
+                        <tr>
+                            <th className="border border-white">ID Vé</th>
+                            <th className="border border-white">Giá</th>
+                            <th className="border border-white">Trạng thái</th>
+                            <th className="border border-white">Tên người dùng</th>
+                            <th className="border border-white">Tên sự kiện</th>
+                            <th className="border border-white">Hành động</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    {activeTickets.length === 0 ? (
-                        <tr>
-                            <td colSpan="6" className="text-center border border-white py-4">
-                                Không có vé mua.
-                            </td>
-                        </tr>
-                    ) : (
-                        activeTickets.map((ticket) => (
-                            <tr key={ticket.id} className="hover:bg-base-300 text-white">
-                                <td className="border border-white">{ticket.id}</td>
-                                <td className="border border-white">{ticket.price.toLocaleString()} đ</td>
-                                <td className="border border-white">{ticket.status}</td>
-                                <td className="border border-white">{Cookies.get('username')}</td>
-                                <td className="border border-white">{eventMapping[ticket.eventId] || 'Không xác định'}</td>
-                                <td className="border border-white">
-                                    {ticket.status !== "Đã hủy" && (
-                                        <button
-                                            onClick={() => handleCancelTicket(ticket.id)}
-                                            className="py-1 px-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
-                                        >
-                                            Hủy vé
-                                        </button>
-                                    )}
+                        {activeTickets.length === 0 ? (
+                            <tr>
+                                <td colSpan="6" className="text-center border border-white py-4">
+                                    Không có vé mua.
                                 </td>
                             </tr>
-                        ))
-                    )}
+                        ) : (
+                            activeTickets.map((ticket) => (
+                                <tr key={ticket.id} className="hover:bg-base-300 text-white">
+                                    <td className="border border-white">{ticket.id}</td>
+                                    <td className="border border-white">{ticket.price.toLocaleString()} đ</td>
+                                    <td className="border border-white">{ticket.status}</td>
+                                    <td className="border border-white">{Cookies.get('username')}</td>
+                                    <td className="border border-white">{eventMapping[ticket.eventId] || 'Không xác định'}</td>
+                                    <td className="border border-white">
+                                        {ticket.status !== "Đã hủy" && (
+                                            <button
+                                                onClick={() => handleCancelTicket(ticket.id)}
+                                                className="py-1 px-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+                                            >
+                                                Hủy vé
+                                            </button>
+                                        )}
+                                    </td>
+                                </tr>
+                            ))
+                        )}
                     </tbody>
                 </table>
             </div>
@@ -182,9 +183,8 @@ const BuyList = () => {
                     activeTickets.map((ticket, index) => (
                         <div
                             key={ticket.id}
-                            className={`bg-base-200 px-2 text-white ${
-                                index !== tickets.length - 1 ? "border-b border-white" : ""
-                            }`}
+                            className={`bg-base-200 px-2 text-white ${index !== tickets.length - 1 ? "border-b border-white" : ""
+                                }`}
                         >
                             <p className="font-light">
                                 <span className="border-b-2 font-semibold">ID Vé:</span>

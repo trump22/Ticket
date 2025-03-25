@@ -134,9 +134,9 @@ const Navbar = () => {
 
                 // Lưu token vào Redux
                 dispatch(setToken(response.data.token));
+
                 // Lưu token vào cookie
                 Cookies.set('token', response.data.token, { expires: 7 });
-                console.log("Response data la",response.data)
 
                 // cập nhật khi có dữ liệu từ API
                 // Lấy thông tin user
@@ -185,7 +185,7 @@ const Navbar = () => {
             const user = await getUserById(tokenValue);
 
             // Lưu username vào cookie
-            console.log("user la ",user);
+            console.log("user la ", user);
             Cookies.set('user', user, { expires: 7 });
 
             Cookies.set('username', user.name, { expires: 7 });
@@ -226,7 +226,7 @@ const Navbar = () => {
                 </div>
 
                 {/* search Bar */}
-                <SeachDropDown/>
+                <SeachDropDown />
 
                 {/* Các nút hành động */}
                 <div className="flex items-center ml-8 space-x-6">
@@ -271,7 +271,7 @@ const Navbar = () => {
                                     >
                                         Đăng nhập
                                     </button>
-                                    <div className="h-6 w-px bg-white mx-1"/>
+                                    <div className="h-6 w-px bg-white mx-1" />
                                     <button
                                         onClick={handleRegisterClick}
                                         className="w-[88px] h-[33px] flex items-center justify-center text-white text-base font-normal font-['Inter']"
@@ -297,7 +297,7 @@ const Navbar = () => {
                                             xmlns="http://www.w3.org/2000/svg"
                                             className="mt-1 ml-2"
                                         >
-                                            <path d="M5 8L0.67 0.5L9.33 0.5L5 8Z" fill="white"/>
+                                            <path d="M5 8L0.67 0.5L9.33 0.5L5 8Z" fill="white" />
                                         </svg>
 
                                     </div>
@@ -324,7 +324,7 @@ const Navbar = () => {
 
                     {/* Account Icon */}
                     <div className="ml-6 flex items-center space-x-2 cursor-pointer">
-                        <img src={vnFlag} alt="VN Flag" className="w-8 h-8"/>
+                        <img src={vnFlag} alt="VN Flag" className="w-8 h-8" />
                         <svg
                             width="10"
                             height="8"
@@ -333,7 +333,7 @@ const Navbar = () => {
                             xmlns="http://www.w3.org/2000/svg"
                             className="mt-1"
                         >
-                            <path d="M5 8L0.67 0.5L9.33 0.5L5 8Z" fill="white"/>
+                            <path d="M5 8L0.67 0.5L9.33 0.5L5 8Z" fill="white" />
                         </svg>
                     </div>
                 </div>
