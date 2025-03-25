@@ -1,26 +1,14 @@
 import searchIcon from "../../assets/images/search.png";
 import { useEffect, useMemo, useRef, useState } from "react";
-import instance from "../../services/axios.js";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-const Searchbar = () => {
+const SeachDropDown = () => {
     const [searchResult, setSearchResult] = useState("");
-    const [dataSearch, setDataSearch] = useState([]);
+    const dataSearch = useSelector((state) => state.event.allEvents);
     const [isFocused, setIsFocused] = useState(false);
     const wrapperRef = useRef(null);
-
-    //Gọi danh sách phim
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await instance.get("/api/Event/GetAllEvent");
-                setDataSearch(response.data);
-            } catch (err) {
-                console.log("Lỗi khi gọi API:", err);
-            }
-        };
-        fetchData();
-    }, []);
-
+    const navigate = useNavigate();
     // Ẩn dropdown
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -40,12 +28,26 @@ const Searchbar = () => {
             return keywords.every((word) => lowerItem.includes(word));
         });
     }, [searchResult, dataSearch]);
+    //Tifm theo tên
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+
+
+        if (searchResult.trim() !== "") {
+            // Điều hướng kèm từ khóa tìm kiếm trên URL
+            navigate(`/eventsearch?keyword=${encodeURIComponent(searchResult)}`);
+        }
+    };
 
     return (
         <div className="w-1x1  flex justify-center">
             <div ref={wrapperRef} className="relative w-full max-w-[376px]">
-                {/* Search Box */}
-                <div className="h-[47px] bg-white rounded-xl overflow-hidden w-full shadow-md">
+                {/* search Box */}
+
+                <form
+                    onSubmit={handleSearchSubmit}
+                    className="h-[47px] bg-white rounded-xl overflow-hidden w-full shadow-md"
+                >
                     <div className="flex items-center w-full h-full  ">
                         <img src={searchIcon} alt="Search" className="w-6 h-6 md:w-8 md:h-8" />
                         <input
@@ -65,31 +67,35 @@ const Searchbar = () => {
                         >
                             Tìm kiếm
                         </button>
-
-
                     </div>
-                </div>
-
+                </form>
                 {/* Dropdown kết quả */}
                 {isFocused && filteredResults.length > 0 && (
                     <ul className="absolute z-10 mt-2 w-full bg-white border border-gray-200 rounded-xl shadow-lg max-h-60 overflow-auto">
                         {filteredResults.map((item, index) => (
                             <li
                                 key={index}
-                                className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm text-black"
+                                className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm text-black"
                                 onClick={() => {
                                     setSearchResult(item.name);
                                     setIsFocused(false);
                                 }}
                             >
-                                {item.name}
+                                <img
+                                    src={item.imageUrl}
+
+                                    alt={item.name}
+                                    className="w-10 h-10 object-cover rounded-md"
+                                />
+                                <span>{item.name}</span>
                             </li>
                         ))}
                     </ul>
+
                 )}
             </div>
         </div>
     );
 };
 
-export default Searchbar;
+export default SeachDropDown;

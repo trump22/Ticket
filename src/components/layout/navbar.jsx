@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { setToken } from '../../store/tokenSlice.js';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import Searchbar from "./searchbar.jsx";
+import SeachDropDown from "./seachDropDown.jsx";
 import instance from "../../services/axios.js";
 
 const Navbar = () => {
@@ -181,8 +181,15 @@ const Navbar = () => {
     const handleLoginSuccess = async (tokenValue) => {
         try {
             const user = await getUserById(tokenValue);
+
             // Lưu username vào cookie
+            console.log("user la ", user);
+            Cookies.set('user', user, { expires: 7 });
+
             Cookies.set('username', user.name, { expires: 7 });
+            Cookies.set('phonenumber', user.phoneNumber, { expires: 7 });
+            Cookies.set('email', user.email, { expires: 7 });
+            Cookies.set('dob', user.dob, { expires: 7 });
 
             // Cập nhật tên hiển thị
             setDisplayName(user.name);
@@ -214,8 +221,8 @@ const Navbar = () => {
                     </Link>
                 </div>
 
-                {/* Search Bar */}
-                <Searchbar/>
+                {/* search Bar */}
+                <SeachDropDown />
 
                 {/* Các nút hành động */}
                 <div className="flex items-center ml-8 space-x-6">
@@ -260,7 +267,7 @@ const Navbar = () => {
                                     >
                                         Đăng nhập
                                     </button>
-                                    <div className="h-6 w-px bg-white mx-1"/>
+                                    <div className="h-6 w-px bg-white mx-1" />
                                     <button
                                         onClick={handleRegisterClick}
                                         className="w-[88px] h-[33px] flex items-center justify-center text-white text-base font-normal font-['Inter']"
@@ -286,7 +293,7 @@ const Navbar = () => {
                                             xmlns="http://www.w3.org/2000/svg"
                                             className="mt-1 ml-2"
                                         >
-                                            <path d="M5 8L0.67 0.5L9.33 0.5L5 8Z" fill="white"/>
+                                            <path d="M5 8L0.67 0.5L9.33 0.5L5 8Z" fill="white" />
                                         </svg>
 
                                     </div>
@@ -298,11 +305,11 @@ const Navbar = () => {
                                     >
                                         <li>
                                             <Link to="/profile"> <img src={discountIcon} alt="ticket"
-                                                                      className="w-6 h-6"/> Tài khoản của tôi </Link>
+                                                className="w-6 h-6" /> Tài khoản của tôi </Link>
                                         </li>
                                         <li>
                                             <button onClick={handleLogout}><img src={logout} alt="logout"
-                                                                                className="w-6 h-6"/>Đăng xuất
+                                                className="w-6 h-6" />Đăng xuất
                                             </button>
                                         </li>
                                     </ul>
@@ -313,7 +320,7 @@ const Navbar = () => {
 
                     {/* Account Icon */}
                     <div className="ml-6 flex items-center space-x-2 cursor-pointer">
-                        <img src={vnFlag} alt="VN Flag" className="w-8 h-8"/>
+                        <img src={vnFlag} alt="VN Flag" className="w-8 h-8" />
                         <svg
                             width="10"
                             height="8"
@@ -322,7 +329,7 @@ const Navbar = () => {
                             xmlns="http://www.w3.org/2000/svg"
                             className="mt-1"
                         >
-                            <path d="M5 8L0.67 0.5L9.33 0.5L5 8Z" fill="white"/>
+                            <path d="M5 8L0.67 0.5L9.33 0.5L5 8Z" fill="white" />
                         </svg>
                     </div>
                 </div>

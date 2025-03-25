@@ -15,22 +15,22 @@ const items = [
     {
         title: 'Thông tin tài khoản',
         logo: 'person',
-        to: '/profile',
+        to: '/',
     },
     {
-        title: 'Vé đã mua',
+        title: 'Lịch sử mua vé',
         logo: 'confirmation_number',
         to: '/ticket/tab',
     },
     {
-        title: 'Bán vé',
-        logo:'local_activity',
-        to: '/',
+        title: 'Chỉnh sửa thông tài khoản ',
+        logo:'settings',
+        to: '/profile',
     },
     {
-        title: 'Sự kiện của tôi',
+        title: 'Tạo sự kiện ',
         logo:'photo_camera',
-        to: '/',
+        to: '/event/create',
     },
 
 ]
