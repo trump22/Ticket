@@ -4,9 +4,11 @@ import { Routes, Route } from "react-router-dom";
 import Home from "../pages/home.jsx";
 import NotFound from "../pages/NotFound.jsx";
 import routes from "./index.jsx";
+
+const EventByMonth = React.lazy(() =>import("../components/search/byThisMonth.jsx"))
 const PrivateRoute = React.lazy(() => import("./private.jsx"))
-const EventByType = React.lazy(() => import("../components/search/showByType.jsx"));
-const SearchPage = React.lazy(() => import("../components/search/searchByName.jsx"))
+const EventByType = React.lazy(() => import("../components/search/byType.jsx"));
+const SearchPage = React.lazy(() => import("../components/search/byName.jsx"))
 const Account = React.lazy(() => import("../components/layout/account.jsx"));
 
 const RouteLoader = () => {
@@ -31,6 +33,7 @@ const RouteLoader = () => {
                 {routes.map(({ path, component: Component }) => (
                     <Route key={path} path={path} element={<Component />} />
                 ))}
+                <Route path="/eventmonth/:month" element={<EventByMonth />} />
                 <Route path="/event/:id" element={<EventDetails />} />
                 <Route path="/eventtype/:type" element={<EventByType />} />
                 <Route path="/" element={<Home />} />

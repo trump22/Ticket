@@ -11,8 +11,11 @@ import {Link, useLocation, useNavigate} from 'react-router-dom';
 import Cookies from 'js-cookie';
 import SeachDropDown from "./seachDropDown.jsx";
 import instance from "../../services/axios.js";
-import {clearImgUrl, clearUsername, setImgUrl, setUsername} from "../../store/authSlice.js";
+import {clearImgUrl, clearUsername} from "../../store/authSlice.js";
 import {clearAllCookies} from "../../helper/removeAllCookie.js";
+import {getCurrentMonth} from "../../helper/getCurrentMonth.js";
+
+const currentMonth = getCurrentMonth();
 
 const Navbar = () => {
     const dispatch = useDispatch();
@@ -368,6 +371,10 @@ const Navbar = () => {
                 <Link to="/eventtype/khac" className="hover:underline cursor-pointer">
                     Khác
                 </Link>
+                <Link to={`/eventmonth/${currentMonth}`} className="hover:underline cursor-pointer">
+                    Sự kiện tháng này
+                </Link>
+
             </nav>
 
 
