@@ -18,7 +18,7 @@ const EventDetail = () => {
 
     const event = useMemo(() => {
         if (!id || !Array.isArray(allEvents)) return null;
-        let event = null;
+        let matchedEvent = null;
 
         if (Array.isArray(allEvents) && allEvents.length > 0) {
             // Duyệt qua từng sự kiện trong mảng
@@ -29,15 +29,15 @@ const EventDetail = () => {
                 // Nếu id của event hiện tại trùng với id trên URL
                 if (currentEvent.id === id) {
                     console.log("event tương thích với url ", currentEvent);
-                    event = currentEvent; // Lưu sự kiện phù hợp vào biến event
+                    matchedEvent = currentEvent; // Lưu sự kiện phù hợp vào biến event
                     break;
                 }
             }
-            console.log("event sau khi tim thay la ",event)
+            console.log("event sau khi tim thay la ",matchedEvent)
         } else {
             console.warn("Danh sách sự kiện không hợp lệ hoặc đang trống.");
         }
-        return event;
+        return matchedEvent;
 
     }, [id, allEvents]);
     console.log("Event sau khi memmo la ",event)
