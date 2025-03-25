@@ -13,7 +13,9 @@ import SeachDropDown from "./seachDropDown.jsx";
 import instance from "../../services/axios.js";
 import { clearImgUrl, clearUsername, setImgUrl, setUsername } from "../../store/authSlice.js";
 import { clearAllCookies } from "../../helper/removeAllCookie.js";
+import {getCurrentMonth} from "../../helper/getCurrentMonth.js";
 
+const currentMonth = getCurrentMonth();
 const Navbar = () => {
     const dispatch = useDispatch();
     const location = useLocation();
