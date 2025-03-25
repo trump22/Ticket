@@ -1,66 +1,90 @@
-// src/pages/EventDetails.jsx
-import { useEffect, useState } from 'react';
+
+import { useSelector } from "react-redux";
+import {useMemo} from "react";
 import ticket from '../../assets/images/Subtract.png';
 import placeholderImg from '../../assets/images/ok.png';
-import { useParams } from 'react-router-dom';
-import instance from '../../services/axios';
+import {useNavigate, useParams} from 'react-router-dom';
+import instance from "../../services/axios.js";
+import Cookies from "js-cookie";
 
-const EventDetails = () => {
-    // Lấy event id từ URL thông qua useParams
-    const { id } = useParams();
-    const [event, setEvent] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+const EventDetail = () => {
+    const { id } = useParams(); // id từ URL
+    console.log("id la ",id)
+    const navigate = useNavigate();
+    const token = Cookies.get('token');
+    const allEvents = useSelector((state) => state.event.allEvents);
+    console.log("all events la ",allEvents)
 
-    useEffect(() => {
-        // Gọi API lấy thông tin sự kiện theo id
-        instance
-            .get(`/api/Event/GetEventById/${id}`)
-            .then((response) => {
-                setEvent(response.data);
-                setLoading(false);
-            })
-            .catch((err) => {
-                console.error("Error fetching event details:", err);
-                setError(err.message || "Error fetching event details");
-                setLoading(false);
-            });
-    }, [id]);
 
-    if (loading) {
-        return (
-            <div className="flex items-center justify-center h-screen">
-                <p className="text-gray-600">Loading event details...</p>
-            </div>
-        );
-    }
+    const event = useMemo(() => {
+        if (!id || !Array.isArray(allEvents)) return null;
+        let event = null;
 
-    if (error) {
-        return (
-            <div className="flex items-center justify-center h-screen">
-                <p className="text-red-500">Error: {error}</p>
-            </div>
-        );
-    }
+        if (Array.isArray(allEvents) && allEvents.length > 0) {
+            // Duyệt qua từng sự kiện trong mảng
+            for (let i = 0; i < allEvents.length; i++) {
 
+                const currentEvent = allEvents[i];
+
+                // Nếu id của event hiện tại trùng với id trên URL
+                if (currentEvent.id === id) {
+                    console.log("event tương thích với url ", currentEvent);
+                    event = currentEvent; // Lưu sự kiện phù hợp vào biến event
+                    break;
+                }
+            }
+            console.log("event sau khi tim thay la ",event)
+        } else {
+            console.warn("Danh sách sự kiện không hợp lệ hoặc đang trống.");
+        }
+        return event;
+
+    }, [id, allEvents]);
+    console.log("Event sau khi memmo la ",event)
+
+    const handleSubmit = async () => {
+        try {
+            const response = await instance.post(
+                '/api/OrderDetail/AddOrderDetail',
+                {
+                    eventId: id,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+            if (response.status === 200) {
+                alert("Bạn đã mua vé thành công!");
+                navigate("/ticket/tab");
+            } else {
+                alert("Có lỗi xảy ra, vui lòng thử lại!");
+                console.error("Chi tiết lỗi:", response);
+            }
+        } catch (error) {
+            alert("Đã xảy ra lỗi khi mua vé!");
+            console.error("Lỗi khi gọi API:", error);
+        }
+    };
+    // Tìm event theo id
+
+    console.log("eveent la ",event)
     if (!event) {
-        return (
-            <div className="flex items-center justify-center h-screen">
-                <p className="text-gray-600">No event details found.</p>
-            </div>
-        );
+        return <p className="text-center text-red-500 mt-10">Không tìm thấy sự kiện.</p>;
     }
 
     return (
         <div id="banner" className="max-w-6xl mx-auto mt-4 md:mt-8 px-4">
-            {/* Container có kích thước cố định: 1209px x 476px */}
             <div
                 className="flex w-[1209px] h-[476px] bg-cover bg-no-repeat bg-center"
                 style={{
                     backgroundImage: `url(${ticket})`,
                 }}
             >
-                {/* Phần thông tin event bên trái: fixed width 454px, full height */}
+                {/* LEFT info */}
                 <div className="w-[454px] h-full p-8">
                     <div className="info">
                         <p
@@ -70,46 +94,18 @@ const EventDetails = () => {
                             {event.name}
                         </p>
                         <p id="date" className="flex items-center text-xl text-white mt-2">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="21"
-                                height="20"
-                                viewBox="0 0 21 20"
-                                fill="none"
-                                className="mr-1"
-                            >
-                                <g clipPath="url(#calendar-detail_svg__clip0)">
-                                    <path
-                                        d="M6.25 0a1 1 0 011 1v1h6V1a1 1 0 112 0v1h1a4 4 0 014 4v2h-20V6a4 4 0 014-4h1V1a1 1 0 011-1zM20.25 10h-20v8a2 2 0 002 2h16a2 2 0 002-2v-8z"
-                                        fill="#000"
-                                    ></path>
-                                </g>
-                                <defs>
-                                    <clipPath id="calendar-detail_svg__clip0">
-                                        <path fill="#fff" transform="translate(.25)" d="M0 0h20v20H0z"></path>
-                                    </clipPath>
-                                </defs>
+                            {/* ICON */}
+                            <svg className="mr-1" xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
+                                <path d="M6.25 0a1 1 0 011 1v1h6V1a1 1 0 112 0v1h1a4 4 0 014 4v2h-20V6a4 4 0 014-4h1V1a1 1 0 011-1zM20.25 10h-20v8a2 2 0 002 2h16a2 2 0 002-2v-8z" fill="#000"></path>
                             </svg>
                             <strong>
-                                Bắt đầu:{" "}
-                                {event.starTime
-                                    ? new Date(event.starTime).toLocaleString()
-                                    : "N/A"}{" "}
-                                - Đến:{" "}
-                                {event.endTime
-                                    ? new Date(event.endTime).toLocaleString()
-                                    : "N/A"}
+                                Bắt đầu: {event.starTime ? new Date(event.starTime).toLocaleString() : "N/A"} - Đến:{" "}
+                                {event.endTime ? new Date(event.endTime).toLocaleString() : "N/A"}
                             </strong>
                         </p>
                         <p id="venue" className="flex items-center text-xl text-white mt-2 mb-5">
-                            <svg
-                                width="22"
-                                height="28"
-                                viewBox="0 0 22 28"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="mr-1"
-                            >
+                            {/* LOCATION ICON */}
+                            <svg width="22" height="28" viewBox="0 0 22 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-1">
                                 <path
                                     fillRule="evenodd"
                                     clipRule="evenodd"
@@ -118,7 +114,7 @@ const EventDetails = () => {
                                 ></path>
                             </svg>
                             <div className="venue-text font-medium text-base">
-                                {event.location || "Not provided"}
+                                {event.location || "Không rõ địa điểm"}
                             </div>
                         </p>
                         <div className="price mt-4">
@@ -131,6 +127,7 @@ const EventDetails = () => {
                             <div className="mt-2">
                                 <button
                                     id="buynow-btn"
+                                    onClick={handleSubmit}
                                     className="px-4 py-2 bg-[#2DC275] text-white rounded hover:opacity-90 transition"
                                 >
                                     Mua vé ngay
@@ -139,9 +136,9 @@ const EventDetails = () => {
                         </div>
                     </div>
                 </div>
-                {/* Phần ảnh event bên phải: fixed width 755px, full height */}
+
+                {/* RIGHT image */}
                 <div className="relative w-[755px] h-[476px] rounded-lg overflow-hidden">
-                    {/* Placeholder mask: dùng ảnh này làm khuôn */}
                     <div
                         className="absolute inset-0 bg-no-repeat bg-cover bg-center"
                         style={{
@@ -154,7 +151,6 @@ const EventDetails = () => {
                             WebkitMaskRepeat: 'no-repeat',
                         }}
                     />
-                    {/* Ảnh event: nếu có, sẽ được hiển thị đè lên và “cắt” theo mask */}
                     {event.imageUrl && (
                         <img
                             src={event.imageUrl}
@@ -172,12 +168,9 @@ const EventDetails = () => {
                         />
                     )}
                 </div>
-
             </div>
-        </div >
-
-
+        </div>
     );
 };
 
-export default EventDetails;
+export default EventDetail;
