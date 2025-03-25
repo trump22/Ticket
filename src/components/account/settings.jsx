@@ -40,7 +40,6 @@ const items = [
 const Settings = () =>{
     const breadcrumbItems = useBreadcrumbItems();
     const username = useSelector((state) => state.auth.username);
-    console.log("Username: " + username);
     const displayName = username && username.trim() !== "" ? username : "Tài khoản của bạn";
     const imgUrl = useSelector((state) => state.auth.imgUrl);
 

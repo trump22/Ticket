@@ -67,7 +67,7 @@ const Profile = () => {
 
             // ⏫ Bước 1: Upload ảnh lên trước (nếu có ảnh)
             let uploadedImageUrl = null;
-            console.log("selectedFile la ", selectedFile);
+
             if (selectedFile) {
                 const imageForm = new FormData();
                 imageForm.append("file", selectedFile);
@@ -77,12 +77,12 @@ const Profile = () => {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                console.log("Upload img la ",uploadRes.data);
+
                 uploadedImageUrl = uploadRes.data?.imageUrl;
                 data.imageUrl = uploadedImageUrl;
             }
 
-            console.log("data laf",data)
+
 
             // ✅ Bước 2: Gửi thông tin user
             const response = await instance.put("/api/User/UpdateUser", data, {

@@ -9,11 +9,11 @@ import Cookies from "js-cookie";
 
 const EventDetail = () => {
     const { id } = useParams(); // id từ URL
-    console.log("id la ",id)
+
     const navigate = useNavigate();
     const token = Cookies.get('token');
     const allEvents = useSelector((state) => state.event.allEvents);
-    console.log("all events la ",allEvents)
+
 
 
     const event = useMemo(() => {
@@ -28,19 +28,19 @@ const EventDetail = () => {
 
                 // Nếu id của event hiện tại trùng với id trên URL
                 if (currentEvent.id === id) {
-                    console.log("event tương thích với url ", currentEvent);
+
                     matchedEvent = currentEvent; // Lưu sự kiện phù hợp vào biến event
                     break;
                 }
             }
-            console.log("event sau khi tim thay la ",matchedEvent)
+
         } else {
             console.warn("Danh sách sự kiện không hợp lệ hoặc đang trống.");
         }
         return matchedEvent;
 
     }, [id, allEvents]);
-    console.log("Event sau khi memmo la ",event)
+
 
     const handleSubmit = async () => {
         try {
@@ -71,7 +71,7 @@ const EventDetail = () => {
     };
     // Tìm event theo id
 
-    console.log("eveent la ",event)
+
     if (!event) {
         return <p className="text-center text-red-500 mt-10">Không tìm thấy sự kiện.</p>;
     }
@@ -151,6 +151,7 @@ const EventDetail = () => {
                             WebkitMaskRepeat: 'no-repeat',
                         }}
                     />
+                    {/* Ảnh event: nếu có, sẽ được hiển thị đè lên và “cắt” theo mask */}
                     {event.imageUrl && (
                         <img
                             src={event.imageUrl}
