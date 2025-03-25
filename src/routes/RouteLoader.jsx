@@ -9,7 +9,7 @@ const SearchPage = React.lazy(() => import("../components/search/searchByName.js
 const Account = React.lazy(() => import("../components/layout/account.jsx"));
 
 const RouteLoader = () => {
-    const sidebarPaths = ["/updateprofiles","/ticket/tab","/event/create"];
+    const sidebarPaths = ["/user/update","/ticket/tab","/event/create","/user/info"];
 
     return (
         <Suspense fallback={<div>Loading...</div>}>

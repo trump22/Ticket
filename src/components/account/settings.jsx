@@ -2,6 +2,7 @@ import {Link} from "react-router-dom";
 import {useBreadcrumbItems} from "../../helper/useBreadcrumpItems.jsx";
 import {useSelector} from "react-redux";
 import kamenrider from '../../assets/images/kamenridermeme.jpg'
+import Cookies from "js-cookie";
     //Breadcumb map để biết được hiển thị giưữa các Link
         // const BREADCRUMB_MAP = {
         //     ticket: {
@@ -16,7 +17,7 @@ const items = [
     {
         title: 'Thông tin tài khoản',
         logo: 'person',
-        to: '/',
+        to: '/user/info',
     },
     {
         title: 'Lịch sử mua vé',
@@ -26,7 +27,7 @@ const items = [
     {
         title: 'Chỉnh sửa thông tài khoản ',
         logo:'settings',
-        to: '/updateProfiles',
+        to: '/user/update',
     },
     {
         title: 'Tạo sự kiện ',
@@ -69,7 +70,7 @@ const Settings = () =>{
                 <div className="flex items-center gap-4">
                     {/* Ảnh bên trái */}
                     <img
-                        src={imgUrl || "https://i.pinimg.com/550x/13/e2/9b/13e29b0cce233c21c26b254e9aacc3bc.jpg" }
+                        src={imgUrl ||  Cookies.get("imgUrl") ||"https://i.pinimg.com/550x/13/e2/9b/13e29b0cce233c21c26b254e9aacc3bc.jpg"  }
                         alt="Avatar"
                         className="w-14 h-14 rounded-full object-cover"
                     />
