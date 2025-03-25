@@ -76,9 +76,10 @@ const Profile = () => {
                 Cookies.set("username", data.Name); // cập nhật Cookies
                 dispatch(setUsername(data.Name)); // cập nhật Redux
             }
-            if (data.imgUrl) {
-                dispatch(setImgUrl(data.imgUrl));// chỉ cập nhật vào Redux
-                Cookies.set("imgUrl", data.imgUrl);
+            console.log("data img url la ",data.imgUrl)
+            if (data.imageUrl) {
+                dispatch(setImgUrl(data.imageUrl));// chỉ cập nhật vào Redux
+                Cookies.set("imgUrl", data.imageUrl);
             }
 
             // toast.success('Cập nhật thành công!');

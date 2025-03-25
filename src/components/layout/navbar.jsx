@@ -7,11 +7,12 @@ import axios from 'axios';
 import gmail from '../../assets/svgs/Gmail 1.png';
 import { useDispatch } from 'react-redux';
 import { setToken } from '../../store/tokenSlice.js';
-import { Link } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import Cookies from 'js-cookie';
 import SeachDropDown from "./seachDropDown.jsx";
 import instance from "../../services/axios.js";
-import {setImgUrl, setUsername} from "../../store/authSlice.js";
+import {clearImgUrl, clearUsername, setImgUrl, setUsername} from "../../store/authSlice.js";
+import {clearAllCookies} from "../../helper/removeAllCookie.js";
 
 const Navbar = () => {
     const dispatch = useDispatch();
@@ -40,6 +41,8 @@ const Navbar = () => {
     // Tên hiển thị trên Navbar (nếu chưa login => “Đăng nhập”, nếu login => “username”)
     const [displayName, setDisplayName] = useState("Đăng nhập");
 
+    const navigate = useNavigate();
+
     // Mỗi khi mount hoặc username trong cookie thay đổi -> cập nhật lại displayName
     useEffect(() => {
         const savedUsername = Cookies.get('username');
@@ -65,6 +68,8 @@ const Navbar = () => {
         setShowRegisterModal(true);
         setShowLoginModal(false);
     };
+
+
 
     // ========================= ĐĂNG KÝ =========================
     const handleSubmit = async (e) => {
@@ -208,10 +213,13 @@ const Navbar = () => {
     // ========================= LOGOUT (tuỳ chọn) =========================
     const handleLogout = () => {
         // Xoá cookie
-        Cookies.remove('token');
-        Cookies.remove('username');
+        clearAllCookies();
+        dispatch(clearUsername());
+        dispatch(clearImgUrl());
         // Đưa về trạng thái chưa đăng nhập
         setDisplayName("Đăng nhập");
+        navigate('/')
+
     };
 
     return (
@@ -308,7 +316,7 @@ const Navbar = () => {
                                         className="dropdown-content menu bg-base-100 rounded-box z-2 w-44 p-2 shadow-sm "
                                     >
                                         <li>
-                                            <Link to="/updateProfiles"> <img src={discountIcon} alt="ticket"
+                                            <Link to="user/info"> <img src={discountIcon} alt="ticket"
                                                                       className="w-6 h-6"/> Tài khoản của tôi </Link>
                                         </li>
                                         <li>

@@ -6,7 +6,11 @@ const BREADCRUMB_MAP = {
         tab: "Vé đã mua",
         sold: "Vé đã bán"
     },
-    profile: "Chỉnh sửa thông tin tài khoản",
+   user:{
+     _label:"Tài khoản",
+     info:"Thông tin tài khoản",
+       update:"Chỉnh sửa thông tin tài khoản"
+   },
     event: {
         _label: "Sự kiện",
         create: "Tạo sự kiện",
