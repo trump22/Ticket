@@ -12,7 +12,7 @@ output_path = "reports/lighthouse.html"
 # ❗ Bảo toàn API proxy (không redirect về index.html)
 [[redirects]]
 from = "/api/*"
-to = "http://54.252.176.198:8080/api/:splat"
+to = "http://52.62.9.44:8080/api/:splat"
 status = 200
 force = true
 
