@@ -95,7 +95,6 @@ const CreateEvent = () => {
         const token = Cookies.get('token');
         //Upload ảnh background
         let uploadedImageUrl = "";
-        console.log("Selected img BG la ",selectedImgBg);
         if (selectedImgBg) {
             const formBg = new FormData();
             formBg.append("file", selectedImgBg);
@@ -106,13 +105,11 @@ const CreateEvent = () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            console.log("Duong link anh sau khi push anh len servcer",uploadBg.data)
             uploadedImageUrl = uploadBg.data?.imageUrl || "";
 
         }
         // BƯỚC 2: Upload logo (nếu có)
         let uploadedLogoUrl = "";
-        console.log("Selected img BG la ",selectedImgLogo);
         if (selectedImgLogo) {
             const formLogo = new FormData();
             formLogo.append("file", selectedImgLogo);
@@ -159,7 +156,6 @@ const CreateEvent = () => {
                 }
 
             );
-            console.log("Response data la ",response.data)
 
 
             if (response.status === 200) {

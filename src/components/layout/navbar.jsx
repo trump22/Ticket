@@ -54,6 +54,12 @@ const Navbar = () => {
             setDisplayName("Đăng nhập");
         }
     }, []);
+    //Alert khi thông báo cần phải đăng nhập
+    useEffect(() => {
+        if (location.state?.alertMessage) {
+            alert(location.state.alertMessage); // hoặc toast, modal, v.v.
+        }
+    }, [location]);
 
     // Chuyển modal sang đăng nhập
     const switchToLoginModal = () => {
@@ -99,7 +105,7 @@ const Navbar = () => {
                     }
                 }
             );
-            console.log("Response dang ki:", response.data);
+
 
             if (response.status === 200) {
                 setSuccessMessage("Đăng kí tài khoản thành công! Mời bạn đăng nhập.");
@@ -133,7 +139,7 @@ const Navbar = () => {
                     'Content-Type': 'application/json'
                 }
             });
-            console.log("Response:", response.data);
+
 
             if (response.status === 200) {
                 setSuccessMessage("Đăng nhập tài khoản thành công <3");
@@ -192,7 +198,7 @@ const Navbar = () => {
             const user = await getUserById(tokenValue);
 
             // Lưu username vào cookie
-            console.log("user la ", user);
+
             Cookies.set('user', user, { expires: 7 });
 
             Cookies.set('username', user.name, { expires: 7 });
@@ -224,11 +230,7 @@ const Navbar = () => {
 
     };
     //Alert thông báo vui lòng đăng nhập
-    useEffect(() => {
-        if (location.state?.alertMessage) {
-            alert(location.state.alertMessage); // hoặc toast, modal, v.v.
-        }
-    }, [location]);
+
 
 
     return (

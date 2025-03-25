@@ -1,20 +1,29 @@
 
-import { useSelector } from "react-redux";
-import {useMemo} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect, useMemo} from "react";
 import ticket from '../../assets/images/Subtract.png';
-import placeholderImg from '../../assets/images/ok.png';
+import placeholderImg from '../../assets/svgs/ok.png';
 import {useNavigate, useParams} from 'react-router-dom';
 import instance from "../../services/axios.js";
 import Cookies from "js-cookie";
+import {fetchAllEvents} from "../../store/eventSlice.js";
 
 const EventDetail = () => {
+
     const { id } = useParams(); // id từ URL
 
     const navigate = useNavigate();
     const token = Cookies.get('token');
     const allEvents = useSelector((state) => state.event.allEvents);
+    const dispatch = useDispatch();
+    //  Nếu allEvents trống thì gọi lại API trong trường hợp user reload
 
-
+    useEffect(() => {
+        if (allEvents.length === 0) {
+            console.log("📥 Gọi fetchAllEvents vì allEvents đang rỗng.");
+            dispatch(fetchAllEvents());
+        }
+    }, [allEvents, dispatch]);
 
     const event = useMemo(() => {
         if (!id || !Array.isArray(allEvents)) return null;
@@ -43,6 +52,17 @@ const EventDetail = () => {
 
 
     const handleSubmit = async () => {
+        const token = Cookies.get('token');
+
+        if(!token){
+            window.confirm("bạn chưa đăng nhập vui lòng đăng nhập trước khi mua");
+            return
+        }
+
+        const confirmBuy = window.confirm("Bạn có chắc chắn muốn mua vé không?");
+        if (!confirmBuy) {
+            return;
+        }
         try {
             const response = await instance.post(
                 '/api/OrderDetail/AddOrderDetail',
@@ -73,9 +93,12 @@ const EventDetail = () => {
 
 
     if (!event) {
-        return <p className="text-center text-red-500 mt-10">Không tìm thấy sự kiện.</p>;
+        if (allEvents.length === 0) {
+            return <p className="text-center text-gray-500 mt-10">Đang tải sự kiện...</p>;
+        } else {
+            return <p className="text-center text-red-500 mt-10">Không tìm thấy sự kiện.</p>;
+        }
     }
-
     return (
         <div id="banner" className="max-w-6xl mx-auto mt-4 md:mt-8 px-4">
             <div
@@ -85,7 +108,7 @@ const EventDetail = () => {
                 }}
             >
                 {/* LEFT info */}
-                <div className="w-[454px] h-full p-8">
+                <div className="w-[448px] h-full p-8">
                     <div className="info">
                         <p
                             id="title"
@@ -95,17 +118,22 @@ const EventDetail = () => {
                         </p>
                         <p id="date" className="flex items-center text-xl text-white mt-2">
                             {/* ICON */}
-                            <svg className="mr-1" xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
-                                <path d="M6.25 0a1 1 0 011 1v1h6V1a1 1 0 112 0v1h1a4 4 0 014 4v2h-20V6a4 4 0 014-4h1V1a1 1 0 011-1zM20.25 10h-20v8a2 2 0 002 2h16a2 2 0 002-2v-8z" fill="#000"></path>
+                            <svg className="mr-1" xmlns="http://www.w3.org/2000/svg" width="21" height="20"
+                                 viewBox="0 0 21 20" fill="none">
+                                <path
+                                    d="M6.25 0a1 1 0 011 1v1h6V1a1 1 0 112 0v1h1a4 4 0 014 4v2h-20V6a4 4 0 014-4h1V1a1 1 0 011-1zM20.25 10h-20v8a2 2 0 002 2h16a2 2 0 002-2v-8z"
+                                    fill="#000"></path>
                             </svg>
                             <strong>
-                                Bắt đầu: {event.starTime ? new Date(event.starTime).toLocaleString() : "N/A"} - Đến:{" "}
+                                Bắt đầu: {event.starTime ? new Date(event.starTime).toLocaleString() : "N/A"} -
+                                Đến:{" "}
                                 {event.endTime ? new Date(event.endTime).toLocaleString() : "N/A"}
                             </strong>
                         </p>
                         <p id="venue" className="flex items-center text-xl text-white mt-2 mb-5">
                             {/* LOCATION ICON */}
-                            <svg width="22" height="28" viewBox="0 0 22 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-1">
+                            <svg width="22" height="28" viewBox="0 0 22 28" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg" className="mr-1">
                                 <path
                                     fillRule="evenodd"
                                     clipRule="evenodd"
@@ -138,7 +166,7 @@ const EventDetail = () => {
                 </div>
 
                 {/* RIGHT image */}
-                <div className="relative w-[755px] h-[476px] rounded-lg overflow-hidden">
+                <div className="relative w-[763px] h-[476px] rounded-lg overflow-hidden">
                     <div
                         className="absolute inset-0 bg-no-repeat bg-cover bg-center"
                         style={{

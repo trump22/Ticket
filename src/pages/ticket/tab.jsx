@@ -1,6 +1,6 @@
 import React from "react";
 
-const TicketTabs = React.lazy(() => import("../../components/ticket/tab.jsx"));
+const TicketTabs = React.lazy(() => import("../../components/ticket/changeStatusTicket.jsx"));
 
 const TicketTable = () =>{
     return(

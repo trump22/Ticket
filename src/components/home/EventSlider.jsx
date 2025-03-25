@@ -18,7 +18,7 @@ const EventSlider = () => {
             .then((response) => {
                 setEvents(response.data);
                 dispatch(setAllEvents(response.data));
-                console.log(response.data);
+
                 setLoading(false);
             })
             .catch((error) => {

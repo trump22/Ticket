@@ -29,16 +29,16 @@ const BuyList = () => {
                 }
             })
             .then((response) => {
-                console.log("Response ticket data:", response.data);
+
                 if (Array.isArray(response.data)) {
-                    console.log("Ticket la ", response.data)
+
                     setTickets(response.data);
                     dispatch(setTickets(response.data));
                 } else {
                     setTickets([]);
                     dispatch(setTickets([]));
                 }
-                console.log(response.data);
+
             })
             .catch((err) => {
                 console.error("Error fetching tickets:", err);

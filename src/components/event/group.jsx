@@ -3,7 +3,6 @@ const EventCard = React.lazy(() => import("./slider.jsx"));
 
 const EventGroup = ({ categoryName, events }) => {
     if (!events || events.length === 0) return null;
-    console.log("Events la ", events)
     return (
         <div className="mb-10">
             <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

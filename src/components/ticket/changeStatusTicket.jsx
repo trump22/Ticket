@@ -3,8 +3,8 @@ import instance from "../../services/axios";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { setTickets, setEventsList, cancelTicket } from "../../store/ticketSlice.js";
-const TicketListTable = React.lazy(() => import("./listTable.jsx"));
-
+const TicketListTable = React.lazy(() => import("./list.jsx"));
+//Chứa 2 nút để chuyển đổi
 const TicketTabs = () => {
     const [activeTab, setActiveTab] = useState("all");
     const token = Cookies.get("token");
