@@ -34,10 +34,12 @@ const Profile = () => {
         e.preventDefault();
         const file = e.dataTransfer.files[0];
         if (file) {
+            setSelectedFile(file);
             const previewUrl = URL.createObjectURL(file);
             setImagePreview(previewUrl);
             setImageUrl(previewUrl);
         }
+
     };
 
     const handleDragOverBackground = (e) => {
