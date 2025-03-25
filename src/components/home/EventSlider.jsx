@@ -31,11 +31,12 @@ const EventSlider = () => {
 
     if (loading) {
         return (<div className="flex items-center justify-center h-64">
-                <p className="text-gray-600">Loading events...</p>
-            </div>);
+            <p className="text-gray-600">Loading events...</p>
+        </div>);
     }
 
-    return (<div className="max-w-6xl mx-auto">
+    return (
+        <div className="max-w-6xl mx-auto">
             {/* Header with title and next button */}
             <div className="flex items-center justify-between p-4">
                 <h2 className="text-2xl font-semibold">Sự kiện đặc biệt</h2>
@@ -71,8 +72,8 @@ const EventSlider = () => {
                                     </span>
                                     <span>
                                         {event.starTime
-                                        ? new Date(event.starTime).toLocaleDateString("vi-VN")
-                                        : "Chưa xác định"}
+                                            ? new Date(event.starTime).toLocaleDateString("vi-VN")
+                                            : "Chưa xác định"}
                                         {" đến "}
                                         {event.endTime
                                             ? new Date(event.endTime).toLocaleDateString("vi-VN")
@@ -87,7 +88,7 @@ const EventSlider = () => {
 
                     </Link>))}
             </div>
-    </div>);
+        </div>);
 };
 
 export default EventSlider;

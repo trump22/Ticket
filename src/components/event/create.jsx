@@ -27,7 +27,6 @@ const CreateEvent = () => {
     const [organizerPhone, setOrganizerPhone] = useState('');
     const [organizerEmail, setOrganizerEmail] = useState('');
     const [organizerLocation, setOrganizerLocation] = useState('');
-    const [organizerLogoUrl, setOrganizerLogoUrl] = useState('');
 
     // State thông báo
     const [successMessage, setSuccessMessage] = useState('');
@@ -143,7 +142,6 @@ const CreateEvent = () => {
             organizerPhone,
             organizerEmail,
             organizerLocation,
-            organizerLogoUrl,
         };
 
         try {
@@ -182,7 +180,6 @@ const CreateEvent = () => {
                 setOrganizerPhone('');
                 setOrganizerEmail('');
                 setOrganizerLocation('');
-                setOrganizerLogoUrl('');
             } else {
                 setError("Tạo event thất bại, vui lòng thử lại!");
                 setSuccessMessage("");
@@ -195,7 +192,7 @@ const CreateEvent = () => {
     };
 
     return (
-        <div className="max-w-4xl mx-auto p-6 bg-base-300 rounded-md shadow">
+        <div className="max-w-4xl mx-auto p-6 rounded-md shadow">
             <h1 className="text-3xl font-bold mb-4">Tạo Event &amp; Organizer</h1>
 
             {successMessage && <p className="text-green-500 mb-4">{successMessage}</p>}
@@ -254,13 +251,19 @@ const CreateEvent = () => {
 
                 <div>
                     <label className="block text-sm font-medium mb-1">Loại Event</label>
-                    <input
-                        type="text"
-                        value={eventType}
-                        onChange={(e) => setEventType(e.target.value)}
-                        className="w-full border p-2 rounded"
-                        required
-                    />
+                    <div className="dropdown">
+                        <div tabIndex={0} role="button" className="btn m-1">
+                            {eventType || "Chọn loại event"}
+                        </div>
+                        <ul
+                            tabIndex={0}
+                            className="dropdown-content z-[1] menu p-2 shadow bg-base-300  rounded-box w-52"
+                        >
+                            <li><a onClick={() => setEventType("Sân khấu & nghệ thuật ")}>Sân khấu & nghệ thuật</a></li>
+                            <li><a onClick={() => setStatus("Thể thao")}>Thể thao</a></li>
+                            <li><a onClick={() => setStatus("Khác")}>Khác</a></li>
+                        </ul>
+                    </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
@@ -288,16 +291,25 @@ const CreateEvent = () => {
 
                 <div>
                     <label className="block text-sm font-medium mb-1">Trạng thái</label>
-                    <input
-                        type="text"
-                        value={status}
-                        onChange={(e) => setStatus(e.target.value)}
-                        className="w-full border p-2 rounded"
-                    />
+                    <div className="dropdown">
+                        <div tabIndex={0} role="button" className="btn m-1">
+                            {status || "Chọn trạng thái "}
+                        </div>
+                        <ul
+                            tabIndex={0}
+                            className="dropdown-content z-[1] menu p-2 shadow bg-base-300  rounded-box w-52"
+                        >
+                            <li><a onClick={() => setEventType("Chưa diễn ra")}>Chưa diễn ra</a></li>
+                            <li><a onClick={() => setStatus("Đang diễn ra")}>Đang diễn ra</a></li>
+                            <li><a onClick={() => setStatus("Kết thúc")}>Kết thúc</a></li>
+                        </ul>
+                    </div>
+
                 </div>
 
 
-                {/* Organizer Info */}
+                {/* Organizer Info */
+                }
                 <div>
                     <label className="block text-sm font-medium mb-1">Tên tổ chức</label>
                     <input
@@ -340,17 +352,6 @@ const CreateEvent = () => {
                         className="w-full border p-2 rounded"
                     />
                 </div>
-
-                <div>
-                    <label className="block text-sm font-medium mb-1">Logo URL (Organizer)</label>
-                    <input
-                        type="text"
-                        value={organizerLogoUrl}
-                        onChange={(e) => setOrganizerLogoUrl(e.target.value)}
-                        className="w-full border p-2 rounded"
-                    />
-                </div>
-
                 <button
                     type="submit"
                     className="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
