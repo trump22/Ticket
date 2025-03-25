@@ -109,6 +109,7 @@ const Profile = () => {
         } catch (error) {
             console.error("Cập nhật thất bại:", error);
             setShowMessage("Cập nhật không thành công");
+
             setMessageType("error");
         }
     };
